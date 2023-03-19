@@ -4,6 +4,7 @@
  */
 package vista;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -13,12 +14,15 @@ import java.awt.Toolkit;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    Color btnColorHover = new Color(0, 79, 160);
+    Color btnColorReset = new Color(0, 79, 146);
+
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         initComponents();
-        
+
         // Centrar la ventana
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
@@ -39,10 +43,19 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnClose = new javax.swing.JLabel();
         sideMenu = new javax.swing.JPanel();
         txtLogo = new javax.swing.JLabel();
-        cuadroDec = new javax.swing.JPanel();
-        cuadroDec2 = new javax.swing.JPanel();
-        btnClientes = new javax.swing.JPanel();
+        userPanel = new javax.swing.JPanel();
         txtcClientes = new javax.swing.JLabel();
+        btnClientes = new javax.swing.JPanel();
+        txtClientes = new javax.swing.JLabel();
+        btnReservaciones = new javax.swing.JPanel();
+        txtReservaciones = new javax.swing.JLabel();
+        btnHabitaciones = new javax.swing.JPanel();
+        txtHabitaciones = new javax.swing.JLabel();
+        btnEmpleados = new javax.swing.JPanel();
+        txtEmpleados = new javax.swing.JLabel();
+        btnReportes = new javax.swing.JPanel();
+        txtReportes = new javax.swing.JLabel();
+        panelInicio = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventana Inicio");
@@ -66,7 +79,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         barraVentana.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnMinimize.setFont(new java.awt.Font("bubbleboddy", 0, 18)); // NOI18N
+        btnMinimize.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnMinimize.setForeground(new java.awt.Color(240, 240, 240));
         btnMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnMinimize.setText("–");
@@ -79,7 +92,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         barraVentana.add(btnMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 0, 40, 40));
 
-        btnClose.setFont(new java.awt.Font("bubbleboddy", 0, 18)); // NOI18N
+        btnClose.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnClose.setForeground(new java.awt.Color(240, 240, 240));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnClose.setText("X");
@@ -102,54 +115,134 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtLogo.setText("Fastel");
         txtLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        sideMenu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 100, 50));
+        sideMenu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 100));
 
-        cuadroDec.setBackground(new java.awt.Color(230, 230, 230));
-
-        javax.swing.GroupLayout cuadroDecLayout = new javax.swing.GroupLayout(cuadroDec);
-        cuadroDec.setLayout(cuadroDecLayout);
-        cuadroDecLayout.setHorizontalGroup(
-            cuadroDecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        cuadroDecLayout.setVerticalGroup(
-            cuadroDecLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        sideMenu.add(cuadroDec, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 30, 30));
-
-        cuadroDec2.setBackground(new java.awt.Color(8, 117, 207));
-
-        javax.swing.GroupLayout cuadroDec2Layout = new javax.swing.GroupLayout(cuadroDec2);
-        cuadroDec2.setLayout(cuadroDec2Layout);
-        cuadroDec2Layout.setHorizontalGroup(
-            cuadroDec2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-        cuadroDec2Layout.setVerticalGroup(
-            cuadroDec2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
-        );
-
-        sideMenu.add(cuadroDec2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 30, 30));
-
-        btnClientes.setBackground(new java.awt.Color(0, 65, 94));
-        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        userPanel.setBackground(new java.awt.Color(0, 79, 146));
+        userPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        userPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtcClientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtcClientes.setForeground(new java.awt.Color(240, 240, 240));
-        txtcClientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txtcClientes.setText("Clientes");
-        btnClientes.add(txtcClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 190, 60));
+        txtcClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtcClientes.setText("USERNAME");
+        userPanel.add(txtcClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 260, 30));
         txtcClientes.getAccessibleContext().setAccessibleName(" Clientes");
         txtcClientes.getAccessibleContext().setAccessibleDescription("");
         txtcClientes.getAccessibleContext().setAccessibleParent(sideMenu);
 
-        sideMenu.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 230, 60));
+        sideMenu.add(userPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 260, 130));
 
-        jPanelPrincipal.add(sideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 230, 680));
+        btnClientes.setBackground(new java.awt.Color(0, 79, 146));
+        btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClientesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClientesMouseExited(evt);
+            }
+        });
+        btnClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtClientes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtClientes.setForeground(new java.awt.Color(240, 240, 240));
+        txtClientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/cliente.png"))); // NOI18N
+        txtClientes.setText("Clientes");
+        btnClientes.add(txtClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 60));
+
+        sideMenu.add(btnClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 260, 60));
+
+        btnReservaciones.setBackground(new java.awt.Color(0, 79, 146));
+        btnReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnReservacionesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnReservacionesMouseExited(evt);
+            }
+        });
+        btnReservaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtReservaciones.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtReservaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtReservaciones.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtReservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/reservacion.png"))); // NOI18N
+        txtReservaciones.setText("Reservaciones");
+        btnReservaciones.add(txtReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 60));
+
+        sideMenu.add(btnReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 260, 60));
+
+        btnHabitaciones.setBackground(new java.awt.Color(0, 79, 146));
+        btnHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnHabitaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHabitacionesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHabitacionesMouseExited(evt);
+            }
+        });
+        btnHabitaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtHabitaciones.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtHabitaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtHabitaciones.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/habitacion.png"))); // NOI18N
+        txtHabitaciones.setText("Habitaciones");
+        btnHabitaciones.add(txtHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 60));
+
+        sideMenu.add(btnHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 260, 60));
+
+        btnEmpleados.setBackground(new java.awt.Color(0, 79, 146));
+        btnEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEmpleadosMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnEmpleadosMouseExited(evt);
+            }
+        });
+        btnEmpleados.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtEmpleados.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtEmpleados.setForeground(new java.awt.Color(240, 240, 240));
+        txtEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/empleado.png"))); // NOI18N
+        txtEmpleados.setText("Empleados");
+        btnEmpleados.add(txtEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 60));
+
+        sideMenu.add(btnEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 260, 60));
+
+        btnReportes.setBackground(new java.awt.Color(0, 79, 146));
+        btnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnReportesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnReportesMouseExited(evt);
+            }
+        });
+        btnReportes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtReportes.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtReportes.setForeground(new java.awt.Color(240, 240, 240));
+        txtReportes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        txtReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/reportes.png"))); // NOI18N
+        txtReportes.setText("Reportes");
+        btnReportes.add(txtReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 60));
+
+        sideMenu.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 260, 60));
+
+        jPanelPrincipal.add(sideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 680));
+
+        panelInicio.setBackground(new java.awt.Color(240, 240, 240));
+        panelInicio.setForeground(new java.awt.Color(240, 240, 240));
+        panelInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelPrincipal.add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
         getContentPane().add(jPanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
 
@@ -168,9 +261,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     //=======================================================
     // Metodos de la barra de la ventana 
     //=======================================================
-    
     int xMouse, yMouse;
-    
+
     private void barraVentanaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_barraVentanaMousePressed
         xMouse = evt.getX();
         yMouse = evt.getY();
@@ -181,6 +273,50 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
     }//GEN-LAST:event_barraVentanaMouseDragged
+
+    // ===========================================================
+    // Cambios de color en los botones del menu
+    //=============================================================
+
+    private void btnClientesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseEntered
+        btnClientes.setBackground(btnColorHover);
+    }//GEN-LAST:event_btnClientesMouseEntered
+
+    private void btnClientesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseExited
+        btnClientes.setBackground(btnColorReset);
+    }//GEN-LAST:event_btnClientesMouseExited
+
+    private void btnReservacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReservacionesMouseEntered
+        btnReservaciones.setBackground(btnColorHover);
+    }//GEN-LAST:event_btnReservacionesMouseEntered
+
+    private void btnReservacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReservacionesMouseExited
+        btnReservaciones.setBackground(btnColorReset);
+    }//GEN-LAST:event_btnReservacionesMouseExited
+
+    private void btnHabitacionesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHabitacionesMouseEntered
+        btnHabitaciones.setBackground(btnColorHover);
+    }//GEN-LAST:event_btnHabitacionesMouseEntered
+
+    private void btnHabitacionesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHabitacionesMouseExited
+        btnHabitaciones.setBackground(btnColorReset);
+    }//GEN-LAST:event_btnHabitacionesMouseExited
+
+    private void btnEmpleadosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMouseEntered
+        btnEmpleados.setBackground(btnColorHover);
+    }//GEN-LAST:event_btnEmpleadosMouseEntered
+
+    private void btnEmpleadosMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMouseExited
+        btnEmpleados.setBackground(btnColorReset);
+    }//GEN-LAST:event_btnEmpleadosMouseExited
+
+    private void btnReportesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseEntered
+        btnReportes.setBackground(btnColorHover);
+    }//GEN-LAST:event_btnReportesMouseEntered
+
+    private void btnReportesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseExited
+        btnReportes.setBackground(btnColorReset);
+    }//GEN-LAST:event_btnReportesMouseExited
 
     /**
      * @param args the command line arguments
@@ -221,12 +357,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel barraVentana;
     private javax.swing.JPanel btnClientes;
     private javax.swing.JLabel btnClose;
+    private javax.swing.JPanel btnEmpleados;
+    private javax.swing.JPanel btnHabitaciones;
     private javax.swing.JLabel btnMinimize;
-    private javax.swing.JPanel cuadroDec;
-    private javax.swing.JPanel cuadroDec2;
+    private javax.swing.JPanel btnReportes;
+    private javax.swing.JPanel btnReservaciones;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPanel panelInicio;
     private javax.swing.JPanel sideMenu;
+    private javax.swing.JLabel txtClientes;
+    private javax.swing.JLabel txtEmpleados;
+    private javax.swing.JLabel txtHabitaciones;
     private javax.swing.JLabel txtLogo;
+    private javax.swing.JLabel txtReportes;
+    private javax.swing.JLabel txtReservaciones;
     private javax.swing.JLabel txtcClientes;
+    private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
 }
