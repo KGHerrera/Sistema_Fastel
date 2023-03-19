@@ -56,6 +56,13 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnReportes = new javax.swing.JPanel();
         txtReportes = new javax.swing.JLabel();
         panelInicio = new javax.swing.JPanel();
+        barraInicioPane = new javax.swing.JPanel();
+        txtSeleccionaAccion = new javax.swing.JLabel();
+        txtInicioTitulo = new javax.swing.JLabel();
+        txtWelcomeUser = new javax.swing.JLabel();
+        txtLogoMain = new javax.swing.JLabel();
+        messagePaneInicio = new javax.swing.JPanel();
+        txtMessageInicio = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Ventana Inicio");
@@ -242,6 +249,48 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelInicio.setBackground(new java.awt.Color(240, 240, 240));
         panelInicio.setForeground(new java.awt.Color(240, 240, 240));
         panelInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barraInicioPane.setBackground(new java.awt.Color(0, 65, 130));
+        barraInicioPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtSeleccionaAccion.setFont(new java.awt.Font("Roboto", 2, 24)); // NOI18N
+        txtSeleccionaAccion.setForeground(new java.awt.Color(240, 240, 240));
+        txtSeleccionaAccion.setText("SELECCIONA ALGUNA DE LAS OPCIONES DE LA IZQUIERDA");
+        barraInicioPane.add(txtSeleccionaAccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 40, -1, 60));
+
+        txtInicioTitulo.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtInicioTitulo.setForeground(new java.awt.Color(240, 240, 240));
+        txtInicioTitulo.setText("PANTALLA DE INICIO");
+        barraInicioPane.add(txtInicioTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, 30));
+
+        panelInicio.add(barraInicioPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
+
+        txtWelcomeUser.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        txtWelcomeUser.setForeground(new java.awt.Color(50, 50, 50));
+        txtWelcomeUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtWelcomeUser.setText("Bienvenido al SISTEMA");
+        txtWelcomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelInicio.add(txtWelcomeUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 1020, 80));
+
+        txtLogoMain.setFont(new java.awt.Font("Calibri", 1, 64)); // NOI18N
+        txtLogoMain.setForeground(new java.awt.Color(50, 50, 50));
+        txtLogoMain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtLogoMain.setText("FASTEL");
+        panelInicio.add(txtLogoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 1020, 80));
+
+        messagePaneInicio.setBackground(new java.awt.Color(0, 153, 153));
+        messagePaneInicio.setForeground(new java.awt.Color(33, 235, 103));
+        messagePaneInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        messagePaneInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtMessageInicio.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txtMessageInicio.setForeground(new java.awt.Color(240, 240, 240));
+        txtMessageInicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtMessageInicio.setText("POWERED BY APACHE FRIJOLES NETOS");
+        messagePaneInicio.add(txtMessageInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 930, 50));
+
+        panelInicio.add(messagePaneInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
+
         jPanelPrincipal.add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
         getContentPane().add(jPanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 720));
@@ -354,6 +403,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel barraInicioPane;
     private javax.swing.JPanel barraVentana;
     private javax.swing.JPanel btnClientes;
     private javax.swing.JLabel btnClose;
@@ -363,14 +413,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel btnReportes;
     private javax.swing.JPanel btnReservaciones;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JPanel messagePaneInicio;
     private javax.swing.JPanel panelInicio;
     private javax.swing.JPanel sideMenu;
     private javax.swing.JLabel txtClientes;
     private javax.swing.JLabel txtEmpleados;
     private javax.swing.JLabel txtHabitaciones;
+    private javax.swing.JLabel txtInicioTitulo;
     private javax.swing.JLabel txtLogo;
+    private javax.swing.JLabel txtLogoMain;
+    private javax.swing.JLabel txtMessageInicio;
     private javax.swing.JLabel txtReportes;
     private javax.swing.JLabel txtReservaciones;
+    private javax.swing.JLabel txtSeleccionaAccion;
+    private javax.swing.JLabel txtWelcomeUser;
     private javax.swing.JLabel txtcClientes;
     private javax.swing.JPanel userPanel;
     // End of variables declaration//GEN-END:variables
