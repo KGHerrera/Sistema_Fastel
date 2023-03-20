@@ -7,6 +7,7 @@ package vista;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JPanel;
 
 /**
  *
@@ -26,6 +27,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // Centrar la ventana
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - getWidth()) / 2, (screenSize.height - getHeight()) / 2);
+        
+        // ocultar paneles
+        ocultarPaneles(panelInicio);
     }
 
     /**
@@ -180,6 +184,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtLogo.setText("Fastel");
         txtLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtLogo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtLogoMouseClicked(evt);
+            }
+        });
         sideMenu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 100));
 
         userPanel.setBackground(new java.awt.Color(0, 79, 146));
@@ -203,6 +212,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnClientes.setBackground(new java.awt.Color(0, 79, 146));
         btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClientesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnClientesMouseEntered(evt);
             }
@@ -224,6 +236,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnReservaciones.setBackground(new java.awt.Color(0, 79, 146));
         btnReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReservacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnReservacionesMouseEntered(evt);
             }
@@ -245,6 +260,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnHabitaciones.setBackground(new java.awt.Color(0, 79, 146));
         btnHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHabitaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnHabitacionesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnHabitacionesMouseEntered(evt);
             }
@@ -266,6 +284,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnEmpleados.setBackground(new java.awt.Color(0, 79, 146));
         btnEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEmpleadosMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEmpleadosMouseEntered(evt);
             }
@@ -287,6 +308,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnReportes.setBackground(new java.awt.Color(0, 79, 146));
         btnReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnReportesMouseEntered(evt);
             }
@@ -339,7 +363,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelReportes.add(messageReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
 
-        btnReportePane.setBackground(new java.awt.Color(187, 187, 187));
+        btnReportePane.setBackground(new java.awt.Color(200, 200, 220));
         btnReportePane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 2, true));
         btnReportePane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnReportePane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -363,20 +387,20 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtComenzar.setForeground(new java.awt.Color(100, 100, 100));
         txtComenzar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtComenzar.setText("COMENZAR");
-        btnComenzar.add(txtComenzar, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 10, 220, -1));
+        btnComenzar.add(txtComenzar, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 0, 220, 40));
 
         btnReportePane.add(btnComenzar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 250, 40));
 
         panelReportes.add(btnReportePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 220, 310, 340));
 
-        btnGraficoPane.setBackground(new java.awt.Color(187, 187, 187));
+        btnGraficoPane.setBackground(new java.awt.Color(200, 200, 220));
         btnGraficoPane.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(220, 220, 220), 2, true));
         btnGraficoPane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGraficoPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtIconGrafico.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         txtIconGrafico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtIconGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/grafico.png"))); // NOI18N
+        txtIconGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/reporte.png"))); // NOI18N
         btnGraficoPane.add(txtIconGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 190, 130));
 
         txtGenerarReporte.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -393,7 +417,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtComenzarGrafico.setForeground(new java.awt.Color(100, 100, 100));
         txtComenzarGrafico.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtComenzarGrafico.setText("COMENZAR");
-        btnGenerarGrafico.add(txtComenzarGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 10, 220, -1));
+        btnGenerarGrafico.add(txtComenzarGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 0, 220, 40));
 
         btnGraficoPane.add(btnGenerarGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 250, 40));
 
@@ -743,6 +767,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnCloseMouseClicked
 
+    private void ocultarPaneles(JPanel panelVisible){
+        panelInicio.setVisible(false);
+        panelHabitaciones.setVisible(false);
+        panelEmpleados.setVisible(false);
+        panelReportes.setVisible(false);
+        panelClientes.setVisible(false);
+        panelReservaciones.setVisible(false);
+        
+        panelVisible.setVisible(true);
+    }
     //=======================================================
     // Metodos de la barra de la ventana 
     //=======================================================
@@ -802,6 +836,34 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void btnReportesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseExited
         btnReportes.setBackground(btnColorReset);
     }//GEN-LAST:event_btnReportesMouseExited
+
+    // =======================================================
+    // Mostrar y ocultar paneles
+    // =======================================================
+    
+    private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
+        ocultarPaneles(panelClientes);
+    }//GEN-LAST:event_btnClientesMouseClicked
+
+    private void btnReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReservacionesMouseClicked
+        ocultarPaneles(panelReservaciones);
+    }//GEN-LAST:event_btnReservacionesMouseClicked
+
+    private void btnHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHabitacionesMouseClicked
+        ocultarPaneles(panelHabitaciones);
+    }//GEN-LAST:event_btnHabitacionesMouseClicked
+
+    private void btnEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMouseClicked
+        ocultarPaneles(panelEmpleados);
+    }//GEN-LAST:event_btnEmpleadosMouseClicked
+
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        ocultarPaneles(panelReportes);
+    }//GEN-LAST:event_btnReportesMouseClicked
+
+    private void txtLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLogoMouseClicked
+        ocultarPaneles(panelInicio);
+    }//GEN-LAST:event_txtLogoMouseClicked
 
     /**
      * @param args the command line arguments
