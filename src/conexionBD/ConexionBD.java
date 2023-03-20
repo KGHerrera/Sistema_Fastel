@@ -16,22 +16,21 @@ import modelo.Cliente;
  * @author KHerrera
  */
 public class ConexionBD {
-    
+
     private String url = "jdbc:sqlserver://localhost:1433;databaseName=fastel;TrustServerCertificate=True";
     private static Connection conexion = null;
     private static PreparedStatement pstm;
     private static ResultSet rs;
-    
+
     private ConexionBD() {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conexion = DriverManager.getConnection(url, "kherrera", "123456");
             System.out.println("se conecto con exito XD");
 
-        }  catch(ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             System.out.println("Error de DRIVER");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error de conexion en SQL Server " + e);
         }
     }
@@ -51,58 +50,90 @@ public class ConexionBD {
             System.out.println("Error al cerrar la conexion");
             //e.printStackTrace();
         }
-    }  
-    
+    }
+
     // Consultas clientes
-    
-    public static boolean altaCliente(Cliente a) {
-        int res = 0;
+    public static boolean altaCliente(Cliente cliente) {
+        boolean exito = false;
         try {
-            // TRANSACCION ALTAS
-            conexion.setAutoCommit(false);
-
-            String consulta = "INSERT INTO clientes VALUES(?,?,?,?,GETDATE())";
-            pstm = conexion.prepareStatement(consulta);
-
-           
-            pstm.setString(1, a.getNombre());
-            pstm.setString(2, a.getApellido());
-            pstm.setString(3, a.getRfc());
-            pstm.setString(4, a.getTelefono());
-
-            res = pstm.executeUpdate();
-
-            // SE EJECUTA SI NO EXISTE ERROR
-            conexion.commit();
-        } catch (SQLException error) {
-            res = 0;
-
-            // REGRESA AL ESTADO ANTERIOR
-            try {
-                conexion.rollback();
-            } catch (SQLException er) {
-
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "INSERT INTO clientes (nombre, apellido, rfc, telefono, fecha_registro) VALUES (?, ?, ?, ?, GETDATE())";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setString(3, cliente.getRfc());
+            ps.setString(4, cliente.getTelefono());
+            
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
             }
-            error.printStackTrace();
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-
-        if (res != 0) {
-            return true;
-        } else {
-            return false;
+        return exito;
+    }
+    
+    public static boolean cambiarCliente(Cliente cliente) {
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "UPDATE clientes SET nombre = ?, apellido = ?, rfc = ?, telefono = ?, fecha_registro = ? WHERE id_cliente = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, cliente.getNombre());
+            ps.setString(2, cliente.getApellido());
+            ps.setString(3, cliente.getRfc());
+            ps.setString(4, cliente.getTelefono());
+            ps.setString(5, cliente.getFechaRegistro());
+            ps.setInt(6, cliente.getIdCliente());
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
+            }
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+        return exito;
     }
     
     
-     
+
     public static void main(String[] args) {
         ConexionBD.getConexion();
-        
-        Cliente cliente1 = new Cliente(1, "rumpel", "lombriz", "HRJEKS20293", "4945123709", "12-12-2023");
-        altaCliente(cliente1);
-        
-    } 
-    
-    
-    
+
+        Cliente cliente1 = new Cliente(4, "megamun", "tarzo", "HIIWQO", "595182931", "2023-03-20");
+        if(cambiarCliente(cliente1) == true){
+            System.out.println("se agrego correctamente");
+        }
+
+    }
+
 }

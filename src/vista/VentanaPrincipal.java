@@ -25,12 +25,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     Color colorCambio;
     Color colorBaja;
     Color colorError;
+    Color colorBtnAgregar;
     
     String modoCliente = "alta";
     String modoReservacion = "alta";
     String modoHabitacion = "alta";
     String modoEmpleado = "alta";
-    
 
     /**
      * Creates new form VentanaPrincipal
@@ -61,6 +61,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         colorBaja = new Color(219, 0, 84);
         colorCambio = new Color(219, 168, 0);
         colorError = new Color(214, 2, 31);
+        colorBtnAgregar = new Color(72,58,125);
 
         // inicializacion de componentes        
         initComponents();
@@ -213,7 +214,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         barraVentana.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnMinimize.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        btnMinimize.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnMinimize.setForeground(new java.awt.Color(240, 240, 240));
         btnMinimize.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnMinimize.setText("–");
@@ -226,7 +227,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         barraVentana.add(btnMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 0, 40, 40));
 
-        btnClose.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        btnClose.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         btnClose.setForeground(new java.awt.Color(240, 240, 240));
         btnClose.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnClose.setText("X");
@@ -420,6 +421,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModoRegistrarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add-16.png"))); // NOI18N
         btnModoRegistrarClientes.setText("Registrar");
         btnModoRegistrarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoRegistrarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoRegistrarClientesMouseClicked(evt);
+            }
+        });
         barraClientes.add(btnModoRegistrarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 90, 30));
 
         btnModoModificarClientes.setBackground(new java.awt.Color(72, 58, 125));
@@ -429,6 +435,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModoModificarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/edit-2-16.png"))); // NOI18N
         btnModoModificarClientes.setText("Modificar");
         btnModoModificarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoModificarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoModificarClientesMouseClicked(evt);
+            }
+        });
         barraClientes.add(btnModoModificarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 90, 30));
 
         btnModoEliminarClientes.setBackground(new java.awt.Color(72, 58, 125));
@@ -438,6 +449,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModoEliminarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
         btnModoEliminarClientes.setText("Eliminar");
         btnModoEliminarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoEliminarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoEliminarClientesMouseClicked(evt);
+            }
+        });
         barraClientes.add(btnModoEliminarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
 
         btnModoConsultarClientes.setBackground(new java.awt.Color(72, 58, 125));
@@ -447,6 +463,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         btnModoConsultarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
         btnModoConsultarClientes.setText("Consultar");
         btnModoConsultarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoConsultarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoConsultarClientesMouseClicked(evt);
+            }
+        });
         barraClientes.add(btnModoConsultarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
 
         panelClientes.add(barraClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
@@ -1099,6 +1120,49 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void messageHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_messageHabitacionesMouseClicked
         messageHabitaciones.setVisible(false);
     }//GEN-LAST:event_messageHabitacionesMouseClicked
+
+    
+    // =====================================================
+    // Metodo hace vidas facil
+    // =====================================================
+    
+    private void eventoRegistro(JLabel titulo,String modoFormulario ,
+            String modoObj, String modo, JLabel txtBtn, String nombreBtn, 
+            JPanel btn, Color color){
+        
+        titulo.setText(modoFormulario);
+        modoObj = modo;
+        txtBtn.setText(nombreBtn);
+        btn.setBackground(color);
+    }
+    
+    // =====================================================
+    // Eventos de registro clientes
+    // =====================================================
+    
+    private void btnModoRegistrarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarClientesMouseClicked
+        eventoRegistro(txtModoClientes, "MODO REGISTRO", 
+                modoCliente, "alta", txtAgregar,"AGREGAR", 
+                btnAgregar, colorBtnAgregar);
+    }//GEN-LAST:event_btnModoRegistrarClientesMouseClicked
+
+    private void btnModoModificarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarClientesMouseClicked
+        eventoRegistro(txtModoClientes, "MODO EDICION", 
+                modoCliente, "cambio", txtAgregar,"MODIFICAR", 
+                btnAgregar, colorCambio);
+    }//GEN-LAST:event_btnModoModificarClientesMouseClicked
+
+    private void btnModoEliminarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarClientesMouseClicked
+        eventoRegistro(txtModoClientes, "MODO ELIMINACION", 
+                modoCliente, "baja", txtAgregar,"ELIMINAR", 
+                btnAgregar, colorBaja);
+    }//GEN-LAST:event_btnModoEliminarClientesMouseClicked
+
+    private void btnModoConsultarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarClientesMouseClicked
+        eventoRegistro(txtModoClientes, "MODO BUSQUEDA", 
+                modoCliente, "consulta", txtAgregar,"BUSCAR", 
+                btnAgregar, colorBtnAgregar);
+    }//GEN-LAST:event_btnModoConsultarClientesMouseClicked
 
     /**
      * @param args the command line arguments
