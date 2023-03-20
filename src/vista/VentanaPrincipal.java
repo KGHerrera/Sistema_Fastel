@@ -56,6 +56,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtEmpleados = new javax.swing.JLabel();
         btnReportes = new javax.swing.JPanel();
         txtReportes = new javax.swing.JLabel();
+        panelHabitaciones = new javax.swing.JPanel();
+        barraHabitaciones = new javax.swing.JPanel();
+        txtModoHabitaciones = new javax.swing.JLabel();
+        txtHabitacionesTitulo = new javax.swing.JLabel();
+        btnModoRegistrarHabitaciones = new javax.swing.JLabel();
+        btnModoModificarHabitaciones = new javax.swing.JLabel();
+        btnModoEliminarHabitaciones = new javax.swing.JLabel();
+        btnModoConsultarHabitaciones = new javax.swing.JLabel();
+        messageHabitaciones = new javax.swing.JPanel();
+        txtMessageHabitaciones = new javax.swing.JLabel();
         panelReservaciones = new javax.swing.JPanel();
         barraReservaciones = new javax.swing.JPanel();
         txtModoReservaciones = new javax.swing.JLabel();
@@ -269,6 +279,75 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         sideMenu.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 260, 60));
 
         jPanelPrincipal.add(sideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 680));
+
+        panelHabitaciones.setBackground(new java.awt.Color(240, 240, 240));
+        panelHabitaciones.setForeground(new java.awt.Color(240, 240, 240));
+        panelHabitaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barraHabitaciones.setBackground(new java.awt.Color(0, 65, 130));
+        barraHabitaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtModoHabitaciones.setFont(new java.awt.Font("Roboto", 2, 24)); // NOI18N
+        txtModoHabitaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtModoHabitaciones.setText("MODO REGISTRO");
+        barraHabitaciones.add(txtModoHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, 60));
+
+        txtHabitacionesTitulo.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtHabitacionesTitulo.setForeground(new java.awt.Color(240, 240, 240));
+        txtHabitacionesTitulo.setText("HABITACIONES");
+        barraHabitaciones.add(txtHabitacionesTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
+
+        btnModoRegistrarHabitaciones.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoRegistrarHabitaciones.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoRegistrarHabitaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoRegistrarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add-16.png"))); // NOI18N
+        btnModoRegistrarHabitaciones.setText("Registrar");
+        btnModoRegistrarHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        barraHabitaciones.add(btnModoRegistrarHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 90, 30));
+
+        btnModoModificarHabitaciones.setBackground(new java.awt.Color(72, 58, 125));
+        btnModoModificarHabitaciones.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoModificarHabitaciones.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoModificarHabitaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoModificarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/edit-2-16.png"))); // NOI18N
+        btnModoModificarHabitaciones.setText("Modificar");
+        btnModoModificarHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        barraHabitaciones.add(btnModoModificarHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 90, 30));
+
+        btnModoEliminarHabitaciones.setBackground(new java.awt.Color(72, 58, 125));
+        btnModoEliminarHabitaciones.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoEliminarHabitaciones.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoEliminarHabitaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoEliminarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
+        btnModoEliminarHabitaciones.setText("Eliminar");
+        btnModoEliminarHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        barraHabitaciones.add(btnModoEliminarHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
+
+        btnModoConsultarHabitaciones.setBackground(new java.awt.Color(72, 58, 125));
+        btnModoConsultarHabitaciones.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoConsultarHabitaciones.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoConsultarHabitaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoConsultarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
+        btnModoConsultarHabitaciones.setText("Consultar");
+        btnModoConsultarHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        barraHabitaciones.add(btnModoConsultarHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
+
+        panelHabitaciones.add(barraHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
+
+        messageHabitaciones.setBackground(new java.awt.Color(0, 153, 153));
+        messageHabitaciones.setForeground(new java.awt.Color(33, 235, 103));
+        messageHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        messageHabitaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtMessageHabitaciones.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txtMessageHabitaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtMessageHabitaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtMessageHabitaciones.setText("AQUI SE MOSTRARAN LOS MENSAJES DE LAS ACCIONES");
+        messageHabitaciones.add(txtMessageHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 930, 50));
+
+        panelHabitaciones.add(messageHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
+
+        jPanelPrincipal.add(panelHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
         panelReservaciones.setBackground(new java.awt.Color(240, 240, 240));
         panelReservaciones.setForeground(new java.awt.Color(240, 240, 240));
@@ -566,6 +645,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel barraClientes;
+    private javax.swing.JPanel barraHabitaciones;
     private javax.swing.JPanel barraInicioPane;
     private javax.swing.JPanel barraReservaciones;
     private javax.swing.JPanel barraVentana;
@@ -575,20 +655,26 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel btnHabitaciones;
     private javax.swing.JLabel btnMinimize;
     private javax.swing.JLabel btnModoConsultarClientes;
+    private javax.swing.JLabel btnModoConsultarHabitaciones;
     private javax.swing.JLabel btnModoConsultarReservaciones;
     private javax.swing.JLabel btnModoEliminarClientes;
+    private javax.swing.JLabel btnModoEliminarHabitaciones;
     private javax.swing.JLabel btnModoEliminarReservaciones;
     private javax.swing.JLabel btnModoModificarClientes;
+    private javax.swing.JLabel btnModoModificarHabitaciones;
     private javax.swing.JLabel btnModoModificarReservaciones;
     private javax.swing.JLabel btnModoRegistrarClientes;
+    private javax.swing.JLabel btnModoRegistrarHabitaciones;
     private javax.swing.JLabel btnModoRegistrarReservaciones;
     private javax.swing.JPanel btnReportes;
     private javax.swing.JPanel btnReservaciones;
     private javax.swing.JPanel jPanelPrincipal;
     private javax.swing.JPanel messageClientes;
+    private javax.swing.JPanel messageHabitaciones;
     private javax.swing.JPanel messagePaneInicio;
     private javax.swing.JPanel messageReservaciones;
     private javax.swing.JPanel panelClientes;
+    private javax.swing.JPanel panelHabitaciones;
     private javax.swing.JPanel panelInicio;
     private javax.swing.JPanel panelReservaciones;
     private javax.swing.JPanel sideMenu;
@@ -596,13 +682,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel txtClientesTitulo;
     private javax.swing.JLabel txtEmpleados;
     private javax.swing.JLabel txtHabitaciones;
+    private javax.swing.JLabel txtHabitacionesTitulo;
     private javax.swing.JLabel txtInicioTitulo;
     private javax.swing.JLabel txtLogo;
     private javax.swing.JLabel txtLogoMain;
     private javax.swing.JLabel txtMessageClientes;
+    private javax.swing.JLabel txtMessageHabitaciones;
     private javax.swing.JLabel txtMessageInicio;
     private javax.swing.JLabel txtMessageReservaciones;
     private javax.swing.JLabel txtModoClientes;
+    private javax.swing.JLabel txtModoHabitaciones;
     private javax.swing.JLabel txtModoReservaciones;
     private javax.swing.JLabel txtReportes;
     private javax.swing.JLabel txtReservaciones;
