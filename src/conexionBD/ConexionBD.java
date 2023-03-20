@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import modelo.Cliente;
 
 /**
  *
@@ -50,12 +51,57 @@ public class ConexionBD {
             System.out.println("Error al cerrar la conexion");
             //e.printStackTrace();
         }
+    }  
+    
+    // Consultas clientes
+    
+    public static boolean altaCliente(Cliente a) {
+        int res = 0;
+        try {
+            // TRANSACCION ALTAS
+            conexion.setAutoCommit(false);
+
+            String consulta = "INSERT INTO clientes VALUES(?,?,?,?,GETDATE())";
+            pstm = conexion.prepareStatement(consulta);
+
+           
+            pstm.setString(1, a.getNombre());
+            pstm.setString(2, a.getApellido());
+            pstm.setString(3, a.getRfc());
+            pstm.setString(4, a.getTelefono());
+
+            res = pstm.executeUpdate();
+
+            // SE EJECUTA SI NO EXISTE ERROR
+            conexion.commit();
+        } catch (SQLException error) {
+            res = 0;
+
+            // REGRESA AL ESTADO ANTERIOR
+            try {
+                conexion.rollback();
+            } catch (SQLException er) {
+
+            }
+            error.printStackTrace();
+        }
+
+        if (res != 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
     
+    
+     
     public static void main(String[] args) {
         ConexionBD.getConexion();
         
-    }    
+        Cliente cliente1 = new Cliente(1, "rumpel", "lombriz", "HRJEKS20293", "4945123709", "12-12-2023");
+        altaCliente(cliente1);
+        
+    } 
     
     
     
