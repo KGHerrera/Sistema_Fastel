@@ -542,6 +542,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnMinimize.setText("–");
         btnMinimize.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMinimize.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnMinimize.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMinimizeMouseClicked(evt);
+            }
+        });
         barraVentana.add(btnMinimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 0, 40, 40));
 
         btnClose.setBackground(btnColorMain);
@@ -1192,11 +1197,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // Metodo hace vidas facil
     // =====================================================
     private void eventoRegistro(JLabel titulo, String modoFormulario,
-            String modoObj, String modo, JLabel txtBtn, String nombreBtn,
-            JPanel btn, Color color) {
+            JLabel txtBtn, String nombreBtn, JPanel btn, Color color) {
 
         titulo.setText(modoFormulario);
-        modoObj = modo;
         txtBtn.setText(nombreBtn);
         btn.setBackground(color);
     }
@@ -1233,38 +1236,40 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     private void btnModoRegistrarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO REGISTRO",
-                modoCliente, "alta", txtAgregar, "AGREGAR",
+                txtAgregar, "AGREGAR",
                 btnAgregar, colorBtnAgregar);
         habilitarCajasClientes();
         cajaIdCliente.setEnabled(false);
         cajaFechaRegistroCliente.setEnabled(false);
         vaciarCajasClientes();
+        modoCliente = "alta";
 
     }//GEN-LAST:event_btnModoRegistrarClientesMouseClicked
 
     private void btnModoModificarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO EDICION",
-                modoCliente, "cambio", txtAgregar, "MODIFICAR",
+                txtAgregar, "MODIFICAR",
                 btnAgregar, colorCambio);
         habilitarCajasClientes();
         vaciarCajasClientes();
+        modoCliente = "cambio";
     }//GEN-LAST:event_btnModoModificarClientesMouseClicked
 
     private void btnModoEliminarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO ELIMINACION",
-                modoCliente, "baja", txtAgregar, "ELIMINAR",
-                btnAgregar, colorBaja);
+                txtAgregar, "ELIMINAR", btnAgregar, colorBaja);
         desabilitarCajasClientes();
         cajaIdCliente.setEnabled(true);
         vaciarCajasClientes();
+        modoCliente = "baja";
     }//GEN-LAST:event_btnModoEliminarClientesMouseClicked
 
     private void btnModoConsultarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO BUSQUEDA",
-                modoCliente, "consulta", txtAgregar, "BUSCAR",
-                btnAgregar, colorBtnAgregar);
+                txtAgregar, "BUSCAR", btnAgregar, colorBtnAgregar);
         habilitarCajasClientes();
         vaciarCajasClientes();
+        modoCliente = "consulta";
     }//GEN-LAST:event_btnModoConsultarClientesMouseClicked
 
     // ================================================
@@ -1349,6 +1354,33 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
 
         } else if (modoCliente.equals("baja")) {
+            if (isIdCliente) {
+                cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
+                clienteDAO.setOpcion(2);
+                clienteDAO.setCliente(cliente);
+
+                Thread h1 = new Thread(clienteDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (clienteDAO.isRes()) {
+                    personalizarMensaje(txtMessageClientes, "EXITO AL ELIMINAR EL CLIENTE", messageClientes, colorAlta);
+                    vaciarCajasClientes();
+                } else {
+                    personalizarMensaje(txtMessageClientes, "ERROR AL ELIMINAR EL CLIENTE", messageClientes, colorError);
+                    vaciarCajasClientes();
+                }
+
+                actualizarTablaClientes();
+
+            } else {
+                personalizarMensaje(txtMessageClientes, "AGREGA EL ID DEL CLIENTE ._.", messageClientes, colorError);
+            }
 
         } else if (modoCliente.equals("cambio")) {
 
@@ -1356,6 +1388,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
+
+    private void btnMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseClicked
+        this.setExtendedState(ICONIFIED);
+        this.setExtendedState(1);
+    }//GEN-LAST:event_btnMinimizeMouseClicked
 
     /**
      * @param args the command line arguments

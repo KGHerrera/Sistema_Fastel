@@ -40,12 +40,19 @@ public class ClienteDAO implements Runnable {
         res = ConexionBD.altaCliente(cliente);
         return res;
     }
+    
+    public boolean bajaCliente(){
+        res = ConexionBD.bajaCliente(cliente);
+        return res;
+    }
 
     @Override
     public void run() {
         if (opcion == 1){
             altaCliente();
-        }   
+        } if(opcion == 2){
+            bajaCliente();
+        }
     }
     
 }
