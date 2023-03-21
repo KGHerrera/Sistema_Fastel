@@ -4,12 +4,21 @@
  */
 package vista;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import conexionBD.ConexionBD;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.ColorUIResource;
 
 /**
  *
@@ -26,7 +35,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     Color colorBaja;
     Color colorError;
     Color colorBtnAgregar;
-    
+
     String modoCliente = "alta";
     String modoReservacion = "alta";
     String modoHabitacion = "alta";
@@ -36,6 +45,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
+        ConexionBD.getConexion();
 
         // Seleccionar tema aleatorio
         Random random = new Random();
@@ -61,7 +71,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         colorBaja = new Color(219, 0, 84);
         colorCambio = new Color(219, 168, 0);
         colorError = new Color(214, 2, 31);
-        colorBtnAgregar = new Color(72,58,125);
+        colorBtnAgregar = new Color(72, 58, 125);
 
         // inicializacion de componentes        
         initComponents();
@@ -76,6 +86,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // desabilitar cajas no editables
         cajaIdCliente.setEditable(false);
         cajaFechaRegistro.setEditable(false);
+
+        actualizarTablaClientes();
     }
 
     /**
@@ -135,6 +147,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         txtVaciar = new javax.swing.JLabel();
         btnAgregar = new javax.swing.JPanel();
         txtAgregar = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         panelEmpleados = new javax.swing.JPanel();
         barraEmpleados = new javax.swing.JPanel();
@@ -496,6 +509,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
 
         txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(50, 50, 50));
         txtNombre.setText("nombre");
         panelClientes.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
 
@@ -505,6 +519,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelClientes.add(txtIntroduceDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         txtApellido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtApellido.setForeground(new java.awt.Color(50, 50, 50));
         txtApellido.setText("apellido");
         panelClientes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 140, 30));
 
@@ -514,6 +529,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
 
         txtRfc.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtRfc.setForeground(new java.awt.Color(50, 50, 50));
         txtRfc.setText("rfc");
         panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 140, 30));
 
@@ -538,10 +554,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
 
         txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtTelefono.setForeground(new java.awt.Color(50, 50, 50));
         txtTelefono.setText("telefono");
         panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 140, 30));
 
         txtFechaRegistro.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtFechaRegistro.setForeground(new java.awt.Color(50, 50, 50));
         txtFechaRegistro.setText("fecha registro");
         panelClientes.add(txtFechaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 140, 30));
 
@@ -586,7 +604,6 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         panelClientes.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 310, 140, 30));
 
-        tablaClientes.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -598,15 +615,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tablaClientes.setGridColor(new java.awt.Color(200, 200, 200));
-        tablaClientes.setRowHeight(25);
-        tablaClientes.setSelectionBackground(new java.awt.Color(35, 29, 56));
-        tablaClientes.setSelectionForeground(new java.awt.Color(240, 240, 240));
+        tablaClientes.setOpaque(false);
+        tablaClientes.setRequestFocusEnabled(false);
+        tablaClientes.setSelectionBackground(btnColorMain);
+        tablaClientes.setSelectionForeground(new java.awt.Color(220, 220, 220));
         tablaClientes.setShowGrid(false);
-        tablaClientes.setShowHorizontalLines(true);
         tablaClientes.getTableHeader().setResizingAllowed(false);
         tablaClientes.getTableHeader().setReorderingAllowed(false);
-        panelClientes.add(tablaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 430, 930, 170));
+        jScrollPane2.setViewportView(tablaClientes);
+
+        panelClientes.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 930, 190));
 
         jPanelPrincipal.add(panelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
@@ -984,6 +1002,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    // ======================================================
+    // metodos para actualizar tablas
+    // ======================================================
+    private void actualizarTablaClientes() {
+        ConexionBD.actualizarTabla(tablaClientes, "clientes", "id_cliente");
+    }
+
+    // ======================================================
+    // Botones de la ventana
+    // ======================================================
     private void btnMinimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMinimizeMouseClicked
         this.setExtendedState(ICONIFIED);
         this.setExtendedState(1);
@@ -996,13 +1024,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // ======================================================
     // Personalizacion de mensajes :D
     // ======================================================
-    
-    private void mensajePersonalizado(JPanel panel, Color color, String mensaje, JLabel label){
-       panel.setBackground(color);
-       label.setText(mensaje);
-       panel.setVisible(true);
+    private void mensajePersonalizado(JPanel panel, Color color, String mensaje, JLabel label) {
+        panel.setBackground(color);
+        label.setText(mensaje);
+        panel.setVisible(true);
     }
-    
+
     private void ocultarPaneles(JPanel panelVisible) {
         panelInicio.setVisible(false);
         panelHabitaciones.setVisible(false);
@@ -1104,7 +1131,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     // ===================================================================
     // Ocultar mensajes de ayuda
     // ===================================================================
-    
+
     private void messageClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_messageClientesMouseClicked
         messageClientes.setVisible(false);
     }//GEN-LAST:event_messageClientesMouseClicked
@@ -1121,46 +1148,44 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         messageHabitaciones.setVisible(false);
     }//GEN-LAST:event_messageHabitacionesMouseClicked
 
-    
     // =====================================================
     // Metodo hace vidas facil
     // =====================================================
-    
-    private void eventoRegistro(JLabel titulo,String modoFormulario ,
-            String modoObj, String modo, JLabel txtBtn, String nombreBtn, 
-            JPanel btn, Color color){
-        
+    private void eventoRegistro(JLabel titulo, String modoFormulario,
+            String modoObj, String modo, JLabel txtBtn, String nombreBtn,
+            JPanel btn, Color color) {
+
         titulo.setText(modoFormulario);
         modoObj = modo;
         txtBtn.setText(nombreBtn);
         btn.setBackground(color);
     }
-    
+
     // =====================================================
     // Eventos de registro clientes
     // =====================================================
-    
+
     private void btnModoRegistrarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarClientesMouseClicked
-        eventoRegistro(txtModoClientes, "MODO REGISTRO", 
-                modoCliente, "alta", txtAgregar,"AGREGAR", 
+        eventoRegistro(txtModoClientes, "MODO REGISTRO",
+                modoCliente, "alta", txtAgregar, "AGREGAR",
                 btnAgregar, colorBtnAgregar);
     }//GEN-LAST:event_btnModoRegistrarClientesMouseClicked
 
     private void btnModoModificarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarClientesMouseClicked
-        eventoRegistro(txtModoClientes, "MODO EDICION", 
-                modoCliente, "cambio", txtAgregar,"MODIFICAR", 
+        eventoRegistro(txtModoClientes, "MODO EDICION",
+                modoCliente, "cambio", txtAgregar, "MODIFICAR",
                 btnAgregar, colorCambio);
     }//GEN-LAST:event_btnModoModificarClientesMouseClicked
 
     private void btnModoEliminarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarClientesMouseClicked
-        eventoRegistro(txtModoClientes, "MODO ELIMINACION", 
-                modoCliente, "baja", txtAgregar,"ELIMINAR", 
+        eventoRegistro(txtModoClientes, "MODO ELIMINACION",
+                modoCliente, "baja", txtAgregar, "ELIMINAR",
                 btnAgregar, colorBaja);
     }//GEN-LAST:event_btnModoEliminarClientesMouseClicked
 
     private void btnModoConsultarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarClientesMouseClicked
-        eventoRegistro(txtModoClientes, "MODO BUSQUEDA", 
-                modoCliente, "consulta", txtAgregar,"BUSCAR", 
+        eventoRegistro(txtModoClientes, "MODO BUSQUEDA",
+                modoCliente, "consulta", txtAgregar, "BUSCAR",
                 btnAgregar, colorBtnAgregar);
     }//GEN-LAST:event_btnModoConsultarClientesMouseClicked
 
@@ -1194,6 +1219,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+
+                try {
+                    UIManager.setLookAndFeel(new FlatIntelliJLaf());
+                } catch (UnsupportedLookAndFeelException e) {
+                    e.printStackTrace();
+                }
                 new VentanaPrincipal().setVisible(true);
             }
         });
@@ -1244,6 +1275,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField cajaRfcCliente;
     private javax.swing.JTextField cajaTelefonoCliente;
     private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel messageClientes;
     private javax.swing.JPanel messageEmpleados;
     private javax.swing.JPanel messageHabitaciones;

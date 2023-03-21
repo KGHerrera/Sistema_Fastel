@@ -9,7 +9,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JTable;
 import modelo.Cliente;
+import vista.ResultSetTableModel;
 
 /**
  *
@@ -17,14 +19,15 @@ import modelo.Cliente;
  */
 public class ConexionBD {
 
-    private String url = "jdbc:sqlserver://localhost:1433;databaseName=fastel;TrustServerCertificate=True";
+    private static String url = "jdbc:sqlserver://localhost:1433;databaseName=fastel;TrustServerCertificate=True";
+    private static String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     private static Connection conexion = null;
     private static PreparedStatement pstm;
     private static ResultSet rs;
 
     private ConexionBD() {
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Class.forName(controlador);
             conexion = DriverManager.getConnection(url, "kherrera", "123456");
             System.out.println("se conecto con exito XD");
 
@@ -38,7 +41,8 @@ public class ConexionBD {
     public static Connection getConexion() {
         if (conexion == null) {
             new ConexionBD();
-        }
+        } 
+        
         return conexion;
     }
 
@@ -154,6 +158,22 @@ public class ConexionBD {
         }
         return exito;
     }   
+    
+    public static void actualizarTabla(JTable tabla, String nombreTabla, String order) {
+        String consulta;
+        consulta = "SELECT * FROM " + nombreTabla + " ORDER BY " + order + "";
+
+        ResultSetTableModel modeloDatos = null;
+
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        tabla.setModel(modeloDatos);
+    }
     
 
     public static void main(String[] args) {
