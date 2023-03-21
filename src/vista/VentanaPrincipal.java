@@ -6,6 +6,7 @@ package vista;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import conexionBD.ConexionBD;
+import controlador.ClienteDAO;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -17,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import modelo.Cliente;
 
 /**
  *
@@ -39,11 +41,17 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     String modoHabitacion = "alta";
     String modoEmpleado = "alta";
 
+    Cliente cliente;
+    ClienteDAO clienteDAO;
+
     /**
      * Creates new form VentanaPrincipal
      */
     public VentanaPrincipal() {
         ConexionBD.getConexion();
+
+        cliente = new Cliente();
+        clienteDAO = new ClienteDAO();
 
         // Seleccionar tema aleatorio
         Random random = new Random();
@@ -82,8 +90,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         ocultarPaneles(panelInicio);
 
         // desabilitar cajas no editables
-        // cajaIdCliente.setEditable(false);
-        // cajaFechaRegistro.setEditable(false);
+        cajaIdCliente.setEnabled(false);
+        cajaFechaRegistroCliente.setEnabled(false);
+
         actualizarTablaClientes();
         kdance.setVisible(false);
 
@@ -316,11 +325,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelClientes.add(messageClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
 
         cajaNombreCliente.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        cajaNombreCliente.setBorder(javax.swing.BorderFactory.createLineBorder(btnColorMain));
+        cajaNombreCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
         cajaNombreCliente.setMargin(new java.awt.Insets(2, 8, 2, 8));
         panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
 
-        txtNombre.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(50, 50, 50));
         txtNombre.setText("nombre");
         panelClientes.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
@@ -330,42 +339,42 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtIntroduceDatos.setText("Introduce los datos solicitados");
         panelClientes.add(txtIntroduceDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
-        txtApellido.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtApellido.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtApellido.setForeground(new java.awt.Color(50, 50, 50));
         txtApellido.setText("apellido");
         panelClientes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 140, 30));
 
         cajaApellidoCliente.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        cajaApellidoCliente.setBorder(javax.swing.BorderFactory.createLineBorder(btnColorMain));
+        cajaApellidoCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
         cajaApellidoCliente.setMargin(new java.awt.Insets(2, 8, 2, 8));
         panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
 
-        txtRfc.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtRfc.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtRfc.setForeground(new java.awt.Color(50, 50, 50));
         txtRfc.setText("rfc");
         panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 140, 30));
 
         cajaRfcCliente.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        cajaRfcCliente.setBorder(javax.swing.BorderFactory.createLineBorder(btnColorMain));
+        cajaRfcCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
         cajaRfcCliente.setMargin(new java.awt.Insets(2, 8, 2, 8));
         panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 140, 30));
 
         cajaIdCliente.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        cajaIdCliente.setBorder(javax.swing.BorderFactory.createLineBorder(btnColorMain));
+        cajaIdCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
         cajaIdCliente.setMargin(new java.awt.Insets(2, 8, 2, 8));
         panelClientes.add(cajaIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
 
-        txtIdCliente.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtIdCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtIdCliente.setForeground(btnColorMain);
         txtIdCliente.setText("ID del CLIENTE");
         panelClientes.add(txtIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
 
         cajaTelefonoCliente.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        cajaTelefonoCliente.setBorder(javax.swing.BorderFactory.createLineBorder(btnColorMain));
+        cajaTelefonoCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
         cajaTelefonoCliente.setMargin(new java.awt.Insets(2, 8, 2, 8));
         panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
 
-        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtTelefono.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(50, 50, 50));
         txtTelefono.setText("telefono");
         panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 140, 30));
@@ -378,15 +387,20 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelClientes.add(txtFormatoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 140, 30));
 
         cajaFechaRegistroCliente.setFont(new java.awt.Font("Roboto Light", 0, 14)); // NOI18N
-        cajaFechaRegistroCliente.setBorder(javax.swing.BorderFactory.createLineBorder(btnColorMain));
+        cajaFechaRegistroCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
         cajaFechaRegistroCliente.setMargin(new java.awt.Insets(2, 8, 2, 8));
         panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 140, 30));
 
         btnVerTodo.setBackground(new java.awt.Color(153, 0, 153));
         btnVerTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVerTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVerTodoMouseClicked(evt);
+            }
+        });
         btnVerTodo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtVerTodo.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtVerTodo.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtVerTodo.setForeground(new java.awt.Color(240, 240, 240));
         txtVerTodo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtVerTodo.setText("VER TODOS");
@@ -396,9 +410,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         btnVaciar.setBackground(new java.awt.Color(0, 153, 153));
         btnVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVaciar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVaciarMouseClicked(evt);
+            }
+        });
         btnVaciar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtVaciar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtVaciar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtVaciar.setForeground(new java.awt.Color(240, 240, 240));
         txtVaciar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtVaciar.setText("VACIAR");
@@ -408,9 +427,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         btnAgregar.setBackground(new java.awt.Color(72, 58, 125));
         btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
         btnAgregar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtAgregar.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtAgregar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
         txtAgregar.setForeground(new java.awt.Color(240, 240, 240));
         txtAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtAgregar.setText("AGREGAR");
@@ -441,7 +465,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         panelClientes.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 930, 190));
 
-        txtFechaRegistro1.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
+        txtFechaRegistro1.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtFechaRegistro1.setForeground(new java.awt.Color(50, 50, 50));
         txtFechaRegistro1.setText("fecha registro");
         panelClientes.add(txtFechaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 140, 30));
@@ -1177,33 +1201,161 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btn.setBackground(color);
     }
 
+    private void vaciarCajasClientes() {
+        cajaIdCliente.setText("");
+        cajaNombreCliente.setText("");
+        cajaApellidoCliente.setText("");
+        cajaTelefonoCliente.setText("");
+        cajaRfcCliente.setText("");
+        cajaFechaRegistroCliente.setText("");
+    }
+
     // =====================================================
     // Eventos de registro clientes
     // =====================================================
+    public void habilitarCajasClientes() {
+        cajaIdCliente.setEnabled(true);
+        cajaNombreCliente.setEnabled(true);
+        cajaApellidoCliente.setEnabled(true);
+        cajaRfcCliente.setEnabled(true);
+        cajaTelefonoCliente.setEnabled(true);
+        cajaFechaRegistroCliente.setEnabled(true);
+    }
+
+    public void desabilitarCajasClientes() {
+        cajaIdCliente.setEnabled(false);
+        cajaNombreCliente.setEnabled(false);
+        cajaApellidoCliente.setEnabled(false);
+        cajaRfcCliente.setEnabled(false);
+        cajaTelefonoCliente.setEnabled(false);
+        cajaFechaRegistroCliente.setEnabled(false);
+    }
 
     private void btnModoRegistrarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO REGISTRO",
                 modoCliente, "alta", txtAgregar, "AGREGAR",
                 btnAgregar, colorBtnAgregar);
+        habilitarCajasClientes();
+        cajaIdCliente.setEnabled(false);
+        cajaFechaRegistroCliente.setEnabled(false);
+        vaciarCajasClientes();
+
     }//GEN-LAST:event_btnModoRegistrarClientesMouseClicked
 
     private void btnModoModificarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO EDICION",
                 modoCliente, "cambio", txtAgregar, "MODIFICAR",
                 btnAgregar, colorCambio);
+        habilitarCajasClientes();
+        vaciarCajasClientes();
     }//GEN-LAST:event_btnModoModificarClientesMouseClicked
 
     private void btnModoEliminarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO ELIMINACION",
                 modoCliente, "baja", txtAgregar, "ELIMINAR",
                 btnAgregar, colorBaja);
+        desabilitarCajasClientes();
+        cajaIdCliente.setEnabled(true);
+        vaciarCajasClientes();
     }//GEN-LAST:event_btnModoEliminarClientesMouseClicked
 
     private void btnModoConsultarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarClientesMouseClicked
         eventoRegistro(txtModoClientes, "MODO BUSQUEDA",
                 modoCliente, "consulta", txtAgregar, "BUSCAR",
                 btnAgregar, colorBtnAgregar);
+        habilitarCajasClientes();
+        vaciarCajasClientes();
     }//GEN-LAST:event_btnModoConsultarClientesMouseClicked
+
+    // ================================================
+    // Metodos para los botones del formulario clientes
+    // ================================================
+    private void btnVaciarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarMouseClicked
+        vaciarCajasClientes();
+    }//GEN-LAST:event_btnVaciarMouseClicked
+
+    private void btnVerTodoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoMouseClicked
+        actualizarTablaClientes();
+    }//GEN-LAST:event_btnVerTodoMouseClicked
+
+    //Metodo de personalizacion de mensaje
+    public void personalizarMensaje(JLabel txt, String datosFaltantes, JPanel panel, Color color) {
+        txt.setText(datosFaltantes);
+        panel.setBackground(color);
+        panel.setVisible(true);
+    }
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+
+        String datosFaltantes = "TE FALTAN LOS DATOS DE [";
+        boolean isIdCliente = !cajaIdCliente.getText().equals("");
+        boolean isNombre = !cajaNombreCliente.getText().equals("");
+        boolean isApellido = !cajaApellidoCliente.getText().equals("");
+        boolean isTelefono = !cajaTelefonoCliente.getText().equals("");
+        boolean isRfc = !cajaRfcCliente.getText().equals("");
+        boolean isFecha = !cajaFechaRegistroCliente.getText().equals("");
+
+        if (modoCliente.equals("alta")) {
+
+            if (isNombre && isApellido && isTelefono && isRfc) {
+
+                cliente.setNombre(cajaNombreCliente.getText());
+                cliente.setApellido(cajaApellidoCliente.getText());
+                cliente.setTelefono(cajaTelefonoCliente.getText());
+                cliente.setRfc(cajaRfcCliente.getText());
+
+                clienteDAO.setOpcion(1);
+                clienteDAO.setCliente(cliente);
+
+                Thread h1 = new Thread(clienteDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (clienteDAO.isRes()) {
+                    personalizarMensaje(txtMessageClientes, "EXITO AL AGREGAR EL CLIENTE :D", messageClientes, colorAlta);
+                    vaciarCajasClientes();
+                } else {
+                    personalizarMensaje(txtMessageClientes, "ERROR AL AGREGAR EL CLIENTE D:", messageClientes, colorError);
+                    vaciarCajasClientes();
+                }
+
+                actualizarTablaClientes();
+
+            } else {
+                if (!isNombre) {
+                    datosFaltantes += " NOMBRE";
+                }
+
+                if (!isApellido) {
+                    datosFaltantes += " APELLIDO";
+                }
+
+                if (!isTelefono) {
+                    datosFaltantes += " TELEFONO";
+                }
+
+                if (!isRfc) {
+                    datosFaltantes += " RFC";
+                }
+
+                datosFaltantes += " ]";
+
+                personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
+            }
+
+        } else if (modoCliente.equals("baja")) {
+
+        } else if (modoCliente.equals("cambio")) {
+
+        } else if (modoCliente.equals("consulta")) {
+
+        }
+    }//GEN-LAST:event_btnAgregarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1413,10 +1565,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-    
-    private void validarLongitud(JTextField caja, KeyEvent e, int longitud){
-        if(e.getSource() == caja){
-            if(caja.getText().length() >= longitud){
+
+    private void validarLongitud(JTextField caja, KeyEvent e, int longitud) {
+        if (e.getSource() == caja) {
+            if (caja.getText().length() >= longitud) {
                 e.consume();
             }
         }
