@@ -1252,6 +1252,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 btnAgregar, colorCambio);
         habilitarCajasClientes();
         vaciarCajasClientes();
+        cajaFechaRegistroCliente.setEnabled(false);
         modoCliente = "cambio";
     }//GEN-LAST:event_btnModoModificarClientesMouseClicked
 
@@ -1369,7 +1370,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 }
 
                 if (clienteDAO.isRes()) {
-                    personalizarMensaje(txtMessageClientes, "EXITO AL ELIMINAR EL CLIENTE", messageClientes, colorAlta);
+                    personalizarMensaje(txtMessageClientes, "EXITO AL ELIMINAR EL CLIENTE", messageClientes, colorBaja);
                     vaciarCajasClientes();
                 } else {
                     personalizarMensaje(txtMessageClientes, "ERROR AL ELIMINAR EL CLIENTE", messageClientes, colorError);
@@ -1383,6 +1384,62 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
 
         } else if (modoCliente.equals("cambio")) {
+            
+            if (isNombre && isApellido && isTelefono && isRfc && isIdCliente) {
+
+                cliente.setNombre(cajaNombreCliente.getText());
+                cliente.setApellido(cajaApellidoCliente.getText());
+                cliente.setTelefono(cajaTelefonoCliente.getText());
+                cliente.setRfc(cajaRfcCliente.getText());
+                cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
+
+                clienteDAO.setOpcion(3);
+                clienteDAO.setCliente(cliente);
+
+                Thread h1 = new Thread(clienteDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (clienteDAO.isRes()) {
+                    personalizarMensaje(txtMessageClientes, "EXITO AL MODIFICAR EL CLIENTE :D", messageClientes, colorCambio);
+                    vaciarCajasClientes();
+                } else {
+                    personalizarMensaje(txtMessageClientes, "ERROR AL MODIFICAR EL CLIENTE D:", messageClientes, colorError);
+                    vaciarCajasClientes();
+                }
+
+                actualizarTablaClientes();
+
+            } else {
+                if (!isNombre) {
+                    datosFaltantes += " NOMBRE";
+                }
+
+                if (!isApellido) {
+                    datosFaltantes += " APELLIDO";
+                }
+
+                if (!isTelefono) {
+                    datosFaltantes += " TELEFONO";
+                }
+
+                if (!isRfc) {
+                    datosFaltantes += " RFC";
+                }
+                
+                if (!isIdCliente) {
+                    datosFaltantes += " IDCLIENTE";
+                }
+
+                datosFaltantes += " ]";
+
+                personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
+            }
 
         } else if (modoCliente.equals("consulta")) {
 

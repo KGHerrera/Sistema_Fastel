@@ -96,14 +96,13 @@ public class ConexionBD {
         boolean exito = false;
         try {
             conexion.setAutoCommit(false); // Iniciar transacción
-            String sql = "UPDATE clientes SET nombre = ?, apellido = ?, rfc = ?, telefono = ?, fecha_registro = ? WHERE id_cliente = ?";
+            String sql = "UPDATE clientes SET nombre = ?, apellido = ?, rfc = ?, telefono = ? WHERE id_cliente = ?";
             PreparedStatement ps = conexion.prepareStatement(sql);
             ps.setString(1, cliente.getNombre());
             ps.setString(2, cliente.getApellido());
             ps.setString(3, cliente.getRfc());
             ps.setString(4, cliente.getTelefono());
-            ps.setString(5, cliente.getFechaRegistro());
-            ps.setInt(6, cliente.getIdCliente());
+            ps.setInt(5, cliente.getIdCliente());
             int filasAfectadas = ps.executeUpdate();
             if (filasAfectadas == 1) {
                 exito = true;
