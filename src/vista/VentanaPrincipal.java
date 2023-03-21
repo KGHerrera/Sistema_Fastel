@@ -1412,18 +1412,29 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 e.consume();
             }
         }
-
+    }
+    
+    private void validarLongitud(JTextField caja, KeyEvent e, int longitud){
+        if(e.getSource() == caja){
+            if(caja.getText().length() >= longitud){
+                e.consume();
+            }
+        }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
+        validarLongitud(cajaNombreCliente, e, 15);
+        validarLongitud(cajaApellidoCliente, e, 15);
+        validarLongitud(cajaRfcCliente, e, 14);
+        validarLongitud(cajaTelefonoCliente, e, 12);
+        validarLongitud(cajaIdCliente, e, 10);
         validarSoloLetras(cajaNombreCliente, e);
         validarSoloLetras(cajaApellidoCliente, e);
         validarSoloNumeros(cajaTelefonoCliente, e);
         validarSoloNumeros(cajaIdCliente, e);
         validarFecha(cajaFechaRegistroCliente, e);
         validarSoloLetrasNumeros(cajaRfcCliente, e);
-
     }
 
     @Override
