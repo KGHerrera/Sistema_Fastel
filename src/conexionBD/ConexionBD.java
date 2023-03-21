@@ -124,13 +124,43 @@ public class ConexionBD {
         return exito;
     }
     
+    public static boolean bajaCliente(Cliente cliente) {
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "DELETE FROM clientes WHERE id_cliente = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, cliente.getIdCliente());
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
+            }
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exito;
+    }   
     
 
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
         Cliente cliente1 = new Cliente(4, "megamun", "tarzo", "HIIWQO", "595182931", "2023-03-20");
-        if(cambiarCliente(cliente1) == true){
+        if(bajaCliente(cliente1) == true){
             System.out.println("se agrego correctamente");
         }
 
