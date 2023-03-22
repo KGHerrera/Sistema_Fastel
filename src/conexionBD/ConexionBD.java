@@ -42,8 +42,8 @@ public class ConexionBD {
     public static Connection getConexion() {
         if (conexion == null) {
             new ConexionBD();
-        } 
-        
+        }
+
         return conexion;
     }
 
@@ -68,7 +68,7 @@ public class ConexionBD {
             ps.setString(2, cliente.getApellido());
             ps.setString(3, cliente.getRfc());
             ps.setString(4, cliente.getTelefono());
-            
+
             int filasAfectadas = ps.executeUpdate();
             if (filasAfectadas == 1) {
                 exito = true;
@@ -92,7 +92,7 @@ public class ConexionBD {
         }
         return exito;
     }
-    
+
     public static boolean cambiarCliente(Cliente cliente) {
         boolean exito = false;
         try {
@@ -127,7 +127,7 @@ public class ConexionBD {
         }
         return exito;
     }
-    
+
     public static boolean bajaCliente(Cliente cliente) {
         boolean exito = false;
         try {
@@ -157,19 +157,19 @@ public class ConexionBD {
             }
         }
         return exito;
-    }   
-    
+    }
+
     public static ResultSetTableModel consultaCliente(Cliente a) {
 
         ResultSetTableModel modeloDatos = null;
         String consulta = "SELECT * FROM clientes "
-                + "WHERE id_cliente LIKE " + a.getIdCliente() 
+                + "WHERE id_cliente LIKE " + a.getIdCliente()
                 + " or nombre LIKE '" + a.getNombre()
                 + "' or apellido LIKE '" + a.getApellido()
                 + "' or telefono LIKE '" + a.getTelefono()
                 + "' or rfc LIKE '" + a.getRfc()
                 + "' or fecha_registro LIKE '" + a.getFechaRegistro() + "'";
-        
+
         try {
             modeloDatos = new ResultSetTableModel(controlador, url,
                     consulta);
@@ -181,7 +181,7 @@ public class ConexionBD {
 
         return modeloDatos;
     }
-    
+
     public static void actualizarTabla(JTable tabla, String nombreTabla, String order) {
         String consulta;
         consulta = "SELECT * FROM " + nombreTabla + " ORDER BY " + order + "";
@@ -197,48 +197,47 @@ public class ConexionBD {
         }
         tabla.setModel(modeloDatos);
     }
-    
+
     // =============================================
     // consultas para la tabla habitaciones
     // =============================================
-    
     public static boolean altaHabitacion(Habitacion habitacion) {
         boolean exito = false;
         try {
             // Iniciar transacción
             conexion.setAutoCommit(false);
-            
+
             // Preparar la consulta SQL
             String consulta = "INSERT INTO habitaciones (tipo_habitacion, disponible, baja_temporal, precio_noche) VALUES (?, ?, ?, ?)";
             PreparedStatement ps = conexion.prepareStatement(consulta);
-            
+
             // Establecer los parámetros de la consulta
             ps.setString(1, habitacion.getTipoHabitacion());
             ps.setBoolean(2, habitacion.isDisponible());
             ps.setBoolean(3, habitacion.isBajaTemporal());
             ps.setDouble(4, habitacion.getPrecioNoche());
-            
+
             // Ejecutar la consulta
             int filasInsertadas = ps.executeUpdate();
-            
+
             // Confirmar la transacción
             conexion.commit();
-            
+
             // Comprobar si se han insertado filas
             if (filasInsertadas > 0) {
                 exito = true;
             }
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
-            
+
             // Deshacer la transacción en caso de error
             try {
                 conexion.rollback();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
-            
+
         } finally {
             // Restaurar el modo de auto-commit
             try {
@@ -249,13 +248,52 @@ public class ConexionBD {
         }
         return exito;
     }
-    
+
+    public static boolean cambiarHabitacion(Habitacion habitacion) {
+        PreparedStatement ps = null;
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false);
+            ps = conexion.prepareStatement("UPDATE habitaciones SET tipo_habitacion = ?, disponible = ?, baja_temporal = ?, precio_noche = ? WHERE id_habitacion = ?");
+            ps.setString(1, habitacion.getTipoHabitacion());
+            ps.setBoolean(2, habitacion.isDisponible());
+            ps.setBoolean(3, habitacion.isBajaTemporal());
+            ps.setDouble(4, habitacion.getPrecioNoche());
+            ps.setInt(5, habitacion.getIdHabitacion());
+            int resultado = ps.executeUpdate();
+            if (resultado > 0) {
+                conexion.commit();
+                exito = true;
+            } else {
+                conexion.rollback();
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cambiar la habitación: " + e.getMessage());
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                System.out.println("Error al realizar rollback: " + e1.getMessage());
+            }
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conexion != null) {
+                    conexion.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            }
+        }
+        return exito;
+    }
 
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Habitacion habitacion = new Habitacion(1, "sencilla", true, false, 2000.00);
-        if(altaHabitacion(habitacion) == true){
+        Habitacion habitacion = new Habitacion(1, "doble", false, true, 1000.00);
+        if (cambiarHabitacion(habitacion) == true) {
             System.out.println("se agrego la habitacion");
         }
 
