@@ -158,6 +158,29 @@ public class ConexionBD {
         return exito;
     }   
     
+    public static ResultSetTableModel consultaCliente(Cliente a) {
+
+        ResultSetTableModel modeloDatos = null;
+        String consulta = "SELECT * FROM clientes "
+                + "WHERE id_cliente LIKE " + a.getIdCliente() 
+                + " or nombre LIKE '" + a.getNombre()
+                + "' or apellido LIKE '" + a.getApellido()
+                + "' or telefono LIKE '" + a.getTelefono()
+                + "' or rfc LIKE '" + a.getRfc()
+                + "' or fecha_registro LIKE '" + a.getFechaRegistro() + "'";
+        
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url,
+                    consulta);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modeloDatos;
+    }
+    
     public static void actualizarTabla(JTable tabla, String nombreTabla, String order) {
         String consulta;
         consulta = "SELECT * FROM " + nombreTabla + " ORDER BY " + order + "";

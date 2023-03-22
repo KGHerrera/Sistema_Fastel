@@ -25,7 +25,7 @@ import modelo.Cliente;
  * @author KHerrera
  */
 public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener {
-
+    
     Color btnColorHover;
     Color btnColorMain;
     Color btnColorReset;
@@ -35,12 +35,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     Color colorBaja;
     Color colorError;
     Color colorBtnAgregar;
-
+    
     String modoCliente = "alta";
     String modoReservacion = "alta";
     String modoHabitacion = "alta";
     String modoEmpleado = "alta";
-
+    
     Cliente cliente;
     ClienteDAO clienteDAO;
 
@@ -49,14 +49,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
      */
     public VentanaPrincipal() {
         ConexionBD.getConexion();
-
+        
         cliente = new Cliente();
         clienteDAO = new ClienteDAO();
 
         // Seleccionar tema aleatorio
         Random random = new Random();
         int intRandom = random.nextInt(3) + 1;
-
+        
         if (intRandom == 1) {
             btnColorHover = new Color(0, 79, 160);
             btnColorMain = new Color(0, 65, 130);
@@ -92,7 +92,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         // desabilitar cajas no editables
         cajaIdCliente.setEnabled(false);
         cajaFechaRegistroCliente.setEnabled(false);
-
+        
         actualizarTablaClientes();
         kdance.setVisible(false);
 
@@ -103,7 +103,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaTelefonoCliente.addKeyListener(this);
         cajaIdCliente.addKeyListener(this);
         cajaFechaRegistroCliente.addKeyListener(this);
-
+        
     }
 
     /**
@@ -1067,7 +1067,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         label.setText(mensaje);
         panel.setVisible(true);
     }
-
+    
     private void ocultarPaneles(JPanel panelVisible) {
         panelInicio.setVisible(false);
         panelHabitaciones.setVisible(false);
@@ -1075,7 +1075,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelReportes.setVisible(false);
         panelClientes.setVisible(false);
         panelReservaciones.setVisible(false);
-
+        
         panelVisible.setVisible(true);
     }
     //=======================================================
@@ -1161,7 +1161,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
         ocultarPaneles(panelReportes);
     }//GEN-LAST:event_btnReportesMouseClicked
-
+    
     int kdanceCount = 1;
     private void txtLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLogoMouseClicked
         ocultarPaneles(panelInicio);
@@ -1198,12 +1198,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // =====================================================
     private void eventoRegistro(JLabel titulo, String modoFormulario,
             JLabel txtBtn, String nombreBtn, JPanel btn, Color color) {
-
+        
         titulo.setText(modoFormulario);
         txtBtn.setText(nombreBtn);
         btn.setBackground(color);
     }
-
+    
     private void vaciarCajasClientes() {
         cajaIdCliente.setText("");
         cajaNombreCliente.setText("");
@@ -1224,7 +1224,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaTelefonoCliente.setEnabled(true);
         cajaFechaRegistroCliente.setEnabled(true);
     }
-
+    
     public void desabilitarCajasClientes() {
         cajaIdCliente.setEnabled(false);
         cajaNombreCliente.setEnabled(false);
@@ -1292,7 +1292,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-
+        
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
         boolean isIdCliente = !cajaIdCliente.getText().equals("");
         boolean isNombre = !cajaNombreCliente.getText().equals("");
@@ -1300,28 +1300,28 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         boolean isTelefono = !cajaTelefonoCliente.getText().equals("");
         boolean isRfc = !cajaRfcCliente.getText().equals("");
         boolean isFecha = !cajaFechaRegistroCliente.getText().equals("");
-
+        
         if (modoCliente.equals("alta")) {
-
+            
             if (isNombre && isApellido && isTelefono && isRfc) {
-
+                
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
-
+                
                 clienteDAO.setOpcion(1);
                 clienteDAO.setCliente(cliente);
-
+                
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL AGREGAR EL CLIENTE :D", messageClientes, colorAlta);
                     vaciarCajasClientes();
@@ -1329,46 +1329,46 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL AGREGAR EL CLIENTE D:", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-
+                
                 actualizarTablaClientes();
-
+                
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
                 }
-
+                
                 if (!isApellido) {
                     datosFaltantes += " APELLIDO";
                 }
-
+                
                 if (!isTelefono) {
                     datosFaltantes += " TELEFONO";
                 }
-
+                
                 if (!isRfc) {
                     datosFaltantes += " RFC";
                 }
-
+                
                 datosFaltantes += " ]";
-
+                
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
             }
-
+            
         } else if (modoCliente.equals("baja")) {
             if (isIdCliente) {
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
                 clienteDAO.setOpcion(2);
                 clienteDAO.setCliente(cliente);
-
+                
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL ELIMINAR EL CLIENTE", messageClientes, colorBaja);
                     vaciarCajasClientes();
@@ -1376,35 +1376,35 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL ELIMINAR EL CLIENTE", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-
+                
                 actualizarTablaClientes();
-
+                
             } else {
                 personalizarMensaje(txtMessageClientes, "AGREGA EL ID DEL CLIENTE ._.", messageClientes, colorError);
             }
-
+            
         } else if (modoCliente.equals("cambio")) {
             
             if (isNombre && isApellido && isTelefono && isRfc && isIdCliente) {
-
+                
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
-
+                
                 clienteDAO.setOpcion(3);
                 clienteDAO.setCliente(cliente);
-
+                
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL MODIFICAR EL CLIENTE :D", messageClientes, colorCambio);
                     vaciarCajasClientes();
@@ -1412,22 +1412,22 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL MODIFICAR EL CLIENTE D:", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-
+                
                 actualizarTablaClientes();
-
+                
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
                 }
-
+                
                 if (!isApellido) {
                     datosFaltantes += " APELLIDO";
                 }
-
+                
                 if (!isTelefono) {
                     datosFaltantes += " TELEFONO";
                 }
-
+                
                 if (!isRfc) {
                     datosFaltantes += " RFC";
                 }
@@ -1435,14 +1435,33 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 if (!isIdCliente) {
                     datosFaltantes += " IDCLIENTE";
                 }
-
+                
                 datosFaltantes += " ]";
-
+                
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
             }
-
+            
         } else if (modoCliente.equals("consulta")) {
-
+            
+            if (isNombre || isApellido || isTelefono || isRfc || isIdCliente || isFecha) {
+                cliente.setNombre(cajaNombreCliente.getText());
+                cliente.setApellido(cajaApellidoCliente.getText());
+                cliente.setTelefono(cajaTelefonoCliente.getText());
+                cliente.setRfc(cajaRfcCliente.getText());
+                
+                if (isIdCliente) {
+                    cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
+                } else {
+                    cliente.setIdCliente(0);
+                }
+                
+                cliente.setFechaRegistro(cajaFechaRegistroCliente.getText());
+                
+                tablaClientes.setModel(ConexionBD.consultaCliente(cliente));
+                
+            } else {
+                personalizarMensaje(txtMessageClientes, "AGREGA UN DATO DUDE .-.", messageClientes, colorError);
+            }
         }
     }//GEN-LAST:event_btnAgregarMouseClicked
 
@@ -1481,7 +1500,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                
                 try {
                     UIManager.setLookAndFeel(new FlatIntelliJLaf());
                 } catch (UnsupportedLookAndFeelException e) {
@@ -1613,7 +1632,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarSoloNumeros(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (!Character.isDigit(e.getKeyChar())) {
@@ -1621,7 +1640,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarSoloLetrasNumeros(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (!Character.isDigit(e.getKeyChar()) && !Character.isLetter(e.getKeyChar())) {
@@ -1629,28 +1648,28 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarFecha(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
-
+            
             if (caja.getText().length() >= 10) {
                 e.consume();
             }
-
+            
             if (!Character.isDigit(e.getKeyChar()) && !(e.getKeyChar() == '-')) {
                 e.consume();
             }
-
+            
             if ((caja.getText().length() != 4 && caja.getText().length() != 7) && e.getKeyChar() == '-') {
                 e.consume();
             }
-
+            
             if ((caja.getText().length() == 4 || caja.getText().length() == 7) && Character.isDigit(e.getKeyChar())) {
                 e.consume();
             }
         }
     }
-
+    
     private void validarNumerosDecimales(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
@@ -1659,7 +1678,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarLongitud(JTextField caja, KeyEvent e, int longitud) {
         if (e.getSource() == caja) {
             if (caja.getText().length() >= longitud) {
@@ -1667,7 +1686,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     @Override
     public void keyTyped(KeyEvent e) {
         validarLongitud(cajaNombreCliente, e, 15);
@@ -1682,14 +1701,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         validarFecha(cajaFechaRegistroCliente, e);
         validarSoloLetrasNumeros(cajaRfcCliente, e);
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
-
+        
     }
-
+    
     @Override
     public void keyReleased(KeyEvent e) {
-
+        
     }
 }
