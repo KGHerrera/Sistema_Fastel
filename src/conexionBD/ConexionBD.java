@@ -250,47 +250,47 @@ public class ConexionBD {
     }
 
     public static boolean cambiarHabitacion(Habitacion habitacion) {
-    boolean resultado = false;
-    PreparedStatement psActualizar = null;
+        boolean resultado = false;
+        PreparedStatement psActualizar = null;
 
-    try {
-        conexion.setAutoCommit(false);
-
-        String sqlActualizar = "UPDATE habitaciones SET tipo_habitacion = ?, disponible = ?, baja_temporal = ?, precio_noche = ? WHERE id_habitacion = ?";
-        psActualizar = conexion.prepareStatement(sqlActualizar);
-        psActualizar.setString(1, habitacion.getTipoHabitacion());
-        psActualizar.setBoolean(2, habitacion.isDisponible());
-        psActualizar.setBoolean(3, habitacion.isBajaTemporal());
-        psActualizar.setDouble(4, habitacion.getPrecioNoche());
-        psActualizar.setInt(5, habitacion.getIdHabitacion());
-
-        int filasAfectadas = psActualizar.executeUpdate();
-        if (filasAfectadas > 0) {
-            resultado = true;
-            conexion.commit();
-        } else {
-            conexion.rollback();
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
         try {
-            conexion.rollback();
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
-    } finally {
-        try {
-            if (psActualizar != null) {
-                psActualizar.close();
+            conexion.setAutoCommit(false);
+
+            String sqlActualizar = "UPDATE habitaciones SET tipo_habitacion = ?, disponible = ?, baja_temporal = ?, precio_noche = ? WHERE id_habitacion = ?";
+            psActualizar = conexion.prepareStatement(sqlActualizar);
+            psActualizar.setString(1, habitacion.getTipoHabitacion());
+            psActualizar.setBoolean(2, habitacion.isDisponible());
+            psActualizar.setBoolean(3, habitacion.isBajaTemporal());
+            psActualizar.setDouble(4, habitacion.getPrecioNoche());
+            psActualizar.setInt(5, habitacion.getIdHabitacion());
+
+            int filasAfectadas = psActualizar.executeUpdate();
+            if (filasAfectadas > 0) {
+                resultado = true;
+                conexion.commit();
+            } else {
+                conexion.rollback();
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            try {
+                if (psActualizar != null) {
+                    psActualizar.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
-    return resultado;
-}
+        return resultado;
+    }
 
     public static boolean bajaHabitacion(Habitacion habitacion) {
         boolean resultado = false;
@@ -331,11 +331,51 @@ public class ConexionBD {
         return resultado;
     }
 
+    public static boolean bajaTemporalHabitacion(Habitacion habitacion, boolean baja) {
+        boolean resultado = false;
+        PreparedStatement psActualizar = null;
+
+        try {
+            conexion.setAutoCommit(false);
+
+            String sqlActualizar = "UPDATE habitaciones SET baja_temporal = ? WHERE id_habitacion = ?";
+            psActualizar = conexion.prepareStatement(sqlActualizar);
+            psActualizar.setBoolean(1, baja);
+            psActualizar.setInt(2, habitacion.getIdHabitacion());
+
+            int filasAfectadas = psActualizar.executeUpdate();
+            if (filasAfectadas > 0) {
+                resultado = true;
+                conexion.commit();
+            } else {
+                conexion.rollback();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            try {
+                if (psActualizar != null) {
+                    psActualizar.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return resultado;
+    }
+
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Habitacion habitacion = new Habitacion(1, "chica", true, false, 2000.00);
-        if (bajaHabitacion(habitacion) == true) {
+        Habitacion habitacion = new Habitacion(2, "chica", true, false, 2000.00);
+        if (bajaTemporalHabitacion(habitacion, false) == true) {
             System.out.println("se agrego la habitacion");
         }
 
