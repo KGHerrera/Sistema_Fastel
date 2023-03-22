@@ -370,6 +370,28 @@ public class ConexionBD {
 
         return resultado;
     }
+    
+    public static ResultSetTableModel consultaHabitacion(Habitacion habitacion) {
+
+        ResultSetTableModel modeloDatos = null;
+        String consulta = "SELECT * FROM clientes "
+                + "WHERE id_habitacion LIKE " + habitacion.getIdHabitacion()
+                + " or tipo_habitacion LIKE '" + habitacion.getTipoHabitacion()
+                + "' or disponible LIKE '" + habitacion.isDisponible()
+                + "' or baja_temporal LIKE '" + habitacion.isBajaTemporal()
+                + "' or precio_noche LIKE " + habitacion.getPrecioNoche()+ "";
+
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url,
+                    consulta);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modeloDatos;
+    }
 
     public static void main(String[] args) {
         ConexionBD.getConexion();
