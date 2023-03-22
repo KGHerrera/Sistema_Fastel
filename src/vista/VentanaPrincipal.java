@@ -94,6 +94,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaFechaRegistroCliente.setEnabled(false);
 
         actualizarTablaClientes();
+        actualizarTablaHabitaciones();
+        
         kdance.setVisible(false);
 
         // key listeners
@@ -1211,6 +1213,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // ======================================================
     private void actualizarTablaClientes() {
         ConexionBD.actualizarTabla(tablaClientes, "clientes", "id_cliente");
+    }
+    
+    private void actualizarTablaHabitaciones() {
+        ConexionBD.actualizarTabla(tablaHabitaciones, "habitaciones", "id_habitacion");
     }
 
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked

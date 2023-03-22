@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JTable;
 import modelo.Cliente;
+import modelo.Habitacion;
 import vista.ResultSetTableModel;
 
 /**
@@ -197,13 +198,65 @@ public class ConexionBD {
         tabla.setModel(modeloDatos);
     }
     
+    // =============================================
+    // consultas para la tabla habitaciones
+    // =============================================
+    
+    public static boolean altaHabitacion(Habitacion habitacion) {
+        boolean exito = false;
+        try {
+            // Iniciar transacción
+            conexion.setAutoCommit(false);
+            
+            // Preparar la consulta SQL
+            String consulta = "INSERT INTO habitaciones (tipo_habitacion, disponible, baja_temporal, precio_noche) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = conexion.prepareStatement(consulta);
+            
+            // Establecer los parámetros de la consulta
+            ps.setString(1, habitacion.getTipoHabitacion());
+            ps.setBoolean(2, habitacion.isDisponible());
+            ps.setBoolean(3, habitacion.isBajaTemporal());
+            ps.setDouble(4, habitacion.getPrecioNoche());
+            
+            // Ejecutar la consulta
+            int filasInsertadas = ps.executeUpdate();
+            
+            // Confirmar la transacción
+            conexion.commit();
+            
+            // Comprobar si se han insertado filas
+            if (filasInsertadas > 0) {
+                exito = true;
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            
+            // Deshacer la transacción en caso de error
+            try {
+                conexion.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            
+        } finally {
+            // Restaurar el modo de auto-commit
+            try {
+                conexion.setAutoCommit(true);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return exito;
+    }
+    
 
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Cliente cliente1 = new Cliente(4, "megamun", "tarzo", "HIIWQO", "595182931", "2023-03-20");
-        if(bajaCliente(cliente1) == true){
-            System.out.println("se agrego correctamente");
+        Habitacion habitacion = new Habitacion(1, "sencilla", true, false, 2000.00);
+        if(altaHabitacion(habitacion) == true){
+            System.out.println("se agrego la habitacion");
         }
 
     }
