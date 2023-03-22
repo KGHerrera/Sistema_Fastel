@@ -250,50 +250,92 @@ public class ConexionBD {
     }
 
     public static boolean cambiarHabitacion(Habitacion habitacion) {
-        PreparedStatement ps = null;
-        boolean exito = false;
+    boolean resultado = false;
+    PreparedStatement psActualizar = null;
+
+    try {
+        conexion.setAutoCommit(false);
+
+        String sqlActualizar = "UPDATE habitaciones SET tipo_habitacion = ?, disponible = ?, baja_temporal = ?, precio_noche = ? WHERE id_habitacion = ?";
+        psActualizar = conexion.prepareStatement(sqlActualizar);
+        psActualizar.setString(1, habitacion.getTipoHabitacion());
+        psActualizar.setBoolean(2, habitacion.isDisponible());
+        psActualizar.setBoolean(3, habitacion.isBajaTemporal());
+        psActualizar.setDouble(4, habitacion.getPrecioNoche());
+        psActualizar.setInt(5, habitacion.getIdHabitacion());
+
+        int filasAfectadas = psActualizar.executeUpdate();
+        if (filasAfectadas > 0) {
+            resultado = true;
+            conexion.commit();
+        } else {
+            conexion.rollback();
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        try {
+            conexion.rollback();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    } finally {
+        try {
+            if (psActualizar != null) {
+                psActualizar.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    return resultado;
+}
+
+    public static boolean bajaHabitacion(Habitacion habitacion) {
+        boolean resultado = false;
+        PreparedStatement psEliminar = null;
+
         try {
             conexion.setAutoCommit(false);
-            ps = conexion.prepareStatement("UPDATE habitaciones SET tipo_habitacion = ?, disponible = ?, baja_temporal = ?, precio_noche = ? WHERE id_habitacion = ?");
-            ps.setString(1, habitacion.getTipoHabitacion());
-            ps.setBoolean(2, habitacion.isDisponible());
-            ps.setBoolean(3, habitacion.isBajaTemporal());
-            ps.setDouble(4, habitacion.getPrecioNoche());
-            ps.setInt(5, habitacion.getIdHabitacion());
-            int resultado = ps.executeUpdate();
-            if (resultado > 0) {
+
+            String sqlEliminar = "DELETE FROM habitaciones WHERE id_habitacion = ?";
+            psEliminar = conexion.prepareStatement(sqlEliminar);
+            psEliminar.setInt(1, habitacion.getIdHabitacion());
+
+            int filasAfectadas = psEliminar.executeUpdate();
+            if (filasAfectadas > 0) {
+                resultado = true;
                 conexion.commit();
-                exito = true;
             } else {
                 conexion.rollback();
             }
+
         } catch (SQLException e) {
-            System.out.println("Error al cambiar la habitación: " + e.getMessage());
+            e.printStackTrace();
             try {
                 conexion.rollback();
             } catch (SQLException e1) {
-                System.out.println("Error al realizar rollback: " + e1.getMessage());
+                e1.printStackTrace();
             }
         } finally {
             try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (conexion != null) {
-                    conexion.close();
+                if (psEliminar != null) {
+                    psEliminar.close();
                 }
             } catch (SQLException e) {
-                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+                e.printStackTrace();
             }
         }
-        return exito;
+
+        return resultado;
     }
 
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Habitacion habitacion = new Habitacion(1, "doble", false, true, 1000.00);
-        if (cambiarHabitacion(habitacion) == true) {
+        Habitacion habitacion = new Habitacion(1, "chica", true, false, 2000.00);
+        if (bajaHabitacion(habitacion) == true) {
             System.out.println("se agrego la habitacion");
         }
 
