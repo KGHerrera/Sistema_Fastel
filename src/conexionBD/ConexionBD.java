@@ -396,8 +396,8 @@ public class ConexionBD {
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Habitacion habitacion = new Habitacion(2, "chica", true, false, 2000.00);
-        if (bajaTemporalHabitacion(habitacion, false) == true) {
+        Habitacion habitacion = new Habitacion(2, "doble", true, false, 2000.00);
+        if (cambiarHabitacion(habitacion) == true) {
             System.out.println("se agrego la habitacion");
         }
 

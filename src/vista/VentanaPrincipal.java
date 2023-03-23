@@ -1666,7 +1666,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }//GEN-LAST:event_tablaClientesMouseReleased
 
     private void tablaHabitacionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaHabitacionesMouseReleased
-        // TODO add your handling code here:
+        if (modoHabitacion.equals("cambio")) {
+            cajaIdHabitacion.setText(String.valueOf(tablaHabitaciones.getValueAt(tablaHabitaciones.getSelectedRow(), 0)));
+            comboTipoHabitacion.setSelectedItem(String.valueOf(tablaHabitaciones.getValueAt(tablaHabitaciones.getSelectedRow(), 1)));
+            checkDisponibleHabitacion.setSelected(Boolean.parseBoolean(String.valueOf(tablaHabitaciones.getValueAt(tablaHabitaciones.getSelectedRow(), 2))));
+            checkBajaTemporal.setSelected(Boolean.parseBoolean(String.valueOf(tablaHabitaciones.getValueAt(tablaHabitaciones.getSelectedRow(), 3))));
+            cajaPrecioHabitacion.setText(String.valueOf(tablaHabitaciones.getValueAt(tablaHabitaciones.getSelectedRow(), 4)));
+        } else if (modoHabitacion.equals("baja")) {
+            cajaIdHabitacion.setText(String.valueOf(tablaHabitaciones.getValueAt(tablaHabitaciones.getSelectedRow(), 0)));
+        }
     }//GEN-LAST:event_tablaHabitacionesMouseReleased
 
     private void btnAgregarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarHabitacionesMouseClicked
@@ -1674,11 +1682,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }//GEN-LAST:event_btnAgregarHabitacionesMouseClicked
 
     private void btnVaciarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarHabitacionesMouseClicked
-        // TODO add your handling code here:
+        vaciarCajasHabitaciones();
     }//GEN-LAST:event_btnVaciarHabitacionesMouseClicked
 
     private void btnVerTodoHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoHabitacionesMouseClicked
-        // TODO add your handling code here:
+        actualizarTablaClientes();
     }//GEN-LAST:event_btnVerTodoHabitacionesMouseClicked
 
     // ===============================================
