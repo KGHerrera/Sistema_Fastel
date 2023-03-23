@@ -1831,6 +1831,31 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
             }
 
+        } else if (modoHabitacion.equals("consulta")) {
+
+            if (comboTipoHabitacion.getSelectedIndex() == 0) {
+                habitacion.setTipoHabitacion("");
+            } else {
+                habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
+            }
+
+            if (isCajaIDHabitacion) {
+                habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
+            } else{
+                habitacion.setIdHabitacion(0);
+            }
+
+            if (isPrecioHabitacion) {
+                habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
+            } else{
+                habitacion.setPrecioNoche(0);
+            }
+            
+            habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
+            habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
+
+            tablaHabitaciones.setModel(ConexionBD.consultaHabitacion(habitacion));
+
         }
 
     }//GEN-LAST:event_btnAgregarHabitacionesMouseClicked
@@ -1840,7 +1865,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }//GEN-LAST:event_btnVaciarHabitacionesMouseClicked
 
     private void btnVerTodoHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoHabitacionesMouseClicked
-        actualizarTablaClientes();
+        actualizarTablaHabitaciones();
     }//GEN-LAST:event_btnVerTodoHabitacionesMouseClicked
 
     // ===============================================

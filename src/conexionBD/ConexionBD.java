@@ -374,11 +374,9 @@ public class ConexionBD {
     public static ResultSetTableModel consultaHabitacion(Habitacion habitacion) {
 
         ResultSetTableModel modeloDatos = null;
-        String consulta = "SELECT * FROM clientes "
+        String consulta = "SELECT * FROM habitaciones "
                 + "WHERE id_habitacion LIKE " + habitacion.getIdHabitacion()
                 + " or tipo_habitacion LIKE '" + habitacion.getTipoHabitacion()
-                + "' or disponible LIKE '" + habitacion.isDisponible()
-                + "' or baja_temporal LIKE '" + habitacion.isBajaTemporal()
                 + "' or precio_noche LIKE " + habitacion.getPrecioNoche()+ "";
 
         try {
