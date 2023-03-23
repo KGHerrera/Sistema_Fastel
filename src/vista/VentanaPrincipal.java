@@ -5,6 +5,7 @@
 package vista;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import conexionBD.ConexionBD;
 import controlador.ClienteDAO;
 import java.awt.Color;
@@ -105,8 +106,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaTelefonoCliente.addKeyListener(this);
         cajaIdCliente.addKeyListener(this);
         cajaFechaRegistroCliente.addKeyListener(this);
-        cajaPrecioHabitacion.addKeyListener(this);
         cajaIdHabitacion.addKeyListener(this);
+        cajaPrecioHabitacion.addKeyListener(this);
 
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
@@ -139,7 +140,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtMessageHabitaciones = new javax.swing.JLabel();
         jScrollPaneTablaHabitaciones = new javax.swing.JScrollPane();
         tablaHabitaciones = new javax.swing.JTable();
-        cajaIdHabitacion = new javax.swing.JTextField();
         txtIdHabitacion = new javax.swing.JLabel();
         btnAgregarHabitaciones = new javax.swing.JPanel();
         txtAgregarHabitaciones = new javax.swing.JLabel();
@@ -147,7 +147,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtVaciar1 = new javax.swing.JLabel();
         btnVerTodoHabitaciones = new javax.swing.JPanel();
         txtVerTodo1 = new javax.swing.JLabel();
-        cajaPrecioHabitacion = new javax.swing.JTextField();
         txtPrecioNoche = new javax.swing.JLabel();
         txtBajaTemporal = new javax.swing.JLabel();
         txtDisponible = new javax.swing.JLabel();
@@ -156,6 +155,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         checkBajaTemporal = new javax.swing.JCheckBox();
         checkDisponibleHabitacion = new javax.swing.JCheckBox();
         comboTipoHabitacion = new javax.swing.JComboBox<>();
+        cajaIdHabitacion = new javax.swing.JTextField();
+        cajaPrecioHabitacion = new javax.swing.JTextField();
         panelClientes = new javax.swing.JPanel();
         barraClientes = new javax.swing.JPanel();
         txtModoClientes = new javax.swing.JLabel();
@@ -166,19 +167,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoConsultarClientes = new javax.swing.JLabel();
         messageClientes = new javax.swing.JPanel();
         txtMessageClientes = new javax.swing.JLabel();
-        cajaNombreCliente = new javax.swing.JTextField();
         txtNombre = new javax.swing.JLabel();
         txtIntroduceDatos = new javax.swing.JLabel();
         txtApellido = new javax.swing.JLabel();
-        cajaApellidoCliente = new javax.swing.JTextField();
         txtRfc = new javax.swing.JLabel();
-        cajaRfcCliente = new javax.swing.JTextField();
-        cajaIdCliente = new javax.swing.JTextField();
         txtIdCliente = new javax.swing.JLabel();
-        cajaTelefonoCliente = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JLabel();
         txtFormatoFecha = new javax.swing.JLabel();
-        cajaFechaRegistroCliente = new javax.swing.JTextField();
         btnVerTodo = new javax.swing.JPanel();
         txtVerTodo = new javax.swing.JLabel();
         btnVaciar = new javax.swing.JPanel();
@@ -188,6 +183,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         jScrollTablaClientes = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         txtFechaRegistro1 = new javax.swing.JLabel();
+        cajaFechaRegistroCliente = new javax.swing.JTextField();
+        cajaNombreCliente = new javax.swing.JTextField();
+        cajaApellidoCliente = new javax.swing.JTextField();
+        cajaIdCliente = new javax.swing.JTextField();
+        cajaRfcCliente = new javax.swing.JTextField();
+        cajaTelefonoCliente = new javax.swing.JTextField();
         panelEmpleados = new javax.swing.JPanel();
         barraEmpleados = new javax.swing.JPanel();
         txtModoEmpleados = new javax.swing.JLabel();
@@ -313,11 +314,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoEliminarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
         btnModoEliminarHabitaciones.setText("Eliminar");
         btnModoEliminarHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModoEliminarHabitaciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModoEliminarHabitacionesMouseClicked(evt);
-            }
-        });
         barraHabitaciones.add(btnModoEliminarHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
 
         btnModoConsultarHabitaciones.setBackground(new java.awt.Color(72, 58, 125));
@@ -327,11 +323,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoConsultarHabitaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
         btnModoConsultarHabitaciones.setText("Consultar");
         btnModoConsultarHabitaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModoConsultarHabitaciones.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModoConsultarHabitacionesMouseClicked(evt);
-            }
-        });
         barraHabitaciones.add(btnModoConsultarHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
 
         panelHabitaciones.add(barraHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
@@ -381,11 +372,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         jScrollPaneTablaHabitaciones.setViewportView(tablaHabitaciones);
 
         panelHabitaciones.add(jScrollPaneTablaHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 930, 190));
-
-        cajaIdHabitacion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaIdHabitacion.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaIdHabitacion.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelHabitaciones.add(cajaIdHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
 
         txtIdHabitacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtIdHabitacion.setForeground(btnColorMain);
@@ -443,11 +429,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         panelHabitaciones.add(btnVerTodoHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 140, 30));
 
-        cajaPrecioHabitacion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaPrecioHabitacion.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaPrecioHabitacion.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelHabitaciones.add(cajaPrecioHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 140, 30));
-
         txtPrecioNoche.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtPrecioNoche.setForeground(new java.awt.Color(50, 50, 50));
         txtPrecioNoche.setText("precio por noche");
@@ -477,6 +458,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         comboTipoHabitacion.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         panelHabitaciones.add(comboTipoHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
+        panelHabitaciones.add(cajaIdHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
+        panelHabitaciones.add(cajaPrecioHabitacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 140, 30));
 
         jPanelPrincipal.add(panelHabitaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
@@ -572,11 +555,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         panelClientes.add(messageClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
 
-        cajaNombreCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaNombreCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaNombreCliente.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
-
         txtNombre.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtNombre.setForeground(new java.awt.Color(50, 50, 50));
         txtNombre.setText("nombre");
@@ -592,52 +570,27 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtApellido.setText("apellido");
         panelClientes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 140, 30));
 
-        cajaApellidoCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaApellidoCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaApellidoCliente.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
-
         txtRfc.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtRfc.setForeground(new java.awt.Color(50, 50, 50));
         txtRfc.setText("rfc");
         panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 140, 30));
-
-        cajaRfcCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaRfcCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaRfcCliente.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 140, 30));
-
-        cajaIdCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaIdCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaIdCliente.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelClientes.add(cajaIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
 
         txtIdCliente.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtIdCliente.setForeground(btnColorMain);
         txtIdCliente.setText("ID del CLIENTE");
         panelClientes.add(txtIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
 
-        cajaTelefonoCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaTelefonoCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaTelefonoCliente.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
-
         txtTelefono.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(50, 50, 50));
         txtTelefono.setText("telefono");
         panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 140, 30));
 
-        txtFormatoFecha.setFont(new java.awt.Font("Roboto", 0, 10)); // NOI18N
+        txtFormatoFecha.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
         txtFormatoFecha.setForeground(new java.awt.Color(50, 50, 50));
         txtFormatoFecha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtFormatoFecha.setText("formato aaaa-mm-dd");
         txtFormatoFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         panelClientes.add(txtFormatoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 140, 30));
-
-        cajaFechaRegistroCliente.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
-        cajaFechaRegistroCliente.setBorder(new javax.swing.border.LineBorder(btnColorMain, 1, true));
-        cajaFechaRegistroCliente.setMargin(new java.awt.Insets(2, 2, 2, 2));
-        panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 140, 30));
 
         btnVerTodo.setBackground(new java.awt.Color(153, 0, 153));
         btnVerTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -722,6 +675,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtFechaRegistro1.setForeground(new java.awt.Color(50, 50, 50));
         txtFechaRegistro1.setText("fecha registro");
         panelClientes.add(txtFechaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 140, 30));
+        panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 140, 30));
+        panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
+        panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
+        panelClientes.add(cajaIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
+        panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 140, 30));
+        panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
 
         jPanelPrincipal.add(panelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
@@ -1734,23 +1693,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         vaciarCajasHabitaciones();
         modoHabitacion = "cambio";
     }//GEN-LAST:event_btnModoModificarHabitacionesMouseClicked
-
-    private void btnModoEliminarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarHabitacionesMouseClicked
-        eventoRegistro(txtModoHabitaciones, "MODO ELIMINACION",
-                txtAgregarHabitaciones, "ELIMINAR", btnAgregarHabitaciones, colorBaja);
-        desabilitarCajasHabitaciones();
-        cajaIdHabitacion.setEnabled(true);
-        vaciarCajasHabitaciones();
-        modoHabitacion = "baja";
-    }//GEN-LAST:event_btnModoEliminarHabitacionesMouseClicked
-
-    private void btnModoConsultarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarHabitacionesMouseClicked
-        eventoRegistro(txtModoHabitaciones, "MODO BUSQUEDA",
-                txtAgregarHabitaciones, "BUSCAR", btnAgregarHabitaciones, colorBtnAgregar);
-        habilitarCajasHabitaciones();
-        vaciarCajasHabitaciones();
-        modoCliente = "consulta";
-    }//GEN-LAST:event_btnModoConsultarHabitacionesMouseClicked
 
     /**
      * @param args the command line arguments
