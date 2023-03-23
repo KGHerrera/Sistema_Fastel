@@ -16,6 +16,9 @@ public class Habitacion {
     private boolean bajaTemporal;
     private double precioNoche;
 
+    public Habitacion(){
+        
+    }
     // Constructor
     public Habitacion(int idHabitacion, String tipoHabitacion, boolean disponible, boolean bajaTemporal, double precioNoche) {
         this.idHabitacion = idHabitacion;

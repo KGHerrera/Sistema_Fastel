@@ -8,6 +8,7 @@ import com.formdev.flatlaf.FlatIntelliJLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import conexionBD.ConexionBD;
 import controlador.ClienteDAO;
+import controlador.HabitacionDAO;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -22,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Cliente;
+import modelo.Habitacion;
 
 /**
  *
@@ -47,6 +49,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     Cliente cliente;
     ClienteDAO clienteDAO;
 
+    Habitacion habitacion;
+    HabitacionDAO habitacionDAO;
+
     /**
      * Creates new form VentanaPrincipal
      */
@@ -55,6 +60,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         cliente = new Cliente();
         clienteDAO = new ClienteDAO();
+
+        habitacion = new Habitacion();
+        habitacionDAO = new HabitacionDAO();
 
         // Seleccionar tema aleatorio
         Random rand = new Random();
@@ -83,7 +91,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             btnColorReset = new Color(79, 146, 146);
         }
          */
-        
         // Declaracion de colores
         panelMessageColor = new Color(0, 153, 153);
         colorAlta = new Color(0, 179, 77);
@@ -127,15 +134,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         for (String dato : datos) {
             comboTipoHabitacion.addItem(dato);
         }
-
     }
-    
-    private Color horaDelRandomizer(Color color1, double randomNum){
+
+    private Color horaDelRandomizer(Color color1, double randomNum) {
         float[] hsb = Color.RGBtoHSB(color1.getRed(), color1.getGreen(), color1.getBlue(), null);
         float hue = hsb[0]; // Obtenemos el valor de hue
         float saturation = hsb[1]; // Obtenemos el valor de saturación
         float brightness = hsb[2]; // Obtenemos el valor de brillo
-        return Color.getHSBColor(hue + (float)randomNum, saturation, brightness);
+        return Color.getHSBColor(hue + (float) randomNum, saturation, brightness);
     }
 
     /**
@@ -1695,7 +1701,55 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }//GEN-LAST:event_tablaHabitacionesMouseReleased
 
     private void btnAgregarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarHabitacionesMouseClicked
-        // TODO add your handling code here:
+        boolean isTipoHabitacion = comboTipoHabitacion.getSelectedIndex() != 0;
+        boolean isPrecioHabitacion = !cajaPrecioHabitacion.getText().equals("");
+        String datosFaltantes = "TE FALTAN LOS DATOS DE [";
+
+        if (modoHabitacion.equals("alta")) {
+            if (isTipoHabitacion && isPrecioHabitacion) {
+
+                habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
+                habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
+                habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
+                habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
+                
+                habitacionDAO.setOpcion(1);
+                habitacionDAO.setHabitacion(habitacion);
+
+                Thread h1 = new Thread(habitacionDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (habitacionDAO.isRes()) {
+                    personalizarMensaje(txtMessageHabitaciones, "EXITO AL AGREGAR LA HABITACION :D", messageHabitaciones, colorAlta);
+                    vaciarCajasHabitaciones();
+                } else {
+                    personalizarMensaje(txtMessageHabitaciones, "ERROR AL AGREGAR LA HABITACION D:", messageHabitaciones, colorError);
+                    
+                }
+
+                actualizarTablaHabitaciones();
+                
+            } else {
+                if (!isTipoHabitacion){
+                    datosFaltantes+= " TIPO";
+                }
+                
+                if(!isPrecioHabitacion){
+                    datosFaltantes+= " PRECIO";
+                }
+                
+                datosFaltantes+= " ]";
+                
+                personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
+            }
+        }
+
     }//GEN-LAST:event_btnAgregarHabitacionesMouseClicked
 
     private void btnVaciarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarHabitacionesMouseClicked
@@ -2019,7 +2073,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void validarNumerosDecimales(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
 
-            if (Character.isDigit(e.getKeyChar()) && caja.getText().length() == 5) {
+            if (Character.isDigit(e.getKeyChar()) && caja.getText().length() == 5 && !caja.getText().contains(".")) {
                 e.consume();
             }
 
