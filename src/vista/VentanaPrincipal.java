@@ -1779,6 +1779,58 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             } else {
                 personalizarMensaje(txtMessageHabitaciones, "INTRODUCE EL ID DE LA HABITACION .-.", messageHabitaciones, colorError);
             }
+
+        } else if (modoHabitacion.equals("cambio")) {
+
+            if (isTipoHabitacion && isPrecioHabitacion && isCajaIDHabitacion) {
+
+                habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
+                habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
+                habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
+                habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
+                habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
+
+                habitacionDAO.setOpcion(3);
+                habitacionDAO.setHabitacion(habitacion);
+
+                Thread h1 = new Thread(habitacionDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (habitacionDAO.isRes()) {
+                    personalizarMensaje(txtMessageHabitaciones, "EXITO AL MODIFICAR LA HABITACION :D", messageHabitaciones, colorCambio);
+                    vaciarCajasHabitaciones();
+                } else {
+                    personalizarMensaje(txtMessageHabitaciones, "ERROR AL MODIFICAR LA HABITACION D:", messageHabitaciones, colorError);
+
+                }
+
+                actualizarTablaHabitaciones();
+
+            } else {
+
+                if (!isCajaIDHabitacion) {
+                    datosFaltantes += " IDHABITACION";
+                }
+
+                if (!isTipoHabitacion) {
+                    datosFaltantes += " TIPO";
+                }
+
+                if (!isPrecioHabitacion) {
+                    datosFaltantes += " PRECIO";
+                }
+
+                datosFaltantes += " ]";
+
+                personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
+            }
+
         }
 
     }//GEN-LAST:event_btnAgregarHabitacionesMouseClicked
