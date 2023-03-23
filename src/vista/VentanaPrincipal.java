@@ -1703,6 +1703,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void btnAgregarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarHabitacionesMouseClicked
         boolean isTipoHabitacion = comboTipoHabitacion.getSelectedIndex() != 0;
         boolean isPrecioHabitacion = !cajaPrecioHabitacion.getText().equals("");
+        boolean isCajaIDHabitacion = !cajaIdHabitacion.getText().equals("");
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
 
         if (modoHabitacion.equals("alta")) {
@@ -1712,7 +1713,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
-                
+
                 habitacionDAO.setOpcion(1);
                 habitacionDAO.setHabitacion(habitacion);
 
@@ -1730,23 +1731,53 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL AGREGAR LA HABITACION D:", messageHabitaciones, colorError);
-                    
+
                 }
 
                 actualizarTablaHabitaciones();
-                
+
             } else {
-                if (!isTipoHabitacion){
-                    datosFaltantes+= " TIPO";
+                if (!isTipoHabitacion) {
+                    datosFaltantes += " TIPO";
                 }
-                
-                if(!isPrecioHabitacion){
-                    datosFaltantes+= " PRECIO";
+
+                if (!isPrecioHabitacion) {
+                    datosFaltantes += " PRECIO";
                 }
-                
-                datosFaltantes+= " ]";
-                
+
+                datosFaltantes += " ]";
+
                 personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
+            }
+        } else if (modoHabitacion.equals("baja")) {
+            if (isCajaIDHabitacion) {
+
+                habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
+
+                habitacionDAO.setOpcion(2);
+                habitacionDAO.setHabitacion(habitacion);
+
+                Thread h1 = new Thread(habitacionDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (habitacionDAO.isRes()) {
+                    personalizarMensaje(txtMessageHabitaciones, "EXITO AL ELIMINAR LA HABITACION", messageHabitaciones, colorBaja);
+                    vaciarCajasHabitaciones();
+                } else {
+                    personalizarMensaje(txtMessageHabitaciones, "ERROR AL ELIMINAR LA HABITACION", messageHabitaciones, colorError);
+
+                }
+
+                actualizarTablaHabitaciones();
+
+            } else {
+                personalizarMensaje(txtMessageHabitaciones, "INTRODUCE EL ID DE LA HABITACION .-.", messageHabitaciones, colorError);
             }
         }
 
