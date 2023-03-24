@@ -30,7 +30,7 @@ import modelo.Habitacion;
  * @author KHerrera
  */
 public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener {
-
+    
     Color btnColorHover;
     Color btnColorMain;
     Color btnColorReset;
@@ -40,15 +40,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     Color colorBaja;
     Color colorError;
     Color colorBtnAgregar;
-
+    
     String modoCliente = "alta";
     String modoReservacion = "alta";
     String modoHabitacion = "alta";
     String modoEmpleado = "alta";
-
+    
     Cliente cliente;
     ClienteDAO clienteDAO;
-
+    
     Habitacion habitacion;
     HabitacionDAO habitacionDAO;
 
@@ -57,21 +57,21 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
      */
     public VentanaPrincipal() {
         ConexionBD.getConexion();
-
+        
         cliente = new Cliente();
         clienteDAO = new ClienteDAO();
-
+        
         habitacion = new Habitacion();
         habitacionDAO = new HabitacionDAO();
 
         // Seleccionar tema aleatorio
         Random rand = new Random();
         double randomNum = rand.nextDouble();
-
+        
         Color btnColorHover1 = new Color(0, 79, 160);
         Color btnColorMain1 = new Color(0, 65, 130);
         Color btnColorReset1 = new Color(0, 79, 146);
-
+        
         btnColorMain = horaDelRandomizer(btnColorMain1, randomNum);
         btnColorHover = horaDelRandomizer(btnColorHover1, randomNum);
         btnColorReset = horaDelRandomizer(btnColorReset1, randomNum);
@@ -112,11 +112,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         // desabilitar cajas no editables
         cajaIdCliente.setEnabled(false);
         cajaFechaRegistroCliente.setEnabled(false);
-
+        cajaIdHabitacion.setEnabled(false);
+        cajaFechaReservacion.setEnabled(false);
+        
         actualizarTablaClientes();
         actualizarTablaHabitaciones();
         actualizarTablaReservaciones();
-
+        
         kdance.setVisible(false);
 
         // key listeners
@@ -131,12 +133,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
-
+        
         for (String dato : datos) {
             comboTipoHabitacion.addItem(dato);
         }
     }
-
+    
     private Color horaDelRandomizer(Color color1, double randomNum) {
         float[] hsb = Color.RGBtoHSB(color1.getRed(), color1.getGreen(), color1.getBlue(), null);
         float hue = hsb[0]; // Obtenemos el valor de hue
@@ -167,6 +169,57 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtMessageReservaciones = new javax.swing.JLabel();
         jScrollPaneTablaReservaciones = new javax.swing.JScrollPane();
         tablaReservaciones = new javax.swing.JTable();
+        txtIdHabitacionReservacion = new javax.swing.JLabel();
+        cajaIdHabitacionReservacion = new javax.swing.JTextField();
+        btnAgregarReservaciones = new javax.swing.JPanel();
+        txtAgregarReservaciones = new javax.swing.JLabel();
+        btnVaciarReservaciones = new javax.swing.JPanel();
+        txtVaciarReservaciones = new javax.swing.JLabel();
+        btnVerTodoReservaciones = new javax.swing.JPanel();
+        txtVerTodoReservaciones = new javax.swing.JLabel();
+        cajaFechaVigencia = new javax.swing.JTextField();
+        txtCostoTotalReservacion = new javax.swing.JLabel();
+        cajaCostoTotal = new javax.swing.JTextField();
+        txtFechaVigenciaReservacion = new javax.swing.JLabel();
+        cajaIdClienteReservacion = new javax.swing.JTextField();
+        txtIdClienteReservacion = new javax.swing.JLabel();
+        cajaFechaReservacion = new javax.swing.JTextField();
+        txtFechaReservacion = new javax.swing.JLabel();
+        txtIntroduceDatosReservacion = new javax.swing.JLabel();
+        txtFormatoFecha1 = new javax.swing.JLabel();
+        txtFormatoFecha2 = new javax.swing.JLabel();
+        panelClientes = new javax.swing.JPanel();
+        barraClientes = new javax.swing.JPanel();
+        txtModoClientes = new javax.swing.JLabel();
+        txtClientesTitulo = new javax.swing.JLabel();
+        btnModoRegistrarClientes = new javax.swing.JLabel();
+        btnModoModificarClientes = new javax.swing.JLabel();
+        btnModoEliminarClientes = new javax.swing.JLabel();
+        btnModoConsultarClientes = new javax.swing.JLabel();
+        messageClientes = new javax.swing.JPanel();
+        txtMessageClientes = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JLabel();
+        txtIntroduceDatos = new javax.swing.JLabel();
+        txtApellido = new javax.swing.JLabel();
+        txtRfc = new javax.swing.JLabel();
+        txtIdCliente = new javax.swing.JLabel();
+        txtTelefono = new javax.swing.JLabel();
+        txtFormatoFecha = new javax.swing.JLabel();
+        btnVerTodo = new javax.swing.JPanel();
+        txtVerTodo = new javax.swing.JLabel();
+        btnVaciar = new javax.swing.JPanel();
+        txtVaciar = new javax.swing.JLabel();
+        btnAgregar = new javax.swing.JPanel();
+        txtAgregar = new javax.swing.JLabel();
+        jScrollTablaClientes = new javax.swing.JScrollPane();
+        tablaClientes = new javax.swing.JTable();
+        txtFechaRegistro1 = new javax.swing.JLabel();
+        cajaFechaRegistroCliente = new javax.swing.JTextField();
+        cajaNombreCliente = new javax.swing.JTextField();
+        cajaApellidoCliente = new javax.swing.JTextField();
+        cajaIdCliente = new javax.swing.JTextField();
+        cajaRfcCliente = new javax.swing.JTextField();
+        cajaTelefonoCliente = new javax.swing.JTextField();
         panelHabitaciones = new javax.swing.JPanel();
         barraHabitaciones = new javax.swing.JPanel();
         txtModoHabitaciones = new javax.swing.JLabel();
@@ -210,38 +263,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnYoutube = new javax.swing.JLabel();
         btnInstagram = new javax.swing.JLabel();
         kdance = new javax.swing.JLabel();
-        panelClientes = new javax.swing.JPanel();
-        barraClientes = new javax.swing.JPanel();
-        txtModoClientes = new javax.swing.JLabel();
-        txtClientesTitulo = new javax.swing.JLabel();
-        btnModoRegistrarClientes = new javax.swing.JLabel();
-        btnModoModificarClientes = new javax.swing.JLabel();
-        btnModoEliminarClientes = new javax.swing.JLabel();
-        btnModoConsultarClientes = new javax.swing.JLabel();
-        messageClientes = new javax.swing.JPanel();
-        txtMessageClientes = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JLabel();
-        txtIntroduceDatos = new javax.swing.JLabel();
-        txtApellido = new javax.swing.JLabel();
-        txtRfc = new javax.swing.JLabel();
-        txtIdCliente = new javax.swing.JLabel();
-        txtTelefono = new javax.swing.JLabel();
-        txtFormatoFecha = new javax.swing.JLabel();
-        btnVerTodo = new javax.swing.JPanel();
-        txtVerTodo = new javax.swing.JLabel();
-        btnVaciar = new javax.swing.JPanel();
-        txtVaciar = new javax.swing.JLabel();
-        btnAgregar = new javax.swing.JPanel();
-        txtAgregar = new javax.swing.JLabel();
-        jScrollTablaClientes = new javax.swing.JScrollPane();
-        tablaClientes = new javax.swing.JTable();
-        txtFechaRegistro1 = new javax.swing.JLabel();
-        cajaFechaRegistroCliente = new javax.swing.JTextField();
-        cajaNombreCliente = new javax.swing.JTextField();
-        cajaApellidoCliente = new javax.swing.JTextField();
-        cajaIdCliente = new javax.swing.JTextField();
-        cajaRfcCliente = new javax.swing.JTextField();
-        cajaTelefonoCliente = new javax.swing.JTextField();
         panelEmpleados = new javax.swing.JPanel();
         barraEmpleados = new javax.swing.JPanel();
         txtModoEmpleados = new javax.swing.JLabel();
@@ -336,7 +357,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoEliminarReservaciones.setForeground(new java.awt.Color(230, 230, 230));
         btnModoEliminarReservaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         btnModoEliminarReservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
-        btnModoEliminarReservaciones.setText("Eliminar");
+        btnModoEliminarReservaciones.setText("Cancelar");
         btnModoEliminarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         barraReservaciones.add(btnModoEliminarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
 
@@ -380,6 +401,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tablaReservaciones.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         tablaReservaciones.setOpaque(false);
         tablaReservaciones.setRequestFocusEnabled(false);
         tablaReservaciones.setRowHeight(25);
@@ -397,7 +419,328 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         panelReservaciones.add(jScrollPaneTablaReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 930, 190));
 
+        txtIdHabitacionReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtIdHabitacionReservacion.setForeground(new java.awt.Color(50, 50, 50));
+        txtIdHabitacionReservacion.setText("ID HABITACION");
+        panelReservaciones.add(txtIdHabitacionReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 140, 30));
+        panelReservaciones.add(cajaIdHabitacionReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 140, 30));
+
+        btnAgregarReservaciones.setBackground(new java.awt.Color(72, 58, 125));
+        btnAgregarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregarReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarReservacionesMouseClicked(evt);
+            }
+        });
+        btnAgregarReservaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtAgregarReservaciones.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtAgregarReservaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtAgregarReservaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtAgregarReservaciones.setText("AGREGAR");
+        btnAgregarReservaciones.add(txtAgregarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, 97, 30));
+
+        panelReservaciones.add(btnAgregarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 310, 140, 30));
+
+        btnVaciarReservaciones.setBackground(new java.awt.Color(0, 153, 153));
+        btnVaciarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVaciarReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVaciarReservacionesMouseClicked(evt);
+            }
+        });
+        btnVaciarReservaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtVaciarReservaciones.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtVaciarReservaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtVaciarReservaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtVaciarReservaciones.setText("VACIAR");
+        btnVaciarReservaciones.add(txtVaciarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
+
+        panelReservaciones.add(btnVaciarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 140, 30));
+
+        btnVerTodoReservaciones.setBackground(new java.awt.Color(153, 0, 153));
+        btnVerTodoReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVerTodoReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVerTodoReservacionesMouseClicked(evt);
+            }
+        });
+        btnVerTodoReservaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtVerTodoReservaciones.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtVerTodoReservaciones.setForeground(new java.awt.Color(240, 240, 240));
+        txtVerTodoReservaciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtVerTodoReservaciones.setText("VER TODOS");
+        btnVerTodoReservaciones.add(txtVerTodoReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
+
+        panelReservaciones.add(btnVerTodoReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 140, 30));
+        panelReservaciones.add(cajaFechaVigencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
+
+        txtCostoTotalReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtCostoTotalReservacion.setForeground(new java.awt.Color(50, 50, 50));
+        txtCostoTotalReservacion.setText("costo total");
+        panelReservaciones.add(txtCostoTotalReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 140, 30));
+        panelReservaciones.add(cajaCostoTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
+
+        txtFechaVigenciaReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtFechaVigenciaReservacion.setForeground(new java.awt.Color(50, 50, 50));
+        txtFechaVigenciaReservacion.setText("FECHA de VIGENCIA");
+        panelReservaciones.add(txtFechaVigenciaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
+        panelReservaciones.add(cajaIdClienteReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 140, 30));
+
+        txtIdClienteReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtIdClienteReservacion.setForeground(new java.awt.Color(50, 50, 50));
+        txtIdClienteReservacion.setText("ID CLIENTE");
+        panelReservaciones.add(txtIdClienteReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 140, 30));
+        panelReservaciones.add(cajaFechaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
+
+        txtFechaReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtFechaReservacion.setForeground(btnColorMain);
+        txtFechaReservacion.setText("FECHA RESERVACION");
+        panelReservaciones.add(txtFechaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
+
+        txtIntroduceDatosReservacion.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtIntroduceDatosReservacion.setForeground(new java.awt.Color(90, 90, 90));
+        txtIntroduceDatosReservacion.setText("Introduce los datos solicitados");
+        panelReservaciones.add(txtIntroduceDatosReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+
+        txtFormatoFecha1.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        txtFormatoFecha1.setForeground(new java.awt.Color(50, 50, 50));
+        txtFormatoFecha1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtFormatoFecha1.setText("formato aaaa-mm-dd");
+        txtFormatoFecha1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        panelReservaciones.add(txtFormatoFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 140, 30));
+
+        txtFormatoFecha2.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        txtFormatoFecha2.setForeground(new java.awt.Color(50, 50, 50));
+        txtFormatoFecha2.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtFormatoFecha2.setText("formato aaaa-mm-dd");
+        txtFormatoFecha2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        panelReservaciones.add(txtFormatoFecha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 140, 20));
+
         jPanelPrincipal.add(panelReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
+
+        panelClientes.setBackground(new java.awt.Color(240, 240, 240));
+        panelClientes.setForeground(new java.awt.Color(240, 240, 240));
+        panelClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barraClientes.setBackground(btnColorMain);
+        barraClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtModoClientes.setFont(new java.awt.Font("Roboto", 2, 24)); // NOI18N
+        txtModoClientes.setForeground(new java.awt.Color(240, 240, 240));
+        txtModoClientes.setText("MODO REGISTRO");
+        barraClientes.add(txtModoClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, 60));
+
+        txtClientesTitulo.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtClientesTitulo.setForeground(new java.awt.Color(240, 240, 240));
+        txtClientesTitulo.setText("CLIENTES");
+        barraClientes.add(txtClientesTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
+
+        btnModoRegistrarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoRegistrarClientes.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoRegistrarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoRegistrarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add-16.png"))); // NOI18N
+        btnModoRegistrarClientes.setText("Registrar");
+        btnModoRegistrarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoRegistrarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoRegistrarClientesMouseClicked(evt);
+            }
+        });
+        barraClientes.add(btnModoRegistrarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 90, 30));
+
+        btnModoModificarClientes.setBackground(new java.awt.Color(72, 58, 125));
+        btnModoModificarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoModificarClientes.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoModificarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoModificarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/edit-2-16.png"))); // NOI18N
+        btnModoModificarClientes.setText("Modificar");
+        btnModoModificarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoModificarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoModificarClientesMouseClicked(evt);
+            }
+        });
+        barraClientes.add(btnModoModificarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 90, 30));
+
+        btnModoEliminarClientes.setBackground(new java.awt.Color(72, 58, 125));
+        btnModoEliminarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoEliminarClientes.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoEliminarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoEliminarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
+        btnModoEliminarClientes.setText("Eliminar");
+        btnModoEliminarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoEliminarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoEliminarClientesMouseClicked(evt);
+            }
+        });
+        barraClientes.add(btnModoEliminarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
+
+        btnModoConsultarClientes.setBackground(new java.awt.Color(72, 58, 125));
+        btnModoConsultarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
+        btnModoConsultarClientes.setForeground(new java.awt.Color(230, 230, 230));
+        btnModoConsultarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnModoConsultarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
+        btnModoConsultarClientes.setText("Consultar");
+        btnModoConsultarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoConsultarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoConsultarClientesMouseClicked(evt);
+            }
+        });
+        barraClientes.add(btnModoConsultarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
+
+        panelClientes.add(barraClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
+
+        messageClientes.setBackground(panelMessageColor);
+        messageClientes.setForeground(new java.awt.Color(33, 235, 103));
+        messageClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        messageClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                messageClientesMouseClicked(evt);
+            }
+        });
+        messageClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtMessageClientes.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
+        txtMessageClientes.setForeground(new java.awt.Color(240, 240, 240));
+        txtMessageClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtMessageClientes.setText("AQUI SE MOSTRARAN LOS MENSAJES DE LAS ACCIONES (puedes darme clic para ocultarme)");
+        messageClientes.add(txtMessageClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 930, 50));
+
+        panelClientes.add(messageClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
+
+        txtNombre.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtNombre.setForeground(new java.awt.Color(50, 50, 50));
+        txtNombre.setText("nombre");
+        panelClientes.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
+
+        txtIntroduceDatos.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtIntroduceDatos.setForeground(new java.awt.Color(90, 90, 90));
+        txtIntroduceDatos.setText("Introduce los datos solicitados");
+        panelClientes.add(txtIntroduceDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+
+        txtApellido.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtApellido.setForeground(new java.awt.Color(50, 50, 50));
+        txtApellido.setText("apellido");
+        panelClientes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 140, 30));
+
+        txtRfc.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtRfc.setForeground(new java.awt.Color(50, 50, 50));
+        txtRfc.setText("rfc");
+        panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 140, 30));
+
+        txtIdCliente.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtIdCliente.setForeground(btnColorMain);
+        txtIdCliente.setText("ID del CLIENTE");
+        panelClientes.add(txtIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
+
+        txtTelefono.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtTelefono.setForeground(new java.awt.Color(50, 50, 50));
+        txtTelefono.setText("telefono");
+        panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 140, 30));
+
+        txtFormatoFecha.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
+        txtFormatoFecha.setForeground(new java.awt.Color(50, 50, 50));
+        txtFormatoFecha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtFormatoFecha.setText("formato aaaa-mm-dd");
+        txtFormatoFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        panelClientes.add(txtFormatoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 140, 30));
+
+        btnVerTodo.setBackground(new java.awt.Color(153, 0, 153));
+        btnVerTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVerTodo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVerTodoMouseClicked(evt);
+            }
+        });
+        btnVerTodo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtVerTodo.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtVerTodo.setForeground(new java.awt.Color(240, 240, 240));
+        txtVerTodo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtVerTodo.setText("VER TODOS");
+        btnVerTodo.add(txtVerTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
+
+        panelClientes.add(btnVerTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 140, 30));
+
+        btnVaciar.setBackground(new java.awt.Color(0, 153, 153));
+        btnVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnVaciar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVaciarMouseClicked(evt);
+            }
+        });
+        btnVaciar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtVaciar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtVaciar.setForeground(new java.awt.Color(240, 240, 240));
+        txtVaciar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtVaciar.setText("VACIAR");
+        btnVaciar.add(txtVaciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
+
+        panelClientes.add(btnVaciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 140, 30));
+
+        btnAgregar.setBackground(new java.awt.Color(72, 58, 125));
+        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarMouseClicked(evt);
+            }
+        });
+        btnAgregar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtAgregar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
+        txtAgregar.setForeground(new java.awt.Color(240, 240, 240));
+        txtAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtAgregar.setText("AGREGAR");
+        btnAgregar.add(txtAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, 97, 30));
+
+        panelClientes.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 310, 140, 30));
+
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tablaClientes.setOpaque(false);
+        tablaClientes.setRequestFocusEnabled(false);
+        tablaClientes.setRowHeight(25);
+        tablaClientes.setSelectionBackground(btnColorMain);
+        tablaClientes.setSelectionForeground(new java.awt.Color(220, 220, 220));
+        tablaClientes.setShowGrid(false);
+        tablaClientes.getTableHeader().setResizingAllowed(false);
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
+        tablaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tablaClientesMouseReleased(evt);
+            }
+        });
+        jScrollTablaClientes.setViewportView(tablaClientes);
+
+        panelClientes.add(jScrollTablaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 930, 190));
+
+        txtFechaRegistro1.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtFechaRegistro1.setForeground(new java.awt.Color(50, 50, 50));
+        txtFechaRegistro1.setText("fecha registro");
+        panelClientes.add(txtFechaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 140, 30));
+        panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 140, 30));
+        panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
+        panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
+        panelClientes.add(cajaIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
+        panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 140, 30));
+        panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
+
+        jPanelPrincipal.add(panelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
         panelHabitaciones.setBackground(new java.awt.Color(240, 240, 240));
         panelHabitaciones.setForeground(new java.awt.Color(240, 240, 240));
@@ -681,227 +1024,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelInicio.add(kdance, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 480, -1, -1));
 
         jPanelPrincipal.add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
-
-        panelClientes.setBackground(new java.awt.Color(240, 240, 240));
-        panelClientes.setForeground(new java.awt.Color(240, 240, 240));
-        panelClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        barraClientes.setBackground(btnColorMain);
-        barraClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtModoClientes.setFont(new java.awt.Font("Roboto", 2, 24)); // NOI18N
-        txtModoClientes.setForeground(new java.awt.Color(240, 240, 240));
-        txtModoClientes.setText("MODO REGISTRO");
-        barraClientes.add(txtModoClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, 60));
-
-        txtClientesTitulo.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtClientesTitulo.setForeground(new java.awt.Color(240, 240, 240));
-        txtClientesTitulo.setText("CLIENTES");
-        barraClientes.add(txtClientesTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
-
-        btnModoRegistrarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
-        btnModoRegistrarClientes.setForeground(new java.awt.Color(230, 230, 230));
-        btnModoRegistrarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnModoRegistrarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add-16.png"))); // NOI18N
-        btnModoRegistrarClientes.setText("Registrar");
-        btnModoRegistrarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModoRegistrarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModoRegistrarClientesMouseClicked(evt);
-            }
-        });
-        barraClientes.add(btnModoRegistrarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 90, 30));
-
-        btnModoModificarClientes.setBackground(new java.awt.Color(72, 58, 125));
-        btnModoModificarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
-        btnModoModificarClientes.setForeground(new java.awt.Color(230, 230, 230));
-        btnModoModificarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnModoModificarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/edit-2-16.png"))); // NOI18N
-        btnModoModificarClientes.setText("Modificar");
-        btnModoModificarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModoModificarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModoModificarClientesMouseClicked(evt);
-            }
-        });
-        barraClientes.add(btnModoModificarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 90, 30));
-
-        btnModoEliminarClientes.setBackground(new java.awt.Color(72, 58, 125));
-        btnModoEliminarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
-        btnModoEliminarClientes.setForeground(new java.awt.Color(230, 230, 230));
-        btnModoEliminarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnModoEliminarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
-        btnModoEliminarClientes.setText("Eliminar");
-        btnModoEliminarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModoEliminarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModoEliminarClientesMouseClicked(evt);
-            }
-        });
-        barraClientes.add(btnModoEliminarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
-
-        btnModoConsultarClientes.setBackground(new java.awt.Color(72, 58, 125));
-        btnModoConsultarClientes.setFont(new java.awt.Font("Roboto", 2, 14)); // NOI18N
-        btnModoConsultarClientes.setForeground(new java.awt.Color(230, 230, 230));
-        btnModoConsultarClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnModoConsultarClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
-        btnModoConsultarClientes.setText("Consultar");
-        btnModoConsultarClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModoConsultarClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnModoConsultarClientesMouseClicked(evt);
-            }
-        });
-        barraClientes.add(btnModoConsultarClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
-
-        panelClientes.add(barraClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
-
-        messageClientes.setBackground(panelMessageColor);
-        messageClientes.setForeground(new java.awt.Color(33, 235, 103));
-        messageClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        messageClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                messageClientesMouseClicked(evt);
-            }
-        });
-        messageClientes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtMessageClientes.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        txtMessageClientes.setForeground(new java.awt.Color(240, 240, 240));
-        txtMessageClientes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtMessageClientes.setText("AQUI SE MOSTRARAN LOS MENSAJES DE LAS ACCIONES (puedes darme clic para ocultarme)");
-        messageClientes.add(txtMessageClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 930, 50));
-
-        panelClientes.add(messageClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
-
-        txtNombre.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtNombre.setForeground(new java.awt.Color(50, 50, 50));
-        txtNombre.setText("nombre");
-        panelClientes.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
-
-        txtIntroduceDatos.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtIntroduceDatos.setForeground(new java.awt.Color(90, 90, 90));
-        txtIntroduceDatos.setText("Introduce los datos solicitados");
-        panelClientes.add(txtIntroduceDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
-
-        txtApellido.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtApellido.setForeground(new java.awt.Color(50, 50, 50));
-        txtApellido.setText("apellido");
-        panelClientes.add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 140, 30));
-
-        txtRfc.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtRfc.setForeground(new java.awt.Color(50, 50, 50));
-        txtRfc.setText("rfc");
-        panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 140, 30));
-
-        txtIdCliente.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtIdCliente.setForeground(btnColorMain);
-        txtIdCliente.setText("ID del CLIENTE");
-        panelClientes.add(txtIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
-
-        txtTelefono.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtTelefono.setForeground(new java.awt.Color(50, 50, 50));
-        txtTelefono.setText("telefono");
-        panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 140, 30));
-
-        txtFormatoFecha.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
-        txtFormatoFecha.setForeground(new java.awt.Color(50, 50, 50));
-        txtFormatoFecha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txtFormatoFecha.setText("formato aaaa-mm-dd");
-        txtFormatoFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        panelClientes.add(txtFormatoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 140, 30));
-
-        btnVerTodo.setBackground(new java.awt.Color(153, 0, 153));
-        btnVerTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVerTodo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnVerTodoMouseClicked(evt);
-            }
-        });
-        btnVerTodo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtVerTodo.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        txtVerTodo.setForeground(new java.awt.Color(240, 240, 240));
-        txtVerTodo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtVerTodo.setText("VER TODOS");
-        btnVerTodo.add(txtVerTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
-
-        panelClientes.add(btnVerTodo, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 190, 140, 30));
-
-        btnVaciar.setBackground(new java.awt.Color(0, 153, 153));
-        btnVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVaciar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnVaciarMouseClicked(evt);
-            }
-        });
-        btnVaciar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtVaciar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        txtVaciar.setForeground(new java.awt.Color(240, 240, 240));
-        txtVaciar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtVaciar.setText("VACIAR");
-        btnVaciar.add(txtVaciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 100, 30));
-
-        panelClientes.add(btnVaciar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 140, 30));
-
-        btnAgregar.setBackground(new java.awt.Color(72, 58, 125));
-        btnAgregar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseClicked(evt);
-            }
-        });
-        btnAgregar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtAgregar.setFont(new java.awt.Font("Roboto", 1, 12)); // NOI18N
-        txtAgregar.setForeground(new java.awt.Color(240, 240, 240));
-        txtAgregar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtAgregar.setText("AGREGAR");
-        btnAgregar.add(txtAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 0, 97, 30));
-
-        panelClientes.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 310, 140, 30));
-
-        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tablaClientes.setOpaque(false);
-        tablaClientes.setRequestFocusEnabled(false);
-        tablaClientes.setRowHeight(25);
-        tablaClientes.setSelectionBackground(btnColorMain);
-        tablaClientes.setSelectionForeground(new java.awt.Color(220, 220, 220));
-        tablaClientes.setShowGrid(false);
-        tablaClientes.getTableHeader().setResizingAllowed(false);
-        tablaClientes.getTableHeader().setReorderingAllowed(false);
-        tablaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tablaClientesMouseReleased(evt);
-            }
-        });
-        jScrollTablaClientes.setViewportView(tablaClientes);
-
-        panelClientes.add(jScrollTablaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 930, 190));
-
-        txtFechaRegistro1.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtFechaRegistro1.setForeground(new java.awt.Color(50, 50, 50));
-        txtFechaRegistro1.setText("fecha registro");
-        panelClientes.add(txtFechaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 140, 30));
-        panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 140, 30));
-        panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
-        panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
-        panelClientes.add(cajaIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
-        panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 140, 30));
-        panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
-
-        jPanelPrincipal.add(panelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
         panelEmpleados.setBackground(new java.awt.Color(240, 240, 240));
         panelEmpleados.setForeground(new java.awt.Color(240, 240, 240));
@@ -1287,7 +1409,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void actualizarTablaClientes() {
         ConexionBD.actualizarTabla(tablaClientes, "clientes", "id_cliente");
     }
-
+    
     private void actualizarTablaHabitaciones() {
         ConexionBD.actualizarTabla(tablaHabitaciones, "habitaciones", "id_habitacion");
     }
@@ -1308,7 +1430,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         label.setText(mensaje);
         panel.setVisible(true);
     }
-
+    
     private void ocultarPaneles(JPanel panelVisible) {
         panelInicio.setVisible(false);
         panelHabitaciones.setVisible(false);
@@ -1316,7 +1438,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelReportes.setVisible(false);
         panelClientes.setVisible(false);
         panelReservaciones.setVisible(false);
-
+        
         panelVisible.setVisible(true);
     }
     //=======================================================
@@ -1402,7 +1524,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
         ocultarPaneles(panelReportes);
     }//GEN-LAST:event_btnReportesMouseClicked
-
+    
     int kdanceCount = 1;
     private void txtLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLogoMouseClicked
         ocultarPaneles(panelInicio);
@@ -1439,12 +1561,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // =====================================================
     private void eventoRegistro(JLabel titulo, String modoFormulario,
             JLabel txtBtn, String nombreBtn, JPanel btn, Color color) {
-
+        
         titulo.setText(modoFormulario);
         txtBtn.setText(nombreBtn);
         btn.setBackground(color);
     }
-
+    
     private void vaciarCajasClientes() {
         cajaIdCliente.setText("");
         cajaNombreCliente.setText("");
@@ -1465,7 +1587,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaTelefonoCliente.setEnabled(true);
         cajaFechaRegistroCliente.setEnabled(true);
     }
-
+    
     public void desabilitarCajasClientes() {
         cajaIdCliente.setEnabled(false);
         cajaNombreCliente.setEnabled(false);
@@ -1533,7 +1655,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-
+        
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
         boolean isIdCliente = !cajaIdCliente.getText().equals("");
         boolean isNombre = !cajaNombreCliente.getText().equals("");
@@ -1541,28 +1663,28 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         boolean isTelefono = !cajaTelefonoCliente.getText().equals("");
         boolean isRfc = !cajaRfcCliente.getText().equals("");
         boolean isFecha = !cajaFechaRegistroCliente.getText().equals("");
-
+        
         if (modoCliente.equals("alta")) {
-
+            
             if (isNombre && isApellido && isTelefono && isRfc) {
-
+                
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
-
+                
                 clienteDAO.setOpcion(1);
                 clienteDAO.setCliente(cliente);
-
+                
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL AGREGAR EL CLIENTE :D", messageClientes, colorAlta);
                     vaciarCajasClientes();
@@ -1570,46 +1692,46 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL AGREGAR EL CLIENTE D:", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-
+                
                 actualizarTablaClientes();
-
+                
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
                 }
-
+                
                 if (!isApellido) {
                     datosFaltantes += " APELLIDO";
                 }
-
+                
                 if (!isTelefono) {
                     datosFaltantes += " TELEFONO";
                 }
-
+                
                 if (!isRfc) {
                     datosFaltantes += " RFC";
                 }
-
+                
                 datosFaltantes += " ]";
-
+                
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
             }
-
+            
         } else if (modoCliente.equals("baja")) {
             if (isIdCliente) {
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
                 clienteDAO.setOpcion(2);
                 clienteDAO.setCliente(cliente);
-
+                
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL ELIMINAR EL CLIENTE", messageClientes, colorBaja);
                     vaciarCajasClientes();
@@ -1617,35 +1739,35 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL ELIMINAR EL CLIENTE", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-
+                
                 actualizarTablaClientes();
-
+                
             } else {
                 personalizarMensaje(txtMessageClientes, "AGREGA EL ID DEL CLIENTE ._.", messageClientes, colorError);
             }
-
+            
         } else if (modoCliente.equals("cambio")) {
-
+            
             if (isNombre && isApellido && isTelefono && isRfc && isIdCliente) {
-
+                
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
-
+                
                 clienteDAO.setOpcion(3);
                 clienteDAO.setCliente(cliente);
-
+                
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL MODIFICAR EL CLIENTE :D", messageClientes, colorCambio);
                     vaciarCajasClientes();
@@ -1653,53 +1775,53 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL MODIFICAR EL CLIENTE D:", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-
+                
                 actualizarTablaClientes();
-
+                
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
                 }
-
+                
                 if (!isApellido) {
                     datosFaltantes += " APELLIDO";
                 }
-
+                
                 if (!isTelefono) {
                     datosFaltantes += " TELEFONO";
                 }
-
+                
                 if (!isRfc) {
                     datosFaltantes += " RFC";
                 }
-
+                
                 if (!isIdCliente) {
                     datosFaltantes += " IDCLIENTE";
                 }
-
+                
                 datosFaltantes += " ]";
-
+                
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
             }
-
+            
         } else if (modoCliente.equals("consulta")) {
-
+            
             if (isNombre || isApellido || isTelefono || isRfc || isIdCliente || isFecha) {
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
-
+                
                 if (isIdCliente) {
                     cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
                 } else {
                     cliente.setIdCliente(0);
                 }
-
+                
                 cliente.setFechaRegistro(cajaFechaRegistroCliente.getText());
-
+                
                 tablaClientes.setModel(ConexionBD.consultaCliente(cliente));
-
+                
             } else {
                 personalizarMensaje(txtMessageClientes, "AGREGA UN DATO DUDE .-.", messageClientes, colorError);
             }
@@ -1740,163 +1862,163 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         boolean isPrecioHabitacion = !cajaPrecioHabitacion.getText().equals("");
         boolean isCajaIDHabitacion = !cajaIdHabitacion.getText().equals("");
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
-
+        
         if (modoHabitacion.equals("alta")) {
             if (isTipoHabitacion && isPrecioHabitacion) {
-
+                
                 habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
                 habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
-
+                
                 habitacionDAO.setOpcion(1);
                 habitacionDAO.setHabitacion(habitacion);
-
+                
                 Thread h1 = new Thread(habitacionDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (habitacionDAO.isRes()) {
                     personalizarMensaje(txtMessageHabitaciones, "EXITO AL AGREGAR LA HABITACION :D", messageHabitaciones, colorAlta);
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL AGREGAR LA HABITACION D:", messageHabitaciones, colorError);
-
+                    
                 }
-
+                
                 actualizarTablaHabitaciones();
-
+                
             } else {
                 if (!isTipoHabitacion) {
                     datosFaltantes += " TIPO";
                 }
-
+                
                 if (!isPrecioHabitacion) {
                     datosFaltantes += " PRECIO";
                 }
-
+                
                 datosFaltantes += " ]";
-
+                
                 personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
             }
         } else if (modoHabitacion.equals("baja")) {
             if (isCajaIDHabitacion) {
-
+                
                 habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
-
+                
                 habitacionDAO.setOpcion(2);
                 habitacionDAO.setHabitacion(habitacion);
-
+                
                 Thread h1 = new Thread(habitacionDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (habitacionDAO.isRes()) {
                     personalizarMensaje(txtMessageHabitaciones, "EXITO AL ELIMINAR LA HABITACION", messageHabitaciones, colorBaja);
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL ELIMINAR LA HABITACION", messageHabitaciones, colorError);
-
+                    
                 }
-
+                
                 actualizarTablaHabitaciones();
-
+                
             } else {
                 personalizarMensaje(txtMessageHabitaciones, "INTRODUCE EL ID DE LA HABITACION .-.", messageHabitaciones, colorError);
             }
-
+            
         } else if (modoHabitacion.equals("cambio")) {
-
+            
             if (isTipoHabitacion && isPrecioHabitacion && isCajaIDHabitacion) {
-
+                
                 habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
                 habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
                 habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
-
+                
                 habitacionDAO.setOpcion(3);
                 habitacionDAO.setHabitacion(habitacion);
-
+                
                 Thread h1 = new Thread(habitacionDAO);
                 h1.start();
-
+                
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-
+                
                 if (habitacionDAO.isRes()) {
                     personalizarMensaje(txtMessageHabitaciones, "EXITO AL MODIFICAR LA HABITACION :D", messageHabitaciones, colorCambio);
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL MODIFICAR LA HABITACION D:", messageHabitaciones, colorError);
-
+                    
                 }
-
+                
                 actualizarTablaHabitaciones();
-
+                
             } else {
-
+                
                 if (!isCajaIDHabitacion) {
                     datosFaltantes += " IDHABITACION";
                 }
-
+                
                 if (!isTipoHabitacion) {
                     datosFaltantes += " TIPO";
                 }
-
+                
                 if (!isPrecioHabitacion) {
                     datosFaltantes += " PRECIO";
                 }
-
+                
                 datosFaltantes += " ]";
-
+                
                 personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
             }
-
+            
         } else if (modoHabitacion.equals("consulta")) {
-
+            
             if (isCajaIDHabitacion || isTipoHabitacion || isPrecioHabitacion) {
                 if (comboTipoHabitacion.getSelectedIndex() == 0) {
                     habitacion.setTipoHabitacion("");
                 } else {
                     habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
                 }
-
+                
                 if (isCajaIDHabitacion) {
                     habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
                 } else {
                     habitacion.setIdHabitacion(0);
                 }
-
+                
                 if (isPrecioHabitacion) {
                     habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 } else {
                     habitacion.setPrecioNoche(0);
                 }
-
+                
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
-
+                
                 tablaHabitaciones.setModel(ConexionBD.consultaHabitacion(habitacion));
-
-            } else{
+                
+            } else {
                 personalizarMensaje(txtMessageHabitaciones, "AGREGA UN DATO DID", messageHabitaciones, colorError);
             }
         }
-
+        
 
     }//GEN-LAST:event_btnAgregarHabitacionesMouseClicked
 
@@ -1918,7 +2040,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         checkDisponibleHabitacion.setEnabled(true);
         comboTipoHabitacion.setEnabled(true);
     }
-
+    
     public void desabilitarCajasHabitaciones() {
         cajaIdHabitacion.setEnabled(false);
         cajaPrecioHabitacion.setEnabled(false);
@@ -1926,7 +2048,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         checkDisponibleHabitacion.setEnabled(false);
         comboTipoHabitacion.setEnabled(false);
     }
-
+    
     public void vaciarCajasHabitaciones() {
         cajaIdHabitacion.setText("");
         cajaPrecioHabitacion.setText("");
@@ -2001,6 +2123,18 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaReservacionesMouseReleased
 
+    private void btnAgregarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarReservacionesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarReservacionesMouseClicked
+
+    private void btnVaciarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarReservacionesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVaciarReservacionesMouseClicked
+
+    private void btnVerTodoReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoReservacionesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerTodoReservacionesMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2031,7 +2165,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                
                 try {
                     UIManager.setLookAndFeel(new FlatIntelliJLaf());
                 } catch (UnsupportedLookAndFeelException e) {
@@ -2052,6 +2186,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JPanel barraVentana;
     private javax.swing.JPanel btnAgregar;
     private javax.swing.JPanel btnAgregarHabitaciones;
+    private javax.swing.JPanel btnAgregarReservaciones;
     private javax.swing.JPanel btnClientes;
     private javax.swing.JLabel btnClose;
     private javax.swing.JPanel btnComenzar;
@@ -2086,13 +2221,20 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JLabel btnTwitter;
     private javax.swing.JPanel btnVaciar;
     private javax.swing.JPanel btnVaciarHabitaciones;
+    private javax.swing.JPanel btnVaciarReservaciones;
     private javax.swing.JPanel btnVerTodo;
     private javax.swing.JPanel btnVerTodoHabitaciones;
+    private javax.swing.JPanel btnVerTodoReservaciones;
     private javax.swing.JLabel btnYoutube;
     private javax.swing.JTextField cajaApellidoCliente;
+    private javax.swing.JTextField cajaCostoTotal;
     private javax.swing.JTextField cajaFechaRegistroCliente;
+    private javax.swing.JTextField cajaFechaReservacion;
+    private javax.swing.JTextField cajaFechaVigencia;
     private javax.swing.JTextField cajaIdCliente;
+    private javax.swing.JTextField cajaIdClienteReservacion;
     private javax.swing.JTextField cajaIdHabitacion;
+    private javax.swing.JTextField cajaIdHabitacionReservacion;
     private javax.swing.JTextField cajaNombreCliente;
     private javax.swing.JTextField cajaPrecioHabitacion;
     private javax.swing.JTextField cajaRfcCliente;
@@ -2123,27 +2265,36 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JTable tablaReservaciones;
     private javax.swing.JLabel txtAgregar;
     private javax.swing.JLabel txtAgregarHabitaciones;
+    private javax.swing.JLabel txtAgregarReservaciones;
     private javax.swing.JLabel txtApellido;
     private javax.swing.JLabel txtBajaTemporal;
     private javax.swing.JLabel txtClientes;
     private javax.swing.JLabel txtClientesTitulo;
     private javax.swing.JLabel txtComenzar;
     private javax.swing.JLabel txtComenzarGrafico;
+    private javax.swing.JLabel txtCostoTotalReservacion;
     private javax.swing.JLabel txtDisponible;
     private javax.swing.JLabel txtEmpleados;
     private javax.swing.JLabel txtEmpleadosTitulo;
     private javax.swing.JLabel txtFechaRegistro1;
+    private javax.swing.JLabel txtFechaReservacion;
+    private javax.swing.JLabel txtFechaVigenciaReservacion;
     private javax.swing.JLabel txtFormatoFecha;
+    private javax.swing.JLabel txtFormatoFecha1;
+    private javax.swing.JLabel txtFormatoFecha2;
     private javax.swing.JLabel txtGenerarReporte;
     private javax.swing.JLabel txtGenerarReportes;
     private javax.swing.JLabel txtHabitaciones;
     private javax.swing.JLabel txtHabitacionesTitulo;
     private javax.swing.JLabel txtIconGrafico;
     private javax.swing.JLabel txtIdCliente;
+    private javax.swing.JLabel txtIdClienteReservacion;
     private javax.swing.JLabel txtIdHabitacion;
+    private javax.swing.JLabel txtIdHabitacionReservacion;
     private javax.swing.JLabel txtInicioTitulo;
     private javax.swing.JLabel txtIntroduceDatos;
     private javax.swing.JLabel txtIntroduceDatosHabitacion;
+    private javax.swing.JLabel txtIntroduceDatosReservacion;
     private javax.swing.JLabel txtLogo;
     private javax.swing.JLabel txtLogoMain;
     private javax.swing.JLabel txtMessageClientes;
@@ -2170,8 +2321,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JLabel txtTipoHabitacion;
     private javax.swing.JLabel txtVaciar;
     private javax.swing.JLabel txtVaciar1;
+    private javax.swing.JLabel txtVaciarReservaciones;
     private javax.swing.JLabel txtVerTodo;
     private javax.swing.JLabel txtVerTodo1;
+    private javax.swing.JLabel txtVerTodoReservaciones;
     private javax.swing.JLabel txtWelcomeUser;
     private javax.swing.JLabel txtcClientes2;
     private javax.swing.JLabel txtcClientes3;
@@ -2189,7 +2342,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarSoloNumeros(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (!Character.isDigit(e.getKeyChar())) {
@@ -2197,7 +2350,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarSoloLetrasNumeros(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (!Character.isDigit(e.getKeyChar()) && !Character.isLetter(e.getKeyChar())) {
@@ -2205,46 +2358,46 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     private void validarFecha(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
-
+            
             if (caja.getText().length() >= 10) {
                 e.consume();
             }
-
+            
             if (!Character.isDigit(e.getKeyChar()) && !(e.getKeyChar() == '-')) {
                 e.consume();
             }
-
+            
             if ((caja.getText().length() != 4 && caja.getText().length() != 7) && e.getKeyChar() == '-') {
                 e.consume();
             }
-
+            
             if ((caja.getText().length() == 4 || caja.getText().length() == 7) && Character.isDigit(e.getKeyChar())) {
                 e.consume();
             }
         }
     }
-
+    
     private void validarNumerosDecimales(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
-
+            
             if (Character.isDigit(e.getKeyChar()) && caja.getText().length() == 5 && !caja.getText().contains(".")) {
                 e.consume();
             }
-
+            
             if (caja.getText().length() == 0 && e.getKeyChar() == '.') {
                 e.consume();
             }
-
+            
             if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
                     && (e.getKeyChar() != '.' || caja.getText().contains("."))) {
                 e.consume();
             }
         }
     }
-
+    
     private void validarLongitud(JTextField caja, KeyEvent e, int longitud) {
         if (e.getSource() == caja) {
             if (caja.getText().length() >= longitud) {
@@ -2252,7 +2405,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-
+    
     @Override
     public void keyTyped(KeyEvent e) {
         validarLongitud(cajaNombreCliente, e, 15);
@@ -2262,26 +2415,26 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         validarLongitud(cajaIdCliente, e, 10);
         validarLongitud(cajaIdHabitacion, e, 5);
         validarLongitud(cajaPrecioHabitacion, e, 8);
-
+        
         validarSoloLetras(cajaNombreCliente, e);
         validarSoloLetras(cajaApellidoCliente, e);
         validarSoloNumeros(cajaTelefonoCliente, e);
         validarSoloNumeros(cajaIdCliente, e);
         validarFecha(cajaFechaRegistroCliente, e);
         validarSoloLetrasNumeros(cajaRfcCliente, e);
-
+        
         validarSoloNumeros(cajaIdHabitacion, e);
         validarNumerosDecimales(cajaPrecioHabitacion, e);
-
+        
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
-
+        
     }
-
+    
     @Override
     public void keyReleased(KeyEvent e) {
-
+        
     }
 }
