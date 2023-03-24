@@ -30,7 +30,7 @@ import modelo.Habitacion;
  * @author KHerrera
  */
 public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener {
-    
+
     Color btnColorHover;
     Color btnColorMain;
     Color btnColorReset;
@@ -40,15 +40,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     Color colorBaja;
     Color colorError;
     Color colorBtnAgregar;
-    
+
     String modoCliente = "alta";
     String modoReservacion = "alta";
     String modoHabitacion = "alta";
     String modoEmpleado = "alta";
-    
+
     Cliente cliente;
     ClienteDAO clienteDAO;
-    
+
     Habitacion habitacion;
     HabitacionDAO habitacionDAO;
 
@@ -57,21 +57,21 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
      */
     public VentanaPrincipal() {
         ConexionBD.getConexion();
-        
+
         cliente = new Cliente();
         clienteDAO = new ClienteDAO();
-        
+
         habitacion = new Habitacion();
         habitacionDAO = new HabitacionDAO();
 
         // Seleccionar tema aleatorio
         Random rand = new Random();
         double randomNum = rand.nextDouble();
-        
+
         Color btnColorHover1 = new Color(0, 79, 160);
         Color btnColorMain1 = new Color(0, 65, 130);
         Color btnColorReset1 = new Color(0, 79, 146);
-        
+
         btnColorMain = horaDelRandomizer(btnColorMain1, randomNum);
         btnColorHover = horaDelRandomizer(btnColorHover1, randomNum);
         btnColorReset = horaDelRandomizer(btnColorReset1, randomNum);
@@ -113,12 +113,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdCliente.setEnabled(false);
         cajaFechaRegistroCliente.setEnabled(false);
         cajaIdHabitacion.setEnabled(false);
+        cajaIdReservacion.setEnabled(false);
         cajaFechaReservacion.setEnabled(false);
-        
+
         actualizarTablaClientes();
         actualizarTablaHabitaciones();
         actualizarTablaReservaciones();
-        
+
         kdance.setVisible(false);
 
         // key listeners
@@ -130,15 +131,21 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaFechaRegistroCliente.addKeyListener(this);
         cajaIdHabitacion.addKeyListener(this);
         cajaPrecioHabitacion.addKeyListener(this);
+        cajaIdReservacion.addKeyListener(this);
+        cajaFechaVigencia.addKeyListener(this);
+        cajaCostoTotal.addKeyListener(this);
+        cajaIdHabitacionReservacion.addKeyListener(this);
+        cajaIdClienteReservacion.addKeyListener(this);
+        cajaIdReservacion.addKeyListener(this);
 
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
-        
+
         for (String dato : datos) {
             comboTipoHabitacion.addItem(dato);
         }
     }
-    
+
     private Color horaDelRandomizer(Color color1, double randomNum) {
         float[] hsb = Color.RGBtoHSB(color1.getRed(), color1.getGreen(), color1.getBlue(), null);
         float hue = hsb[0]; // Obtenemos el valor de hue
@@ -182,12 +189,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaCostoTotal = new javax.swing.JTextField();
         txtFechaVigenciaReservacion = new javax.swing.JLabel();
         cajaIdClienteReservacion = new javax.swing.JTextField();
-        txtIdClienteReservacion = new javax.swing.JLabel();
-        cajaFechaReservacion = new javax.swing.JTextField();
         txtFechaReservacion = new javax.swing.JLabel();
+        cajaIdReservacion = new javax.swing.JTextField();
+        txtIdReservacion = new javax.swing.JLabel();
         txtIntroduceDatosReservacion = new javax.swing.JLabel();
         txtFormatoFecha1 = new javax.swing.JLabel();
         txtFormatoFecha2 = new javax.swing.JLabel();
+        cajaFechaReservacion = new javax.swing.JTextField();
+        txtIdClienteReservacion = new javax.swing.JLabel();
         panelClientes = new javax.swing.JPanel();
         barraClientes = new javax.swing.JPanel();
         txtModoClientes = new javax.swing.JLabel();
@@ -341,6 +350,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoRegistrarReservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add-16.png"))); // NOI18N
         btnModoRegistrarReservaciones.setText("Registrar");
         btnModoRegistrarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoRegistrarReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoRegistrarReservacionesMouseClicked(evt);
+            }
+        });
         barraReservaciones.add(btnModoRegistrarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 90, 30));
 
         btnModoModificarReservaciones.setBackground(new java.awt.Color(72, 58, 125));
@@ -350,6 +364,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoModificarReservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/edit-2-16.png"))); // NOI18N
         btnModoModificarReservaciones.setText("Modificar");
         btnModoModificarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoModificarReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoModificarReservacionesMouseClicked(evt);
+            }
+        });
         barraReservaciones.add(btnModoModificarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 90, 30));
 
         btnModoEliminarReservaciones.setBackground(new java.awt.Color(72, 58, 125));
@@ -359,6 +378,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoEliminarReservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
         btnModoEliminarReservaciones.setText("Cancelar");
         btnModoEliminarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoEliminarReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoEliminarReservacionesMouseClicked(evt);
+            }
+        });
         barraReservaciones.add(btnModoEliminarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
 
         btnModoConsultarReservaciones.setBackground(new java.awt.Color(72, 58, 125));
@@ -368,6 +392,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoConsultarReservaciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
         btnModoConsultarReservaciones.setText("Consultar");
         btnModoConsultarReservaciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoConsultarReservaciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoConsultarReservacionesMouseClicked(evt);
+            }
+        });
         barraReservaciones.add(btnModoConsultarReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
 
         panelReservaciones.add(barraReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
@@ -489,16 +518,16 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelReservaciones.add(txtFechaVigenciaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 140, 30));
         panelReservaciones.add(cajaIdClienteReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 140, 30));
 
-        txtIdClienteReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtIdClienteReservacion.setForeground(new java.awt.Color(50, 50, 50));
-        txtIdClienteReservacion.setText("ID CLIENTE");
-        panelReservaciones.add(txtIdClienteReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 140, 30));
-        panelReservaciones.add(cajaFechaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
-
         txtFechaReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtFechaReservacion.setForeground(btnColorMain);
-        txtFechaReservacion.setText("FECHA RESERVACION");
-        panelReservaciones.add(txtFechaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
+        txtFechaReservacion.setForeground(new java.awt.Color(50, 50, 50));
+        txtFechaReservacion.setText("fecha reservacion");
+        panelReservaciones.add(txtFechaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 310, 140, 30));
+        panelReservaciones.add(cajaIdReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
+
+        txtIdReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtIdReservacion.setForeground(btnColorMain);
+        txtIdReservacion.setText("ID RESERVACION");
+        panelReservaciones.add(txtIdReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 140, 30));
 
         txtIntroduceDatosReservacion.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         txtIntroduceDatosReservacion.setForeground(new java.awt.Color(90, 90, 90));
@@ -510,7 +539,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtFormatoFecha1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtFormatoFecha1.setText("formato aaaa-mm-dd");
         txtFormatoFecha1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        panelReservaciones.add(txtFormatoFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 140, 30));
+        panelReservaciones.add(txtFormatoFecha1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 140, 30));
 
         txtFormatoFecha2.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
         txtFormatoFecha2.setForeground(new java.awt.Color(50, 50, 50));
@@ -518,6 +547,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtFormatoFecha2.setText("formato aaaa-mm-dd");
         txtFormatoFecha2.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         panelReservaciones.add(txtFormatoFecha2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 140, 20));
+        panelReservaciones.add(cajaFechaReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, 140, 30));
+
+        txtIdClienteReservacion.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtIdClienteReservacion.setForeground(new java.awt.Color(50, 50, 50));
+        txtIdClienteReservacion.setText("ID CLIENTE");
+        panelReservaciones.add(txtIdClienteReservacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 140, 30));
 
         jPanelPrincipal.add(panelReservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
@@ -631,7 +666,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtRfc.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtRfc.setForeground(new java.awt.Color(50, 50, 50));
         txtRfc.setText("rfc");
-        panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 190, 140, 30));
+        panelClientes.add(txtRfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 140, 30));
 
         txtIdCliente.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtIdCliente.setForeground(btnColorMain);
@@ -641,14 +676,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtTelefono.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtTelefono.setForeground(new java.awt.Color(50, 50, 50));
         txtTelefono.setText("telefono");
-        panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 140, 30));
+        panelClientes.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 140, 30));
 
         txtFormatoFecha.setFont(new java.awt.Font("Roboto", 2, 10)); // NOI18N
         txtFormatoFecha.setForeground(new java.awt.Color(50, 50, 50));
         txtFormatoFecha.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtFormatoFecha.setText("formato aaaa-mm-dd");
         txtFormatoFecha.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        panelClientes.add(txtFormatoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 140, 30));
+        panelClientes.add(txtFormatoFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 350, 140, 30));
 
         btnVerTodo.setBackground(new java.awt.Color(153, 0, 153));
         btnVerTodo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -732,13 +767,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtFechaRegistro1.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtFechaRegistro1.setForeground(new java.awt.Color(50, 50, 50));
         txtFechaRegistro1.setText("fecha registro");
-        panelClientes.add(txtFechaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 140, 30));
-        panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 140, 30));
+        panelClientes.add(txtFechaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 310, 140, 30));
+        panelClientes.add(cajaFechaRegistroCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, 140, 30));
         panelClientes.add(cajaNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 140, 30));
         panelClientes.add(cajaApellidoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 30));
         panelClientes.add(cajaIdCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, 140, 30));
-        panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 140, 30));
-        panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 250, 140, 30));
+        panelClientes.add(cajaRfcCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 140, 30));
+        panelClientes.add(cajaTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 140, 30));
 
         jPanelPrincipal.add(panelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
@@ -1409,11 +1444,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void actualizarTablaClientes() {
         ConexionBD.actualizarTabla(tablaClientes, "clientes", "id_cliente");
     }
-    
+
     private void actualizarTablaHabitaciones() {
         ConexionBD.actualizarTabla(tablaHabitaciones, "habitaciones", "id_habitacion");
     }
-    
+
     private void actualizarTablaReservaciones() {
         ConexionBD.actualizarTabla(tablaReservaciones, "reservaciones", "fecha_reservacion");
     }
@@ -1430,7 +1465,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         label.setText(mensaje);
         panel.setVisible(true);
     }
-    
+
     private void ocultarPaneles(JPanel panelVisible) {
         panelInicio.setVisible(false);
         panelHabitaciones.setVisible(false);
@@ -1438,7 +1473,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelReportes.setVisible(false);
         panelClientes.setVisible(false);
         panelReservaciones.setVisible(false);
-        
+
         panelVisible.setVisible(true);
     }
     //=======================================================
@@ -1524,7 +1559,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
         ocultarPaneles(panelReportes);
     }//GEN-LAST:event_btnReportesMouseClicked
-    
+
     int kdanceCount = 1;
     private void txtLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLogoMouseClicked
         ocultarPaneles(panelInicio);
@@ -1561,12 +1596,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // =====================================================
     private void eventoRegistro(JLabel titulo, String modoFormulario,
             JLabel txtBtn, String nombreBtn, JPanel btn, Color color) {
-        
+
         titulo.setText(modoFormulario);
         txtBtn.setText(nombreBtn);
         btn.setBackground(color);
     }
-    
+
     private void vaciarCajasClientes() {
         cajaIdCliente.setText("");
         cajaNombreCliente.setText("");
@@ -1587,7 +1622,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaTelefonoCliente.setEnabled(true);
         cajaFechaRegistroCliente.setEnabled(true);
     }
-    
+
     public void desabilitarCajasClientes() {
         cajaIdCliente.setEnabled(false);
         cajaNombreCliente.setEnabled(false);
@@ -1655,7 +1690,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        
+
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
         boolean isIdCliente = !cajaIdCliente.getText().equals("");
         boolean isNombre = !cajaNombreCliente.getText().equals("");
@@ -1663,28 +1698,28 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         boolean isTelefono = !cajaTelefonoCliente.getText().equals("");
         boolean isRfc = !cajaRfcCliente.getText().equals("");
         boolean isFecha = !cajaFechaRegistroCliente.getText().equals("");
-        
+
         if (modoCliente.equals("alta")) {
-            
+
             if (isNombre && isApellido && isTelefono && isRfc) {
-                
+
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
-                
+
                 clienteDAO.setOpcion(1);
                 clienteDAO.setCliente(cliente);
-                
+
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-                
+
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                
+
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL AGREGAR EL CLIENTE :D", messageClientes, colorAlta);
                     vaciarCajasClientes();
@@ -1692,46 +1727,46 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL AGREGAR EL CLIENTE D:", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-                
+
                 actualizarTablaClientes();
-                
+
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
                 }
-                
+
                 if (!isApellido) {
                     datosFaltantes += " APELLIDO";
                 }
-                
+
                 if (!isTelefono) {
                     datosFaltantes += " TELEFONO";
                 }
-                
+
                 if (!isRfc) {
                     datosFaltantes += " RFC";
                 }
-                
+
                 datosFaltantes += " ]";
-                
+
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
             }
-            
+
         } else if (modoCliente.equals("baja")) {
             if (isIdCliente) {
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
                 clienteDAO.setOpcion(2);
                 clienteDAO.setCliente(cliente);
-                
+
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-                
+
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                
+
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL ELIMINAR EL CLIENTE", messageClientes, colorBaja);
                     vaciarCajasClientes();
@@ -1739,35 +1774,35 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL ELIMINAR EL CLIENTE", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-                
+
                 actualizarTablaClientes();
-                
+
             } else {
                 personalizarMensaje(txtMessageClientes, "AGREGA EL ID DEL CLIENTE ._.", messageClientes, colorError);
             }
-            
+
         } else if (modoCliente.equals("cambio")) {
-            
+
             if (isNombre && isApellido && isTelefono && isRfc && isIdCliente) {
-                
+
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
-                
+
                 clienteDAO.setOpcion(3);
                 clienteDAO.setCliente(cliente);
-                
+
                 Thread h1 = new Thread(clienteDAO);
                 h1.start();
-                
+
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                
+
                 if (clienteDAO.isRes()) {
                     personalizarMensaje(txtMessageClientes, "EXITO AL MODIFICAR EL CLIENTE :D", messageClientes, colorCambio);
                     vaciarCajasClientes();
@@ -1775,53 +1810,53 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageClientes, "ERROR AL MODIFICAR EL CLIENTE D:", messageClientes, colorError);
                     vaciarCajasClientes();
                 }
-                
+
                 actualizarTablaClientes();
-                
+
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
                 }
-                
+
                 if (!isApellido) {
                     datosFaltantes += " APELLIDO";
                 }
-                
+
                 if (!isTelefono) {
                     datosFaltantes += " TELEFONO";
                 }
-                
+
                 if (!isRfc) {
                     datosFaltantes += " RFC";
                 }
-                
+
                 if (!isIdCliente) {
                     datosFaltantes += " IDCLIENTE";
                 }
-                
+
                 datosFaltantes += " ]";
-                
+
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
             }
-            
+
         } else if (modoCliente.equals("consulta")) {
-            
+
             if (isNombre || isApellido || isTelefono || isRfc || isIdCliente || isFecha) {
                 cliente.setNombre(cajaNombreCliente.getText());
                 cliente.setApellido(cajaApellidoCliente.getText());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
                 cliente.setRfc(cajaRfcCliente.getText());
-                
+
                 if (isIdCliente) {
                     cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
                 } else {
                     cliente.setIdCliente(0);
                 }
-                
+
                 cliente.setFechaRegistro(cajaFechaRegistroCliente.getText());
-                
+
                 tablaClientes.setModel(ConexionBD.consultaCliente(cliente));
-                
+
             } else {
                 personalizarMensaje(txtMessageClientes, "AGREGA UN DATO DUDE .-.", messageClientes, colorError);
             }
@@ -1862,163 +1897,163 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         boolean isPrecioHabitacion = !cajaPrecioHabitacion.getText().equals("");
         boolean isCajaIDHabitacion = !cajaIdHabitacion.getText().equals("");
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
-        
+
         if (modoHabitacion.equals("alta")) {
             if (isTipoHabitacion && isPrecioHabitacion) {
-                
+
                 habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
                 habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
-                
+
                 habitacionDAO.setOpcion(1);
                 habitacionDAO.setHabitacion(habitacion);
-                
+
                 Thread h1 = new Thread(habitacionDAO);
                 h1.start();
-                
+
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                
+
                 if (habitacionDAO.isRes()) {
                     personalizarMensaje(txtMessageHabitaciones, "EXITO AL AGREGAR LA HABITACION :D", messageHabitaciones, colorAlta);
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL AGREGAR LA HABITACION D:", messageHabitaciones, colorError);
-                    
+
                 }
-                
+
                 actualizarTablaHabitaciones();
-                
+
             } else {
                 if (!isTipoHabitacion) {
                     datosFaltantes += " TIPO";
                 }
-                
+
                 if (!isPrecioHabitacion) {
                     datosFaltantes += " PRECIO";
                 }
-                
+
                 datosFaltantes += " ]";
-                
+
                 personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
             }
         } else if (modoHabitacion.equals("baja")) {
             if (isCajaIDHabitacion) {
-                
+
                 habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
-                
+
                 habitacionDAO.setOpcion(2);
                 habitacionDAO.setHabitacion(habitacion);
-                
+
                 Thread h1 = new Thread(habitacionDAO);
                 h1.start();
-                
+
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                
+
                 if (habitacionDAO.isRes()) {
                     personalizarMensaje(txtMessageHabitaciones, "EXITO AL ELIMINAR LA HABITACION", messageHabitaciones, colorBaja);
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL ELIMINAR LA HABITACION", messageHabitaciones, colorError);
-                    
+
                 }
-                
+
                 actualizarTablaHabitaciones();
-                
+
             } else {
                 personalizarMensaje(txtMessageHabitaciones, "INTRODUCE EL ID DE LA HABITACION .-.", messageHabitaciones, colorError);
             }
-            
+
         } else if (modoHabitacion.equals("cambio")) {
-            
+
             if (isTipoHabitacion && isPrecioHabitacion && isCajaIDHabitacion) {
-                
+
                 habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
                 habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
                 habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
-                
+
                 habitacionDAO.setOpcion(3);
                 habitacionDAO.setHabitacion(habitacion);
-                
+
                 Thread h1 = new Thread(habitacionDAO);
                 h1.start();
-                
+
                 try {
                     h1.join();
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                
+
                 if (habitacionDAO.isRes()) {
                     personalizarMensaje(txtMessageHabitaciones, "EXITO AL MODIFICAR LA HABITACION :D", messageHabitaciones, colorCambio);
                     vaciarCajasHabitaciones();
                 } else {
                     personalizarMensaje(txtMessageHabitaciones, "ERROR AL MODIFICAR LA HABITACION D:", messageHabitaciones, colorError);
-                    
+
                 }
-                
+
                 actualizarTablaHabitaciones();
-                
+
             } else {
-                
+
                 if (!isCajaIDHabitacion) {
                     datosFaltantes += " IDHABITACION";
                 }
-                
+
                 if (!isTipoHabitacion) {
                     datosFaltantes += " TIPO";
                 }
-                
+
                 if (!isPrecioHabitacion) {
                     datosFaltantes += " PRECIO";
                 }
-                
+
                 datosFaltantes += " ]";
-                
+
                 personalizarMensaje(txtMessageHabitaciones, datosFaltantes, messageHabitaciones, colorError);
             }
-            
+
         } else if (modoHabitacion.equals("consulta")) {
-            
+
             if (isCajaIDHabitacion || isTipoHabitacion || isPrecioHabitacion) {
                 if (comboTipoHabitacion.getSelectedIndex() == 0) {
                     habitacion.setTipoHabitacion("");
                 } else {
                     habitacion.setTipoHabitacion(String.valueOf(comboTipoHabitacion.getSelectedItem()));
                 }
-                
+
                 if (isCajaIDHabitacion) {
                     habitacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacion.getText()));
                 } else {
                     habitacion.setIdHabitacion(0);
                 }
-                
+
                 if (isPrecioHabitacion) {
                     habitacion.setPrecioNoche(Double.parseDouble(cajaPrecioHabitacion.getText()));
                 } else {
                     habitacion.setPrecioNoche(0);
                 }
-                
+
                 habitacion.setDisponible(checkDisponibleHabitacion.isSelected());
                 habitacion.setBajaTemporal(checkBajaTemporal.isSelected());
-                
+
                 tablaHabitaciones.setModel(ConexionBD.consultaHabitacion(habitacion));
-                
+
             } else {
                 personalizarMensaje(txtMessageHabitaciones, "AGREGA UN DATO DID", messageHabitaciones, colorError);
             }
         }
-        
+
 
     }//GEN-LAST:event_btnAgregarHabitacionesMouseClicked
 
@@ -2040,7 +2075,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         checkDisponibleHabitacion.setEnabled(true);
         comboTipoHabitacion.setEnabled(true);
     }
-    
+
     public void desabilitarCajasHabitaciones() {
         cajaIdHabitacion.setEnabled(false);
         cajaPrecioHabitacion.setEnabled(false);
@@ -2048,7 +2083,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         checkDisponibleHabitacion.setEnabled(false);
         comboTipoHabitacion.setEnabled(false);
     }
-    
+
     public void vaciarCajasHabitaciones() {
         cajaIdHabitacion.setText("");
         cajaPrecioHabitacion.setText("");
@@ -2135,6 +2170,79 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnVerTodoReservacionesMouseClicked
 
+    // ================================================
+    // Eventos de registro reservaciones    
+    // ================================================
+    private void vaciarCajasReservaciones() {
+        cajaFechaReservacion.setText("");
+        cajaIdReservacion.setText("");
+        cajaFechaVigencia.setText("");
+        cajaCostoTotal.setText("");
+        cajaIdHabitacionReservacion.setText("");
+        cajaIdClienteReservacion.setText("");
+    }
+
+    private void desabilitarCajasReservaciones() {
+        cajaFechaReservacion.setEnabled(false);
+        cajaIdReservacion.setEnabled(false);
+        cajaFechaVigencia.setEnabled(false);
+        cajaCostoTotal.setEnabled(false);
+        cajaIdHabitacionReservacion.setEnabled(false);
+        cajaIdClienteReservacion.setEnabled(false);
+    }
+
+    private void habilitarCajasReservaciones() {
+        cajaFechaReservacion.setEnabled(true);
+        cajaIdReservacion.setEnabled(true);
+        cajaFechaVigencia.setEnabled(true);
+        cajaCostoTotal.setEnabled(true);
+        cajaIdHabitacionReservacion.setEnabled(true);
+        cajaIdClienteReservacion.setEnabled(true);
+    }
+
+    private void btnModoRegistrarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarReservacionesMouseClicked
+        eventoRegistro(txtModoReservaciones, "MODO REGISTRO",
+                txtAgregarReservaciones, "AGREGAR",
+                btnAgregarReservaciones, colorBtnAgregar);
+        habilitarCajasReservaciones();
+        cajaIdReservacion.setEnabled(false);
+        cajaFechaReservacion.setEnabled(false);
+        vaciarCajasReservaciones();
+        modoReservacion = "alta";
+    }//GEN-LAST:event_btnModoRegistrarReservacionesMouseClicked
+
+    private void btnModoModificarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarReservacionesMouseClicked
+        eventoRegistro(txtModoReservaciones, "MODO EDICION",
+                txtAgregarReservaciones, "MODIFICAR",
+                btnAgregarReservaciones, colorCambio);
+        habilitarCajasReservaciones();
+        cajaIdReservacion.setEnabled(true);
+        cajaFechaReservacion.setEnabled(false);
+        cajaIdHabitacionReservacion.setEnabled(false);
+        cajaIdClienteReservacion.setEnabled(false);
+        vaciarCajasReservaciones();
+        modoReservacion = "cambio";
+    }//GEN-LAST:event_btnModoModificarReservacionesMouseClicked
+
+    private void btnModoEliminarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarReservacionesMouseClicked
+        eventoRegistro(txtModoReservaciones, "MODO CANCELACION",
+                txtAgregarReservaciones, "CANCELAR",
+                btnAgregarReservaciones, colorBaja);
+        desabilitarCajasReservaciones();
+        cajaIdReservacion.setEnabled(true);
+        vaciarCajasReservaciones();
+        modoReservacion = "baja";
+    }//GEN-LAST:event_btnModoEliminarReservacionesMouseClicked
+
+    private void btnModoConsultarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarReservacionesMouseClicked
+        eventoRegistro(txtModoReservaciones, "MODO BUSQUEDA",
+                txtAgregarReservaciones, "BUSCAR",
+                btnAgregarReservaciones, colorBtnAgregar);
+        habilitarCajasReservaciones();
+        vaciarCajasReservaciones();
+        modoReservacion = "consulta";
+    }//GEN-LAST:event_btnModoConsultarReservacionesMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -2165,7 +2273,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
                 try {
                     UIManager.setLookAndFeel(new FlatIntelliJLaf());
                 } catch (UnsupportedLookAndFeelException e) {
@@ -2235,6 +2343,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JTextField cajaIdClienteReservacion;
     private javax.swing.JTextField cajaIdHabitacion;
     private javax.swing.JTextField cajaIdHabitacionReservacion;
+    private javax.swing.JTextField cajaIdReservacion;
     private javax.swing.JTextField cajaNombreCliente;
     private javax.swing.JTextField cajaPrecioHabitacion;
     private javax.swing.JTextField cajaRfcCliente;
@@ -2291,6 +2400,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JLabel txtIdClienteReservacion;
     private javax.swing.JLabel txtIdHabitacion;
     private javax.swing.JLabel txtIdHabitacionReservacion;
+    private javax.swing.JLabel txtIdReservacion;
     private javax.swing.JLabel txtInicioTitulo;
     private javax.swing.JLabel txtIntroduceDatos;
     private javax.swing.JLabel txtIntroduceDatosHabitacion;
@@ -2342,7 +2452,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-    
+
     private void validarSoloNumeros(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (!Character.isDigit(e.getKeyChar())) {
@@ -2350,7 +2460,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-    
+
     private void validarSoloLetrasNumeros(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
             if (!Character.isDigit(e.getKeyChar()) && !Character.isLetter(e.getKeyChar())) {
@@ -2358,46 +2468,46 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-    
+
     private void validarFecha(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
-            
+
             if (caja.getText().length() >= 10) {
                 e.consume();
             }
-            
+
             if (!Character.isDigit(e.getKeyChar()) && !(e.getKeyChar() == '-')) {
                 e.consume();
             }
-            
+
             if ((caja.getText().length() != 4 && caja.getText().length() != 7) && e.getKeyChar() == '-') {
                 e.consume();
             }
-            
+
             if ((caja.getText().length() == 4 || caja.getText().length() == 7) && Character.isDigit(e.getKeyChar())) {
                 e.consume();
             }
         }
     }
-    
+
     private void validarNumerosDecimales(JTextField caja, KeyEvent e) {
         if (e.getSource() == caja) {
-            
+
             if (Character.isDigit(e.getKeyChar()) && caja.getText().length() == 5 && !caja.getText().contains(".")) {
                 e.consume();
             }
-            
+
             if (caja.getText().length() == 0 && e.getKeyChar() == '.') {
                 e.consume();
             }
-            
+
             if (((e.getKeyChar() < '0') || (e.getKeyChar() > '9'))
                     && (e.getKeyChar() != '.' || caja.getText().contains("."))) {
                 e.consume();
             }
         }
     }
-    
+
     private void validarLongitud(JTextField caja, KeyEvent e, int longitud) {
         if (e.getSource() == caja) {
             if (caja.getText().length() >= longitud) {
@@ -2405,7 +2515,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             }
         }
     }
-    
+
     @Override
     public void keyTyped(KeyEvent e) {
         validarLongitud(cajaNombreCliente, e, 15);
@@ -2415,26 +2525,26 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         validarLongitud(cajaIdCliente, e, 10);
         validarLongitud(cajaIdHabitacion, e, 5);
         validarLongitud(cajaPrecioHabitacion, e, 8);
-        
+
         validarSoloLetras(cajaNombreCliente, e);
         validarSoloLetras(cajaApellidoCliente, e);
         validarSoloNumeros(cajaTelefonoCliente, e);
         validarSoloNumeros(cajaIdCliente, e);
         validarFecha(cajaFechaRegistroCliente, e);
         validarSoloLetrasNumeros(cajaRfcCliente, e);
-        
+
         validarSoloNumeros(cajaIdHabitacion, e);
         validarNumerosDecimales(cajaPrecioHabitacion, e);
-        
+
     }
-    
+
     @Override
     public void keyPressed(KeyEvent e) {
-        
+
     }
-    
+
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
     }
 }

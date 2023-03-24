@@ -9,7 +9,6 @@ package modelo;
  * @author KHerrera
  */
 public class Habitacion {
-
     private int idHabitacion;
     private String tipoHabitacion;
     private boolean disponible;

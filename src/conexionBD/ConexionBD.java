@@ -507,7 +507,7 @@ public class ConexionBD {
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Reservacion reservacion = new Reservacion("", "2023-02-02", 2000.78, 2,1);
+        Reservacion reservacion = new Reservacion(1, "", "2023-02-02", 2000.78, 2,1);
         
         int resultado = altaReservacion(reservacion);
         

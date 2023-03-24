@@ -9,19 +9,28 @@ package modelo;
  * @author KHerrera
  */
 public class Reservacion {
-
+    private int idReservacion;
     private String fechaReservacion;
     private String vigencia;
     private double costoTotal;
     private int idHabitacion;
     private int idCliente;
 
-    public Reservacion(String fechaReservacion, String vigencia, double costoTotal, int idHabitacion, int idCliente) {
+    public Reservacion(int idReservacion,String fechaReservacion, String vigencia, double costoTotal, int idHabitacion, int idCliente) {
+        this.idReservacion = idReservacion;
         this.fechaReservacion = fechaReservacion;
         this.vigencia = vigencia;
         this.costoTotal = costoTotal;
         this.idHabitacion = idHabitacion;
         this.idCliente = idCliente;
+    }
+
+    public int getIdReservacion() {
+        return idReservacion;
+    }
+
+    public void setIdReservacion(int idReservacion) {
+        this.idReservacion = idReservacion;
     }
 
     public String getFechaReservacion() {
