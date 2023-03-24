@@ -504,6 +504,18 @@ public class ConexionBD {
         return resultado;
     }
     
+    public static void cambiarReservacion(){
+        
+    }
+    
+    public static void cancelarReservacion(){
+        
+    }
+    
+    public static void consultaReservacion(){
+        
+    }
+    
     public static void main(String[] args) {
         ConexionBD.getConexion();
 

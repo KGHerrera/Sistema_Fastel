@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Cliente;
 import modelo.Habitacion;
+import modelo.Reservacion;
 
 /**
  *
@@ -51,6 +52,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     Habitacion habitacion;
     HabitacionDAO habitacionDAO;
+    
+    Reservacion reservacion;
+    
 
     /**
      * Creates new form VentanaPrincipal
@@ -2165,8 +2169,55 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         }
     }//GEN-LAST:event_tablaReservacionesMouseReleased
 
+    // =======================================
+    // Consultas de reservaciones
+    // =======================================
+
     private void btnAgregarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarReservacionesMouseClicked
 
+        boolean isCajaFechaVigencia = cajaFechaVigencia.getText().length() == 10;
+        boolean isCostoTotal = !cajaCostoTotal.getText().equals("");
+        boolean isIdHabitacion = !cajaIdHabitacionReservacion.getText().equals("");
+        boolean isIdCliente = !cajaIdClienteReservacion.getText().equals("");
+        String datosFaltantes = "TE FALTAN LOS DATOS DE [";
+
+        if (modoReservacion.equals("alta")) {
+
+            if (isCajaFechaVigencia && isCostoTotal && isIdCliente && isIdCliente) {
+
+                
+                
+            } else {
+
+                if (!isCajaFechaVigencia) {
+                    datosFaltantes += " VIGENCIA";
+                }
+
+                if (!isCostoTotal) {
+                    datosFaltantes += " TOTAL";
+                }
+
+                if (!isIdHabitacion) {
+                    datosFaltantes += " IDHABITACION";
+                }
+
+                if (!isIdCliente) {
+                    datosFaltantes += " IDCLIENTE";
+                }
+
+                datosFaltantes += " ]";
+
+                personalizarMensaje(txtMessageReservaciones, datosFaltantes, messageReservaciones, colorError);
+
+            }
+
+        } else if (modoReservacion.equals("baja")) {
+
+        } else if (modoReservacion.equals("cambio")) {
+
+        } else if (modoReservacion.equals("consulta")) {
+
+        }
     }//GEN-LAST:event_btnAgregarReservacionesMouseClicked
 
     private void btnVaciarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarReservacionesMouseClicked
