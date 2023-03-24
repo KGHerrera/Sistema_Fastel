@@ -137,6 +137,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdHabitacionReservacion.addKeyListener(this);
         cajaIdClienteReservacion.addKeyListener(this);
         cajaIdReservacion.addKeyListener(this);
+        cajaFechaReservacion.addKeyListener(this);
 
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
@@ -2155,19 +2156,25 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }//GEN-LAST:event_btnModoConsultarHabitacionesMouseClicked
 
     private void tablaReservacionesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaReservacionesMouseReleased
-        // TODO add your handling code here:
+        if (modoReservacion.equals("cambio")) {
+            cajaIdReservacion.setText(String.valueOf(tablaReservaciones.getValueAt(tablaReservaciones.getSelectedRow(), 0)));
+            cajaFechaVigencia.setText(String.valueOf(tablaReservaciones.getValueAt(tablaReservaciones.getSelectedRow(), 2)));
+            cajaCostoTotal.setText(String.valueOf(tablaReservaciones.getValueAt(tablaReservaciones.getSelectedRow(), 3)));
+        } else if (modoReservacion.equals("baja")) {
+            cajaIdReservacion.setText(String.valueOf(tablaReservaciones.getValueAt(tablaReservaciones.getSelectedRow(), 0)));
+        }
     }//GEN-LAST:event_tablaReservacionesMouseReleased
 
     private void btnAgregarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarReservacionesMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnAgregarReservacionesMouseClicked
 
     private void btnVaciarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarReservacionesMouseClicked
-        // TODO add your handling code here:
+        vaciarCajasReservaciones();
     }//GEN-LAST:event_btnVaciarReservacionesMouseClicked
 
     private void btnVerTodoReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoReservacionesMouseClicked
-        // TODO add your handling code here:
+        actualizarTablaReservaciones();
     }//GEN-LAST:event_btnVerTodoReservacionesMouseClicked
 
     // ================================================
@@ -2525,6 +2532,18 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         validarLongitud(cajaIdCliente, e, 10);
         validarLongitud(cajaIdHabitacion, e, 5);
         validarLongitud(cajaPrecioHabitacion, e, 8);
+
+        validarLongitud(cajaIdClienteReservacion, e, 10);
+        validarLongitud(cajaIdHabitacionReservacion, e, 5);
+        validarLongitud(cajaIdReservacion, e, 15);
+        validarLongitud(cajaCostoTotal, e, 8);
+
+        validarFecha(cajaFechaReservacion, e);
+        validarFecha(cajaFechaVigencia, e);
+        validarSoloNumeros(cajaIdClienteReservacion, e);
+        validarSoloNumeros(cajaIdHabitacionReservacion, e);
+        validarNumerosDecimales(cajaCostoTotal, e);
+        validarSoloNumeros(cajaIdReservacion, e);
 
         validarSoloLetras(cajaNombreCliente, e);
         validarSoloLetras(cajaApellidoCliente, e);
