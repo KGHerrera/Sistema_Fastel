@@ -9,6 +9,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import conexionBD.ConexionBD;
 import controlador.ClienteDAO;
 import controlador.HabitacionDAO;
+import controlador.ReservacionDAO;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -52,9 +53,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     Habitacion habitacion;
     HabitacionDAO habitacionDAO;
-    
+
     Reservacion reservacion;
-    
+    ReservacionDAO reservacionDAO;
 
     /**
      * Creates new form VentanaPrincipal
@@ -67,6 +68,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         habitacion = new Habitacion();
         habitacionDAO = new HabitacionDAO();
+
+        reservacion = new Reservacion();
+        reservacionDAO = new ReservacionDAO();
 
         // Seleccionar tema aleatorio
         Random rand = new Random();
@@ -1547,14 +1551,17 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     private void btnClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClientesMouseClicked
         ocultarPaneles(panelClientes);
+        actualizarTablaClientes();
     }//GEN-LAST:event_btnClientesMouseClicked
 
     private void btnReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReservacionesMouseClicked
         ocultarPaneles(panelReservaciones);
+        actualizarTablaReservaciones();
     }//GEN-LAST:event_btnReservacionesMouseClicked
 
     private void btnHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHabitacionesMouseClicked
         ocultarPaneles(panelHabitaciones);
+        actualizarTablaHabitaciones();
     }//GEN-LAST:event_btnHabitacionesMouseClicked
 
     private void btnEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEmpleadosMouseClicked
@@ -2184,9 +2191,39 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         if (modoReservacion.equals("alta")) {
 
             if (isCajaFechaVigencia && isCostoTotal && isIdCliente && isIdCliente) {
+                reservacion.setVigencia(cajaFechaVigencia.getText());
+                reservacion.setCostoTotal(Double.parseDouble(cajaCostoTotal.getText()));
+                reservacion.setIdCliente(Integer.parseInt(cajaIdClienteReservacion.getText()));
+                reservacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacionReservacion.getText()));
 
-                
-                
+                reservacionDAO.setOpcion(1);
+                reservacionDAO.setReservacion(reservacion);
+
+                Thread h1 = new Thread(reservacionDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (reservacionDAO.isRes() == -1) {
+                    personalizarMensaje(txtMessageReservaciones, "EL CLIENTE NO EXISTE", messageReservaciones, colorError);
+                } else if (reservacionDAO.isRes() == -2) {
+                    personalizarMensaje(txtMessageReservaciones, "LA HABITACION NO EXISTE", messageReservaciones, colorError);
+                } else if (reservacionDAO.isRes() == 1) {
+                    personalizarMensaje(txtMessageReservaciones, "SE AGREGO CORRECTAMENTE", messageReservaciones, colorAlta);
+                } else if (reservacionDAO.isRes() == -3) {
+                    personalizarMensaje(txtMessageReservaciones, "LA HABITACION ESTA OCUPADA", messageReservaciones, colorError);
+                } else if (reservacionDAO.isRes() == -4) {
+                    personalizarMensaje(txtMessageReservaciones, "LA HABITACION ESTA DADA DE BAJA TEMPORAL", messageReservaciones, colorError);
+                } else if (reservacionDAO.isRes() == -4) {
+                    personalizarMensaje(txtMessageReservaciones, "ERROR AL AGREGAR", messageReservaciones, colorError);
+                }
+
+                actualizarTablaReservaciones();
+
             } else {
 
                 if (!isCajaFechaVigencia) {

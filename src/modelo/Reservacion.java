@@ -9,6 +9,7 @@ package modelo;
  * @author KHerrera
  */
 public class Reservacion {
+
     private int idReservacion;
     private String fechaReservacion;
     private String vigencia;
@@ -16,7 +17,11 @@ public class Reservacion {
     private int idHabitacion;
     private int idCliente;
 
-    public Reservacion(int idReservacion,String fechaReservacion, String vigencia, double costoTotal, int idHabitacion, int idCliente) {
+    public Reservacion() {
+
+    }
+
+    public Reservacion(int idReservacion, String fechaReservacion, String vigencia, double costoTotal, int idHabitacion, int idCliente) {
         this.idReservacion = idReservacion;
         this.fechaReservacion = fechaReservacion;
         this.vigencia = vigencia;

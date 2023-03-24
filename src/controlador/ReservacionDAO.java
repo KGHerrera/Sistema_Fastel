@@ -28,7 +28,7 @@ public class ReservacionDAO implements Runnable{
         return reservacion;
     }
 
-    public void setCliente(Reservacion reservacion) {
+    public void setReservacion(Reservacion reservacion) {
         this.reservacion = reservacion;
     }
               
