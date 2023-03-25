@@ -520,7 +520,7 @@ public class ConexionBD {
     }
 
     public static int cancelarReservacion(Reservacion reservacion) {
-        int resultado = 0;
+        boolean resultado = false;
         PreparedStatement psEliminar = null;
 
         try {
@@ -532,7 +532,7 @@ public class ConexionBD {
 
             int filasAfectadas = psEliminar.executeUpdate();
             if (filasAfectadas > 0) {
-                resultado = 1;
+                resultado = true;
                 conexion.commit();
             } else {
                 conexion.rollback();
@@ -555,7 +555,7 @@ public class ConexionBD {
             }
         }
 
-        return resultado;
+        return resultado ? 1 : 0;
     }
 
     public static void consultaReservacion() {

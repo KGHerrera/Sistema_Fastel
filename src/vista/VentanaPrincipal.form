@@ -480,6 +480,9 @@
                   <Color blue="32" green="32" red="32" type="rgb"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Ver reservaciones canceladas"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnVerReservacionesCanceladasMouseClicked"/>

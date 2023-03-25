@@ -520,6 +520,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnVerReservacionesCanceladas.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         btnVerReservacionesCanceladas.setForeground(new java.awt.Color(50, 50, 50));
         btnVerReservacionesCanceladas.setText("Ver reservaciones canceladas");
+        btnVerReservacionesCanceladas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnVerReservacionesCanceladas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnVerReservacionesCanceladasMouseClicked(evt);
@@ -2433,8 +2434,23 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         // TODO add your handling code here:
     }//GEN-LAST:event_tablaReservacionesCanceladasMouseReleased
 
+    boolean ver = false;
     private void btnVerReservacionesCanceladasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerReservacionesCanceladasMouseClicked
-        jScrollPaneTablaReservacionesCanceladas.setVisible(true);
+
+        if (ver == false) {
+            jScrollPaneTablaReservacionesCanceladas.setVisible(true);
+            jScrollPaneTablaReservaciones.setVisible(false);
+            btnVerReservacionesCanceladas.setText("Ver reservaciones normales");
+            actualizarTablaReservacionesCanceladas();
+            ver = true;
+        } else {
+            jScrollPaneTablaReservacionesCanceladas.setVisible(false);
+            jScrollPaneTablaReservaciones.setVisible(true);
+            btnVerReservacionesCanceladas.setText("Ver reservaciones canceladas");
+            actualizarTablaReservaciones();
+            ver = false;
+        }
+
 
     }//GEN-LAST:event_btnVerReservacionesCanceladasMouseClicked
 
