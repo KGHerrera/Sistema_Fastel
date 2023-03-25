@@ -443,19 +443,18 @@ public class ConexionBD {
             if (!rs.next()) {
                 //System.out.println("la habitacion esta ocupada");
                 return -4;
-            }          
-            
+            }
+
             // verificar que la fecha sea mayor
             String sqlFecha = "SELECT DATEDIFF(day, GETDATE(), ?)";
             ps = conexion.prepareStatement(sqlFecha);
             ps.setString(1, reservacion.getVigencia());
             rs = ps.executeQuery();
             while (rs.next()) {
-                if(rs.getInt(1) <= 0){
+                if (rs.getInt(1) <= 0) {
                     return -5;
                 }
             }
-            
 
             // Iniciar la transacción
             conexion.setAutoCommit(false);
@@ -520,8 +519,43 @@ public class ConexionBD {
 
     }
 
-    public static void cancelarReservacion() {
+    public static int cancelarReservacion(Reservacion reservacion) {
+        int resultado = 0;
+        PreparedStatement psEliminar = null;
 
+        try {
+            conexion.setAutoCommit(false);
+
+            String sqlEliminar = "DELETE FROM reservaciones WHERE id_reservacion = ?";
+            psEliminar = conexion.prepareStatement(sqlEliminar);
+            psEliminar.setInt(1, reservacion.getIdReservacion());
+
+            int filasAfectadas = psEliminar.executeUpdate();
+            if (filasAfectadas > 0) {
+                resultado = 1;
+                conexion.commit();
+            } else {
+                conexion.rollback();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+        } finally {
+            try {
+                if (psEliminar != null) {
+                    psEliminar.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return resultado;
     }
 
     public static void consultaReservacion() {
