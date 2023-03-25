@@ -371,14 +371,14 @@ public class ConexionBD {
 
         return resultado;
     }
-    
+
     public static ResultSetTableModel consultaHabitacion(Habitacion habitacion) {
 
         ResultSetTableModel modeloDatos = null;
         String consulta = "SELECT * FROM habitaciones "
                 + "WHERE id_habitacion LIKE " + habitacion.getIdHabitacion()
                 + " or tipo_habitacion LIKE '" + habitacion.getTipoHabitacion()
-                + "' or precio_noche LIKE " + habitacion.getPrecioNoche()+ "";
+                + "' or precio_noche LIKE " + habitacion.getPrecioNoche() + "";
 
         try {
             modeloDatos = new ResultSetTableModel(controlador, url,
@@ -395,23 +395,22 @@ public class ConexionBD {
     // =======================================================
     // Metodos de consultas para reservaciones
     // =======================================================
-    
     public static int altaReservacion(Reservacion reservacion) {
         int resultado = 0;
         PreparedStatement ps = null;
         ResultSet rs = null;
 
         try {
-            
+
             // Verificar si existe el cliente y la habitación
             String sqlCliente = "SELECT id_cliente FROM clientes WHERE id_cliente = ?";
             ps = conexion.prepareStatement(sqlCliente);
             ps.setInt(1, reservacion.getIdCliente());
             rs = ps.executeQuery();
             if (!rs.next()) {
-               
+
                 //System.out.println("el cliente no existe");
-                return -1;               
+                return -1;
             }
 
             String sqlHabitacion = "SELECT id_habitacion FROM habitaciones WHERE id_habitacion = ?";
@@ -419,11 +418,11 @@ public class ConexionBD {
             ps.setInt(1, reservacion.getIdHabitacion());
             rs = ps.executeQuery();
             if (!rs.next()) {
-                
+
                 //System.out.println("la habitacion no existe");
                 return -2;
             }
-            
+
             // verificar si la habitacion esta disponible
             String sqlHabitacion1 = "SELECT id_habitacion FROM habitaciones WHERE id_habitacion = ? AND disponible = ?";
             ps = conexion.prepareStatement(sqlHabitacion1);
@@ -434,7 +433,7 @@ public class ConexionBD {
                 //System.out.println("la habitacion esta ocupada");
                 return -3;
             }
-            
+
             // verificar si la habitacion no esta de baja temporal
             String sqlHabitacion2 = "SELECT id_habitacion FROM habitaciones WHERE id_habitacion = ? AND baja_temporal = ?";
             ps = conexion.prepareStatement(sqlHabitacion2);
@@ -444,11 +443,23 @@ public class ConexionBD {
             if (!rs.next()) {
                 //System.out.println("la habitacion esta ocupada");
                 return -4;
-            }            
+            }          
             
+            // verificar que la fecha sea mayor
+            String sqlFecha = "SELECT DATEDIFF(day, GETDATE(), ?)";
+            ps = conexion.prepareStatement(sqlFecha);
+            ps.setString(1, reservacion.getVigencia());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                if(rs.getInt(1) <= 0){
+                    return -5;
+                }
+            }
+            
+
             // Iniciar la transacción
             conexion.setAutoCommit(false);
-            
+
             // modificar la habitacion para que este ocupada
             String sqlHabitacionOcupada = "UPDATE habitaciones SET disponible = ? WHERE id_habitacion = ?";
             ps = conexion.prepareStatement(sqlHabitacionOcupada);
@@ -458,17 +469,18 @@ public class ConexionBD {
 
             // Insertar la reservación
             String sqlReservacion = "INSERT INTO reservaciones (fecha_reservacion, vigencia, costo_total, fk_id_habitacion, fk_id_cliente) "
-                    + "VALUES (GETDATE(), ?, ?, ?, ?)";
+                    + "VALUES (GETDATE(), ?, (SELECT DATEDIFF(day, GETDATE(), ?)) * (SELECT precio_noche FROM habitaciones WHERE id_habitacion = ?), ?, ?)";
             ps = conexion.prepareStatement(sqlReservacion);
             ps.setString(1, reservacion.getVigencia());
-            ps.setDouble(2, reservacion.getCostoTotal());
+            ps.setString(2, reservacion.getVigencia());
             ps.setInt(3, reservacion.getIdHabitacion());
-            ps.setInt(4, reservacion.getIdCliente());
+            ps.setInt(4, reservacion.getIdHabitacion());
+            ps.setInt(5, reservacion.getIdCliente());
             resultado = ps.executeUpdate();
 
             // Confirmar la transacción
             conexion.commit();
-            
+
         } catch (SQLException e) {
             // Cancelar la transacción
             try {
@@ -503,35 +515,51 @@ public class ConexionBD {
 
         return resultado;
     }
-    
-    public static void cambiarReservacion(){
-        
+
+    public static void cambiarReservacion() {
+
     }
-    
-    public static void cancelarReservacion(){
-        
+
+    public static void cancelarReservacion() {
+
     }
-    
-    public static void consultaReservacion(){
-        
+
+    public static void consultaReservacion() {
+
     }
+
+    /*
     
+    TRIGGER para reservaciones canceladas al eliminar
+    
+    CREATE TRIGGER tr_reservaciones_canceladas ON reservaciones
+    AFTER DELETE
+    AS
+    BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO reservaciones_canceladas (fecha_reservacion, vigencia, costo_total, fk_id_habitacion, fk_id_cliente)
+    SELECT fecha_reservacion, vigencia, costo_total, fk_id_habitacion, fk_id_cliente
+    FROM DELETED;
+    END;
+    
+     */
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Reservacion reservacion = new Reservacion(1, "", "2023-02-02", 2000.78, 2,1);
-        
+        Reservacion reservacion = new Reservacion(1, "", "2023-02-02", 2000.78, 2, 1);
+
         int resultado = altaReservacion(reservacion);
-        
-        if (resultado == -1){
+
+        if (resultado == -1) {
             System.out.println("el cliente no existe");
-        } else if(resultado == -2){
+        } else if (resultado == -2) {
             System.out.println("la habitacion no existe");
-        } else if (resultado == 1){
+        } else if (resultado == 1) {
             System.out.println("se agrego correctamente");
-        } else if(resultado == -3){
+        } else if (resultado == -3) {
             System.out.println("la habitacion esta ocupada");
-        } else if(resultado == -4){
+        } else if (resultado == -4) {
             System.out.println("la habitacion esta de baja temporal");
         }
 
