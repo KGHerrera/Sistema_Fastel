@@ -5,7 +5,6 @@
 package vista;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.themes.FlatMacLightLaf;
 import conexionBD.ConexionBD;
 import controlador.ClienteDAO;
 import controlador.HabitacionDAO;
@@ -126,6 +125,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdHabitacion.setEnabled(false);
         cajaIdReservacion.setEnabled(false);
         cajaFechaReservacion.setEnabled(false);
+        cajaCostoTotal.setEnabled(false);
 
         actualizarTablaClientes();
         actualizarTablaHabitaciones();
@@ -1772,10 +1772,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
             if (isNombre && isApellido && isTelefono && isRfc) {
 
-                cliente.setNombre(cajaNombreCliente.getText());
-                cliente.setApellido(cajaApellidoCliente.getText());
+                cliente.setNombre(cajaNombreCliente.getText().trim().toLowerCase());
+                cliente.setApellido(cajaApellidoCliente.getText().trim().toLowerCase());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
-                cliente.setRfc(cajaRfcCliente.getText());
+                cliente.setRfc(cajaRfcCliente.getText().toUpperCase());
 
                 clienteDAO.setOpcion(1);
                 clienteDAO.setCliente(cliente);
@@ -1854,10 +1854,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
             if (isNombre && isApellido && isTelefono && isRfc && isIdCliente) {
 
-                cliente.setNombre(cajaNombreCliente.getText());
-                cliente.setApellido(cajaApellidoCliente.getText());
+                cliente.setNombre(cajaNombreCliente.getText().trim().toLowerCase());
+                cliente.setApellido(cajaApellidoCliente.getText().trim().toLowerCase());
                 cliente.setTelefono(cajaTelefonoCliente.getText());
-                cliente.setRfc(cajaRfcCliente.getText());
+                cliente.setRfc(cajaRfcCliente.getText().toUpperCase());
                 cliente.setIdCliente(Integer.parseInt(cajaIdCliente.getText()));
 
                 clienteDAO.setOpcion(3);
@@ -2239,10 +2239,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     private void btnAgregarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarReservacionesMouseClicked
 
-        boolean isCajaFechaVigencia = cajaFechaVigencia.getText().length() == 10;
+        boolean isCajaFechaVigencia = !cajaFechaVigencia.getText().equals("");
         boolean isIdReservacion = !cajaIdReservacion.getText().equals("");
         boolean isIdHabitacion = !cajaIdHabitacionReservacion.getText().equals("");
         boolean isIdCliente = !cajaIdClienteReservacion.getText().equals("");
+        boolean isCajaFechaReservacion = !cajaFechaReservacion.getText().equals("");
+        boolean isCajaCostoTotal = !cajaCostoTotal.getText().equals("");
+
         String datosFaltantes = "TE FALTAN LOS DATOS DE [";
 
         if (modoReservacion.equals("alta")) {
@@ -2309,7 +2312,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     if (cuenta == 0) {
                         datosFaltantes = "";
                     }
-                    datosFaltantes += " (la fecha no es valida)";
+                    datosFaltantes += " [ LA FECHA NO ES VALIDA ]";
                 }
 
                 personalizarMensaje(txtMessageReservaciones, datosFaltantes, messageReservaciones, colorError);
@@ -2349,6 +2352,36 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         } else if (modoReservacion.equals("consulta")) {
 
+            if (isCajaCostoTotal || isCajaFechaReservacion || isCajaFechaVigencia || isIdCliente || isIdHabitacion || isIdReservacion) {
+
+                if (isIdReservacion) {
+                    reservacion.setIdReservacion(Integer.parseInt(cajaIdReservacion.getText()));
+                } else {
+                    reservacion.setIdReservacion(0);
+                }
+
+                String nombre = cajaIdClienteReservacion.getText();
+
+                if (isIdHabitacion) {
+                    reservacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacionReservacion.getText()));
+                } else {
+                    reservacion.setIdHabitacion(0);
+                }
+
+                if (isCajaCostoTotal) {
+                    reservacion.setCostoTotal(Double.parseDouble(cajaCostoTotal.getText()));
+                } else {
+                    reservacion.setCostoTotal(0.0);
+                }
+
+                reservacion.setFechaReservacion(cajaFechaReservacion.getText());
+                reservacion.setVigencia(cajaFechaVigencia.getText());
+
+                tablaReservaciones.setModel(ConexionBD.consultaReservacion(reservacion, nombre));
+
+            } else {
+                personalizarMensaje(txtMessageReservaciones, "INTRODUCE ALGO XD", messageReservaciones, colorError);
+            }
         }
     }//GEN-LAST:event_btnAgregarReservacionesMouseClicked
 
@@ -2396,6 +2429,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaCostoTotal.setEnabled(false);
         vaciarCajasReservaciones();
         modoReservacion = "alta";
+        txtIdClienteReservacion.setText("ID CLIENTE");
     }//GEN-LAST:event_btnModoRegistrarReservacionesMouseClicked
 
     private void btnModoModificarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarReservacionesMouseClicked
@@ -2405,6 +2439,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         desabilitarCajasReservaciones();
         vaciarCajasReservaciones();
         modoReservacion = "cambio";
+        txtIdClienteReservacion.setText("ID CLIENTE");
     }//GEN-LAST:event_btnModoModificarReservacionesMouseClicked
 
     private void btnModoEliminarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarReservacionesMouseClicked
@@ -2415,6 +2450,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdReservacion.setEnabled(true);
         vaciarCajasReservaciones();
         modoReservacion = "baja";
+        txtIdClienteReservacion.setText("ID CLIENTE");
     }//GEN-LAST:event_btnModoEliminarReservacionesMouseClicked
 
     private void btnModoConsultarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarReservacionesMouseClicked
@@ -2424,10 +2460,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         habilitarCajasReservaciones();
         vaciarCajasReservaciones();
         modoReservacion = "consulta";
+        txtIdClienteReservacion.setText("NOMBRE CLIENTE");
     }//GEN-LAST:event_btnModoConsultarReservacionesMouseClicked
 
     private void btnVerTodoReservaciones1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoReservaciones1MouseClicked
-        // TODO add your handling code here:
+        actualizarTablaReservaciones();
     }//GEN-LAST:event_btnVerTodoReservaciones1MouseClicked
 
     private void tablaReservacionesCanceladasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaReservacionesCanceladasMouseReleased
@@ -2664,12 +2701,22 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // End of variables declaration//GEN-END:variables
 
     // ===================================================    
-    // metodos de validacion poderosos
+    // metodos de validacion poderosos bueno ya no tanto
     // ===================================================
+    
     private void validarSoloLetras(JTextField caja, KeyEvent e) {
         // Validacion de solo letras
         if (e.getSource() == caja) {
-            if (!(Character.isLetter(e.getKeyChar()))) {
+            
+            if(caja.getText().contains(" ") && e.getKeyChar() == ' '){
+                e.consume();
+            }
+            
+            if(caja.getText().equals("") && e.getKeyChar() == ' '){
+                e.consume();
+            }
+            
+            if (!(Character.isLetter(e.getKeyChar())) && e.getKeyChar() != ' ') {
                 e.consume();
             }
         }
@@ -2759,20 +2806,29 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         validarLongitud(cajaIdHabitacion, e, 5);
         validarLongitud(cajaPrecioHabitacion, e, 8);
 
-        validarLongitud(cajaIdClienteReservacion, e, 10);
+        
         validarLongitud(cajaIdHabitacionReservacion, e, 5);
         validarLongitud(cajaIdReservacion, e, 15);
         validarLongitud(cajaCostoTotal, e, 8);
 
         validarFecha(cajaFechaReservacion, e);
         validarFecha(cajaFechaVigencia, e);
-        validarSoloNumeros(cajaIdClienteReservacion, e);
+
+        if (modoReservacion.equals("consulta")) {
+            validarSoloLetras(cajaIdClienteReservacion, e);
+            validarLongitud(cajaIdClienteReservacion, e, 30);
+        } else {
+            validarSoloNumeros(cajaIdClienteReservacion, e);
+            validarLongitud(cajaIdClienteReservacion, e, 10);
+        }
+
         validarSoloNumeros(cajaIdHabitacionReservacion, e);
         validarNumerosDecimales(cajaCostoTotal, e);
         validarSoloNumeros(cajaIdReservacion, e);
 
         validarSoloLetras(cajaNombreCliente, e);
         validarSoloLetras(cajaApellidoCliente, e);
+        
         validarSoloNumeros(cajaTelefonoCliente, e);
         validarSoloNumeros(cajaIdCliente, e);
         validarFecha(cajaFechaRegistroCliente, e);

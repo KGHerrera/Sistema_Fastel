@@ -459,7 +459,7 @@ public class ConexionBD {
             // Iniciar la transacción
             conexion.setAutoCommit(false);
 
-            // modificar la habitacion para que este ocupada
+            // modificar la habitacion para que este ocupada, anuma esto tambien podria estar en un trigger
             String sqlHabitacionOcupada = "UPDATE habitaciones SET disponible = ? WHERE id_habitacion = ?";
             ps = conexion.prepareStatement(sqlHabitacionOcupada);
             ps.setBoolean(1, false);
@@ -526,6 +526,14 @@ public class ConexionBD {
         try {
             conexion.setAutoCommit(false);
 
+            // modificar la habitacion para que este disponible
+            String sqlHabitacionOcupada = "UPDATE habitaciones SET disponible = ? WHERE id_habitacion = ?";
+            psEliminar = conexion.prepareStatement(sqlHabitacionOcupada);
+            psEliminar.setBoolean(1, true);
+            psEliminar.setInt(2, reservacion.getIdHabitacion());
+            psEliminar.executeUpdate();
+
+            // eliminar la habitacion, el trigger se encargara de lo demas y porque no hice un trigger que hiciera lo anterior :thinking:
             String sqlEliminar = "DELETE FROM reservaciones WHERE id_reservacion = ?";
             psEliminar = conexion.prepareStatement(sqlEliminar);
             psEliminar.setInt(1, reservacion.getIdReservacion());
@@ -558,7 +566,27 @@ public class ConexionBD {
         return resultado ? 1 : 0;
     }
 
-    public static void consultaReservacion() {
+    public static ResultSetTableModel consultaReservacion(Reservacion reservacion, String nombre) {
+
+        ResultSetTableModel modeloDatos = null;
+        String consulta = "SELECT * FROM v_reservaciones "
+                + "WHERE id_reservacion LIKE " + reservacion.getIdReservacion()
+                + " or id_habitacion LIKE " + reservacion.getIdHabitacion()
+                + " or nombre_cliente LIKE '" + nombre + "%'"
+                + " or vigencia LIKE '" + reservacion.getVigencia() + "'"
+                + " or fecha_reservacion LIKE '" + reservacion.getFechaReservacion() + "'"
+                + " or costo_total = " + reservacion.getCostoTotal();
+
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url,
+                    consulta);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modeloDatos;
 
     }
 
