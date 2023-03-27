@@ -717,6 +717,43 @@ public class ConexionBD {
         return exito;
     }
 
+    public static boolean cambiarEmpleado(Empleado empleado) {
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "UPDATE empleados SET nombre = ?, apellido = ?, rfc = ?, telefono = ?, puesto = ?, sueldo = ? WHERE id_empleado = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getApellido());
+            ps.setString(3, empleado.getRfc());
+            ps.setString(4, empleado.getTelefono());
+            ps.setString(5, empleado.getPuesto());
+            ps.setDouble(6, empleado.getSueldo());
+            ps.setInt(7, empleado.getId());
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
+            }
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exito;
+    }
+
     /*
     
     TRIGGER para reservaciones canceladas al eliminar
@@ -737,9 +774,9 @@ public class ConexionBD {
         ConexionBD.getConexion();
 
         String sql = "INSERT INTO empleados (nombre, apellido, rfc, telefono, puesto, sueldo) VALUES (?, ?, ?, ?, ?, ?)";
-        Empleado empleado = new Empleado(1, "juan", "bañuelos", "JUBA23891", "4940942", "gerente", 1999.00);
+        Empleado empleado = new Empleado(2, "empleado", "robles", "PECA23891", "1", "cocinero", 2000.00);
 
-        boolean res = ConexionBD.bajaEmpleado(empleado);
+        boolean res = ConexionBD.cambiarEmpleado(empleado);
         System.out.println(res);
 
     }
