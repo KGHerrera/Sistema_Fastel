@@ -161,6 +161,37 @@ public class ConexionBD {
         return exito;
     }
 
+    public static boolean bajaEmpleado(Empleado empleado) {
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "DELETE FROM empleados WHERE id_empleado = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, empleado.getId());
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
+            }
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exito;
+    }
+
     public static ResultSetTableModel consultaCliente(Cliente a) {
 
         ResultSetTableModel modeloDatos = null;
@@ -708,7 +739,7 @@ public class ConexionBD {
         String sql = "INSERT INTO empleados (nombre, apellido, rfc, telefono, puesto, sueldo) VALUES (?, ?, ?, ?, ?, ?)";
         Empleado empleado = new Empleado(1, "juan", "bañuelos", "JUBA23891", "4940942", "gerente", 1999.00);
 
-        boolean res = ConexionBD.altaEmpleado(empleado);
+        boolean res = ConexionBD.bajaEmpleado(empleado);
         System.out.println(res);
 
     }
