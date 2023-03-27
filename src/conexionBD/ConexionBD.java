@@ -467,8 +467,10 @@ public class ConexionBD {
             ps.executeUpdate();
 
             // Insertar la reservación
-            String sqlReservacion = "INSERT INTO reservaciones (fecha_reservacion, vigencia, costo_total, fk_id_habitacion, fk_id_cliente) "
-                    + "VALUES (GETDATE(), ?, (SELECT DATEDIFF(day, GETDATE(), ?)) * (SELECT precio_noche FROM habitaciones WHERE id_habitacion = ?), ?, ?)";
+            String sqlReservacion = "INSERT INTO reservaciones (fecha_reservacion, "
+                    + "vigencia, costo_total, fk_id_habitacion, fk_id_cliente) "
+                    + "VALUES (GETDATE(), ?, (SELECT DATEDIFF(day, GETDATE(), ?)) * "
+                    + "(SELECT precio_noche FROM habitaciones WHERE id_habitacion = ?), ?, ?)";
             ps = conexion.prepareStatement(sqlReservacion);
             ps.setString(1, reservacion.getVigencia());
             ps.setString(2, reservacion.getVigencia());
@@ -515,8 +517,61 @@ public class ConexionBD {
         return resultado;
     }
 
-    public static void cambiarReservacion() {
+    public static int cambiarReservacion(Reservacion reservacion) {
+        int result = 0;
+        PreparedStatement stmt = null;
+        try {
 
+            // verificar que la fecha sea mayor
+            String sqlFecha = "SELECT DATEDIFF(day, ?, ?)";
+            stmt = conexion.prepareStatement(sqlFecha);
+            
+            stmt.setString(1, reservacion.getFechaReservacion());
+            stmt.setString(2, reservacion.getVigencia());
+            rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) <= 0) {
+                    return -1;
+                }
+            }
+
+            // INICIAR MODIFICACION
+            conexion.setAutoCommit(false);
+            stmt = conexion.prepareStatement("UPDATE reservaciones SET vigencia = ? , "
+                    + "costo_total = ((SELECT DATEDIFF(day, ?, ?)) * "
+                    + "(SELECT precio_noche FROM habitaciones WHERE id_habitacion = ?)) "
+                    + "WHERE id_reservacion = ?");
+            stmt.setString(1, reservacion.getVigencia());
+            stmt.setString(2, reservacion.getFechaReservacion());
+            stmt.setString(3, reservacion.getVigencia());
+            stmt.setInt(4, reservacion.getIdHabitacion());
+            stmt.setInt(5, reservacion.getIdReservacion());
+
+            int rows = stmt.executeUpdate();
+            if (rows > 0) {
+                conexion.commit();
+                result = 1;
+            } else {
+                conexion.rollback();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+                conexion.setAutoCommit(true);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     public static int cancelarReservacion(Reservacion reservacion) {

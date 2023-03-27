@@ -48,6 +48,7 @@ public class ReservacionDAO implements Runnable {
     }
 
     public int cambiarReservacion() {
+        res = ConexionBD.cambiarReservacion(reservacion);
         return res;
     }
 
