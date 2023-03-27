@@ -2799,7 +2799,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }
 
     private void tablaEmpleadosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosMouseReleased
-
+        if(modoEmpleado.equals("cambio")){
+            cajaIdEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
+            cajaNombreEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
+            cajaApellidoEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
+        } else if(modoEmpleado.equals("baja")){
+            cajaIdEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
+        }
     }//GEN-LAST:event_tablaEmpleadosMouseReleased
 
     private void btnVerTodoEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoEmpleadosMouseClicked
