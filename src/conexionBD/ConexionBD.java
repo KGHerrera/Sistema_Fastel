@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JTable;
 import modelo.Cliente;
+import modelo.Empleado;
 import modelo.Habitacion;
 import modelo.Reservacion;
 import vista.ResultSetTableModel;
@@ -525,7 +526,7 @@ public class ConexionBD {
             // verificar que la fecha sea mayor
             String sqlFecha = "SELECT DATEDIFF(day, ?, ?)";
             stmt = conexion.prepareStatement(sqlFecha);
-            
+
             stmt.setString(1, reservacion.getFechaReservacion());
             stmt.setString(2, reservacion.getVigencia());
             rs = stmt.executeQuery();
@@ -645,6 +646,46 @@ public class ConexionBD {
 
     }
 
+    // ====================================================================
+    // Consultas empleado
+    // ====================================================================
+    public static boolean altaEmpleado(Empleado empleado) {
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "INSERT INTO empleados (nombre, apellido, rfc, telefono, puesto, sueldo) VALUES (?, ?, ?, ?, ?, ?)";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setString(1, empleado.getNombre());
+            ps.setString(2, empleado.getApellido());
+            ps.setString(3, empleado.getRfc());
+            ps.setString(4, empleado.getTelefono());
+            ps.setString(5, empleado.getPuesto());
+            ps.setDouble(6, empleado.getSueldo());
+
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
+            }
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exito;
+    }
+
     /*
     
     TRIGGER para reservaciones canceladas al eliminar
@@ -664,21 +705,11 @@ public class ConexionBD {
     public static void main(String[] args) {
         ConexionBD.getConexion();
 
-        Reservacion reservacion = new Reservacion(1, "", "2023-02-02", 2000.78, 2, 1);
+        String sql = "INSERT INTO empleados (nombre, apellido, rfc, telefono, puesto, sueldo) VALUES (?, ?, ?, ?, ?, ?)";
+        Empleado empleado = new Empleado(1, "juan", "bañuelos", "JUBA23891", "4940942", "gerente", 1999.00);
 
-        int resultado = altaReservacion(reservacion);
-
-        if (resultado == -1) {
-            System.out.println("el cliente no existe");
-        } else if (resultado == -2) {
-            System.out.println("la habitacion no existe");
-        } else if (resultado == 1) {
-            System.out.println("se agrego correctamente");
-        } else if (resultado == -3) {
-            System.out.println("la habitacion esta ocupada");
-        } else if (resultado == -4) {
-            System.out.println("la habitacion esta de baja temporal");
-        }
+        boolean res = ConexionBD.altaEmpleado(empleado);
+        System.out.println(res);
 
     }
 
