@@ -161,37 +161,6 @@ public class ConexionBD {
         return exito;
     }
 
-    public static boolean bajaEmpleado(Empleado empleado) {
-        boolean exito = false;
-        try {
-            conexion.setAutoCommit(false); // Iniciar transacción
-            String sql = "DELETE FROM empleados WHERE id_empleado = ?";
-            PreparedStatement ps = conexion.prepareStatement(sql);
-            ps.setInt(1, empleado.getId());
-            int filasAfectadas = ps.executeUpdate();
-            if (filasAfectadas == 1) {
-                exito = true;
-                conexion.commit(); // Confirmar transacción
-            } else {
-                conexion.rollback(); // Deshacer transacción
-            }
-        } catch (SQLException e) {
-            try {
-                conexion.rollback(); // Deshacer transacción
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                conexion.setAutoCommit(true); // Reestablecer autocommit
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return exito;
-    }
-
     public static ResultSetTableModel consultaCliente(Cliente a) {
 
         ResultSetTableModel modeloDatos = null;
@@ -717,6 +686,37 @@ public class ConexionBD {
         return exito;
     }
 
+    public static boolean bajaEmpleado(Empleado empleado) {
+        boolean exito = false;
+        try {
+            conexion.setAutoCommit(false); // Iniciar transacción
+            String sql = "DELETE FROM empleados WHERE id_empleado = ?";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, empleado.getId());
+            int filasAfectadas = ps.executeUpdate();
+            if (filasAfectadas == 1) {
+                exito = true;
+                conexion.commit(); // Confirmar transacción
+            } else {
+                conexion.rollback(); // Deshacer transacción
+            }
+        } catch (SQLException e) {
+            try {
+                conexion.rollback(); // Deshacer transacción
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conexion.setAutoCommit(true); // Reestablecer autocommit
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return exito;
+    }
+
     public static boolean cambiarEmpleado(Empleado empleado) {
         boolean exito = false;
         try {
@@ -752,6 +752,30 @@ public class ConexionBD {
             }
         }
         return exito;
+    }
+
+    public static ResultSetTableModel consultaEmpleado(Empleado empleado, String nombre) {
+
+        ResultSetTableModel modeloDatos = null;
+        String consulta = "SELECT * FROM empleados "
+                + "WHERE id_empleado LIKE " + empleado.getId()
+                + " or nombre LIKE '" + nombre + "%'"
+                + " or apellido LIKE '" + empleado.getApellido() + "%'"
+                + " or rfc LIKE '" + empleado.getRfc() + "%'"
+                + " or telefono LIKE '" + empleado.getTelefono() + "%'"
+                + " or puesto LIKE '" + empleado.getPuesto() + "%'"
+                + " or sueldo = " + empleado.getSueldo();
+
+        try {
+            modeloDatos = new ResultSetTableModel(controlador, url,
+                    consulta);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return modeloDatos;
     }
 
     /*
