@@ -168,7 +168,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaRfcEmpleado.addKeyListener(this);
         cajaTelefonoEmpleado.addKeyListener(this);
         cajaIdEmpleado.addKeyListener(this);
-        
 
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
@@ -408,6 +407,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoRegistrarEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/add-16.png"))); // NOI18N
         btnModoRegistrarEmpleados.setText("Registrar");
         btnModoRegistrarEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoRegistrarEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoRegistrarEmpleadosMouseClicked(evt);
+            }
+        });
         barraEmpleados.add(btnModoRegistrarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 90, 30));
 
         btnModoModificarEmpleados.setBackground(new java.awt.Color(72, 58, 125));
@@ -417,6 +421,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoModificarEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/edit-2-16.png"))); // NOI18N
         btnModoModificarEmpleados.setText("Modificar");
         btnModoModificarEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoModificarEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoModificarEmpleadosMouseClicked(evt);
+            }
+        });
         barraEmpleados.add(btnModoModificarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 70, 90, 30));
 
         btnModoEliminarEmpleados.setBackground(new java.awt.Color(72, 58, 125));
@@ -426,6 +435,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoEliminarEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/x-mark-4-16.png"))); // NOI18N
         btnModoEliminarEmpleados.setText("Eliminar");
         btnModoEliminarEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoEliminarEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoEliminarEmpleadosMouseClicked(evt);
+            }
+        });
         barraEmpleados.add(btnModoEliminarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, 90, 30));
 
         btnModoConsultarEmpleados.setBackground(new java.awt.Color(72, 58, 125));
@@ -435,6 +449,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnModoConsultarEmpleados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/search-15-16.png"))); // NOI18N
         btnModoConsultarEmpleados.setText("Consultar");
         btnModoConsultarEmpleados.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModoConsultarEmpleados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModoConsultarEmpleadosMouseClicked(evt);
+            }
+        });
         barraEmpleados.add(btnModoConsultarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 70, 90, 30));
 
         panelEmpleados.add(barraEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
@@ -2749,21 +2768,89 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         }
     }//GEN-LAST:event_btnYoutubeMouseClicked
 
+    private void vaciarCajasEmpleados() {
+        cajaIdEmpleado.setText("");
+        cajaNombreEmpleado.setText("");
+        cajaApellidoEmpleado.setText("");
+        cajaRfcEmpleado.setText("");
+        cajaTelefonoEmpleado.setText("");
+        cajaSueldoEmpleado.setText("");
+        comboPuestoEmpleado.setSelectedIndex(0);
+    }
+
+    private void desabilitarCajasEmpleados() {
+        cajaIdEmpleado.setEnabled(false);
+        cajaNombreEmpleado.setEnabled(false);
+        cajaApellidoEmpleado.setEnabled(false);
+        cajaRfcEmpleado.setEnabled(false);
+        cajaTelefonoEmpleado.setEnabled(false);
+        cajaSueldoEmpleado.setEnabled(false);
+        comboPuestoEmpleado.setEnabled(false);
+    }
+
+    private void habilitarCajasEmpleados() {
+        cajaIdEmpleado.setEnabled(true);
+        cajaNombreEmpleado.setEnabled(true);
+        cajaApellidoEmpleado.setEnabled(true);
+        cajaRfcEmpleado.setEnabled(true);
+        cajaTelefonoEmpleado.setEnabled(true);
+        cajaSueldoEmpleado.setEnabled(true);
+        comboPuestoEmpleado.setEnabled(true);
+    }
+
     private void tablaEmpleadosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosMouseReleased
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_tablaEmpleadosMouseReleased
 
     private void btnVerTodoEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoEmpleadosMouseClicked
-        // TODO add your handling code here:
+        actualizarTablaEmpleados();
     }//GEN-LAST:event_btnVerTodoEmpleadosMouseClicked
 
     private void btnVaciarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVaciarEmpleadosMouseClicked
-        // TODO add your handling code here:
+        vaciarCajasEmpleados();
     }//GEN-LAST:event_btnVaciarEmpleadosMouseClicked
 
     private void btnAgregarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarEmpleadosMouseClicked
+
+    private void btnModoRegistrarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarEmpleadosMouseClicked
+        eventoRegistro(txtModoEmpleados, "MODO REGISTRO",
+                txtAgregarEmpleados, "AGREGAR",
+                btnAgregarEmpleados, colorBtnAgregar);
+        habilitarCajasEmpleados();
+        cajaIdEmpleado.setEditable(false);
+        vaciarCajasEmpleados();
+        modoEmpleado = "alta";
+    }//GEN-LAST:event_btnModoRegistrarEmpleadosMouseClicked
+
+    private void btnModoModificarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarEmpleadosMouseClicked
+        eventoRegistro(txtModoEmpleados, "MODO EDICION",
+                txtAgregarEmpleados, "MODIFICAR",
+                btnAgregarEmpleados, colorCambio);
+        habilitarCajasEmpleados();
+        vaciarCajasEmpleados();
+        modoEmpleado = "cambio";
+    }//GEN-LAST:event_btnModoModificarEmpleadosMouseClicked
+
+    private void btnModoEliminarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarEmpleadosMouseClicked
+        eventoRegistro(txtModoEmpleados, "MODO ELIMINACION",
+                txtAgregarEmpleados, "CANCELAR",
+                btnAgregarEmpleados, colorBaja);
+        desabilitarCajasEmpleados();
+        cajaIdEmpleado.setEnabled(true);
+        vaciarCajasEmpleados();
+        modoEmpleado = "baja";
+    }//GEN-LAST:event_btnModoEliminarEmpleadosMouseClicked
+
+    private void btnModoConsultarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarEmpleadosMouseClicked
+        eventoRegistro(txtModoEmpleados, "MODO BUSQUEDA",
+                txtAgregarEmpleados, "BUSCAR",
+                btnAgregarEmpleados, colorBtnAgregar);
+        habilitarCajasEmpleados();
+        vaciarCajasEmpleados();
+        modoEmpleado = "consulta";
+    }//GEN-LAST:event_btnModoConsultarEmpleadosMouseClicked
 
     /**
      * @param args the command line arguments
