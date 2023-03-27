@@ -203,6 +203,7 @@ public class ConexionBD {
     // =============================================
     // consultas para la tabla habitaciones
     // =============================================
+    
     public static boolean altaHabitacion(Habitacion habitacion) {
         boolean exito = false;
         try {
@@ -777,32 +778,4 @@ public class ConexionBD {
 
         return modeloDatos;
     }
-
-    /*
-    
-    TRIGGER para reservaciones canceladas al eliminar
-    
-    CREATE TRIGGER tr_reservaciones_canceladas ON reservaciones
-    AFTER DELETE
-    AS
-    BEGIN
-    SET NOCOUNT ON;
-
-    INSERT INTO reservaciones_canceladas (fecha_reservacion, vigencia, costo_total, fk_id_habitacion, fk_id_cliente)
-    SELECT fecha_reservacion, vigencia, costo_total, fk_id_habitacion, fk_id_cliente
-    FROM DELETED;
-    END;
-    
-     */
-    public static void main(String[] args) {
-        ConexionBD.getConexion();
-
-        String sql = "INSERT INTO empleados (nombre, apellido, rfc, telefono, puesto, sueldo) VALUES (?, ?, ?, ?, ?, ?)";
-        Empleado empleado = new Empleado(2, "empleado", "robles", "PECA23891", "1", "cocinero", 2000.00);
-
-        boolean res = ConexionBD.cambiarEmpleado(empleado);
-        System.out.println(res);
-
-    }
-
 }

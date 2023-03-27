@@ -162,6 +162,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdClienteReservacion.addKeyListener(this);
         cajaIdReservacion.addKeyListener(this);
         cajaFechaReservacion.addKeyListener(this);
+        cajaNombreEmpleado.addKeyListener(this);
+        cajaApellidoEmpleado.addKeyListener(this);
+        cajaSueldoEmpleado.addKeyListener(this);
+        cajaRfcEmpleado.addKeyListener(this);
+        cajaTelefonoEmpleado.addKeyListener(this);
+        cajaIdEmpleado.addKeyListener(this);
+        
 
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
@@ -1687,7 +1694,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void actualizarTablaReservacionesCanceladas() {
         ConexionBD.actualizarTabla(tablaReservacionesCanceladas, "reservaciones_canceladas", "fecha_reservacion");
     }
-    
+
     private void actualizarTablaEmpleados() {
         ConexionBD.actualizarTabla(tablaEmpleados, "empleados", "id_empleado");
     }
@@ -2547,8 +2554,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageReservaciones, "LA FECHA NO PUEDE SER MENOR DUDE XD._.", messageReservaciones, colorError);
                 }
 
-                
-
             } else {
                 byte cuenta = 0;
 
@@ -3081,24 +3086,32 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     @Override
     public void keyTyped(KeyEvent e) {
-        validarLongitud(cajaNombreCliente, e, 15);
-        validarLongitud(cajaApellidoCliente, e, 15);
+        validarLongitud(cajaNombreCliente, e, 25);
+        validarLongitud(cajaApellidoCliente, e, 25);
         validarLongitud(cajaRfcCliente, e, 14);
         validarLongitud(cajaTelefonoCliente, e, 12);
         validarLongitud(cajaIdCliente, e, 10);
+
+        validarLongitud(cajaNombreEmpleado, e, 25);
+        validarLongitud(cajaApellidoEmpleado, e, 25);
+        validarLongitud(cajaRfcEmpleado, e, 14);
+        validarLongitud(cajaTelefonoEmpleado, e, 12);
+        validarLongitud(cajaIdEmpleado, e, 10);
+
         validarLongitud(cajaIdHabitacion, e, 5);
         validarLongitud(cajaPrecioHabitacion, e, 8);
+        validarLongitud(cajaSueldoEmpleado, e, 8);
 
         validarLongitud(cajaIdHabitacionReservacion, e, 5);
         validarLongitud(cajaIdReservacion, e, 15);
-        validarLongitud(cajaCostoTotal, e, 8);
+        validarLongitud(cajaCostoTotal, e, 10);
 
         validarFecha(cajaFechaReservacion, e);
         validarFecha(cajaFechaVigencia, e);
 
         if (modoReservacion.equals("consulta")) {
             validarSoloLetras(cajaIdClienteReservacion, e);
-            validarLongitud(cajaIdClienteReservacion, e, 30);
+            validarLongitud(cajaIdClienteReservacion, e, 50);
         } else {
             validarSoloNumeros(cajaIdClienteReservacion, e);
             validarLongitud(cajaIdClienteReservacion, e, 10);
@@ -3113,11 +3126,19 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         validarSoloNumeros(cajaTelefonoCliente, e);
         validarSoloNumeros(cajaIdCliente, e);
-        validarFecha(cajaFechaRegistroCliente, e);
         validarSoloLetrasNumeros(cajaRfcCliente, e);
+
+        validarSoloLetras(cajaNombreEmpleado, e);
+        validarSoloLetras(cajaApellidoEmpleado, e);
+        validarSoloNumeros(cajaTelefonoEmpleado, e);
+        validarSoloNumeros(cajaIdEmpleado, e);
+        validarSoloLetrasNumeros(cajaRfcEmpleado, e);
+
+        validarFecha(cajaFechaRegistroCliente, e);
 
         validarSoloNumeros(cajaIdHabitacion, e);
         validarNumerosDecimales(cajaPrecioHabitacion, e);
+        validarNumerosDecimales(cajaSueldoEmpleado, e);
 
     }
 
