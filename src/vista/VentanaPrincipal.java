@@ -5,6 +5,7 @@
 package vista;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import conexionBD.ConexionBD;
 import controlador.ClienteDAO;
 import controlador.HabitacionDAO;
@@ -12,30 +13,19 @@ import controlador.ReservacionDAO;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.Point;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
-import java.io.IOException;
 import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import modelo.Cliente;
+import modelo.Empleado;
 import modelo.Habitacion;
 import modelo.Reservacion;
 
@@ -68,6 +58,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     Reservacion reservacion;
     ReservacionDAO reservacionDAO;
+    
+    Empleado empleado;
+    
 
     /**
      * Creates new form VentanaPrincipal
@@ -112,11 +105,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         }
          */
         // Declaracion de colores
-        panelMessageColor = new Color(0, 153, 153);
-        colorAlta = new Color(0, 179, 77);
+        panelMessageColor = btnColorReset;
+        colorAlta = new Color(0, 153, 153);
         colorBaja = new Color(219, 0, 84);
-        colorCambio = new Color(219, 168, 0);
-        colorError = new Color(214, 2, 31);
+        colorCambio = new Color(230, 194, 2);
+        colorError = new Color(219, 0, 84);
         colorBtnAgregar = new Color(72, 58, 125);
 
         // inicializacion de componentes        
@@ -137,6 +130,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdReservacion.setEnabled(false);
         cajaFechaReservacion.setEnabled(false);
         cajaCostoTotal.setEnabled(false);
+        cajaIdEmpleado.setEnabled(false);
 
         actualizarTablaClientes();
         actualizarTablaHabitaciones();
@@ -169,12 +163,22 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaTelefonoEmpleado.addKeyListener(this);
         cajaIdEmpleado.addKeyListener(this);
 
+        resetMessage(messageHabitaciones, txtMessageHabitaciones);
+        resetMessage(messageReservaciones, txtMessageReservaciones);
+        resetMessage(messageEmpleados, txtMessageEmpleados);
+        resetMessage(messageClientes, txtMessageClientes);
+
         // datos de prueba si me da tiempo los cargo de la base de datos
         String[] datos = {"selecciona opcion", "sencilla", "doble", "estandar", "familiar"};
 
         for (String dato : datos) {
             comboTipoHabitacion.addItem(dato);
         }
+    }
+
+    private void resetMessage(JPanel panel, JLabel message) {
+        panel.setBackground(btnColorReset);
+        message.setText("AQUI SE MOSTRARAN LOS MENSAJES DE LAS ACCIONES [CLIC PARA OCULTAR]");
     }
 
     private Color horaDelRandomizer(Color color1, double randomNum) {
@@ -471,7 +475,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtMessageEmpleados.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         txtMessageEmpleados.setForeground(new java.awt.Color(240, 240, 240));
         txtMessageEmpleados.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtMessageEmpleados.setText("AQUI SE MOSTRARAN LOS MENSAJES DE LAS ACCIONES (puedes darme clic para ocultarme)");
+        txtMessageEmpleados.setText("AQUI SE MOSTRARAN LOS MENSAJES DE LAS ACCIONES [CLIC PARA OCULTAR]");
         messageEmpleados.add(txtMessageEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 930, 50));
 
         panelEmpleados.add(messageEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
@@ -512,7 +516,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         panelEmpleados.add(cajaIdEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 360, 140, 30));
 
         txtIdEmpleado.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtIdEmpleado.setForeground(btnColorMain);
+        txtIdEmpleado.setForeground(btnColorMain      );
         txtIdEmpleado.setText("ID EMPLEADO");
         panelEmpleados.add(txtIdEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 140, 30));
 
@@ -1903,6 +1907,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaFechaRegistroCliente.setEnabled(false);
         vaciarCajasClientes();
         modoCliente = "alta";
+        resetMessage(messageClientes, txtMessageClientes);
 
     }//GEN-LAST:event_btnModoRegistrarClientesMouseClicked
 
@@ -1914,6 +1919,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         vaciarCajasClientes();
         cajaFechaRegistroCliente.setEnabled(false);
         modoCliente = "cambio";
+        resetMessage(messageClientes, txtMessageClientes);
     }//GEN-LAST:event_btnModoModificarClientesMouseClicked
 
     private void btnModoEliminarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarClientesMouseClicked
@@ -1923,6 +1929,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdCliente.setEnabled(true);
         vaciarCajasClientes();
         modoCliente = "baja";
+        resetMessage(messageClientes, txtMessageClientes);
     }//GEN-LAST:event_btnModoEliminarClientesMouseClicked
 
     private void btnModoConsultarClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarClientesMouseClicked
@@ -1931,6 +1938,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         habilitarCajasClientes();
         vaciarCajasClientes();
         modoCliente = "consulta";
+        resetMessage(messageClientes, txtMessageClientes);
     }//GEN-LAST:event_btnModoConsultarClientesMouseClicked
 
     // ================================================
@@ -2362,6 +2370,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdHabitacion.setEnabled(false);
         vaciarCajasHabitaciones();
         modoHabitacion = "alta";
+        resetMessage(messageHabitaciones, txtMessageHabitaciones);
     }//GEN-LAST:event_btnModoRegistrarHabitacionesMouseClicked
 
     private void btnModoModificarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarHabitacionesMouseClicked
@@ -2371,6 +2380,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         habilitarCajasHabitaciones();
         vaciarCajasHabitaciones();
         modoHabitacion = "cambio";
+        resetMessage(messageHabitaciones, txtMessageHabitaciones);
     }//GEN-LAST:event_btnModoModificarHabitacionesMouseClicked
 
     private void btnGithubMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGithubMouseClicked
@@ -2402,6 +2412,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdHabitacion.setEnabled(true);
         vaciarCajasHabitaciones();
         modoHabitacion = "baja";
+        resetMessage(messageHabitaciones, txtMessageHabitaciones);
     }//GEN-LAST:event_btnModoEliminarHabitacionesMouseClicked
 
     private void btnModoConsultarHabitacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarHabitacionesMouseClicked
@@ -2413,6 +2424,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         checkBajaTemporal.setEnabled(false);
         checkDisponibleHabitacion.setEnabled(false);
         modoHabitacion = "consulta";
+        resetMessage(messageHabitaciones, txtMessageHabitaciones);
 
     }//GEN-LAST:event_btnModoConsultarHabitacionesMouseClicked
 
@@ -2689,6 +2701,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         vaciarCajasReservaciones();
         modoReservacion = "alta";
         txtIdClienteReservacion.setText("ID CLIENTE");
+        resetMessage(messageReservaciones, txtMessageReservaciones);
     }//GEN-LAST:event_btnModoRegistrarReservacionesMouseClicked
 
     private void btnModoModificarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarReservacionesMouseClicked
@@ -2701,6 +2714,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         vaciarCajasReservaciones();
         modoReservacion = "cambio";
         txtIdClienteReservacion.setText("ID CLIENTE");
+        resetMessage(messageReservaciones, txtMessageReservaciones);
     }//GEN-LAST:event_btnModoModificarReservacionesMouseClicked
 
     private void btnModoEliminarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarReservacionesMouseClicked
@@ -2712,6 +2726,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         vaciarCajasReservaciones();
         modoReservacion = "baja";
         txtIdClienteReservacion.setText("ID CLIENTE");
+        resetMessage(messageReservaciones, txtMessageReservaciones);
     }//GEN-LAST:event_btnModoEliminarReservacionesMouseClicked
 
     private void btnModoConsultarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarReservacionesMouseClicked
@@ -2722,6 +2737,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         vaciarCajasReservaciones();
         modoReservacion = "consulta";
         txtIdClienteReservacion.setText("NOMBRE CLIENTE");
+        resetMessage(messageReservaciones, txtMessageReservaciones);
     }//GEN-LAST:event_btnModoConsultarReservacionesMouseClicked
 
     private void btnVerTodoReservaciones1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVerTodoReservaciones1MouseClicked
@@ -2799,11 +2815,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }
 
     private void tablaEmpleadosMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaEmpleadosMouseReleased
-        if(modoEmpleado.equals("cambio")){
+        if (modoEmpleado.equals("cambio")) {
             cajaIdEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
-            cajaNombreEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
-            cajaApellidoEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
-        } else if(modoEmpleado.equals("baja")){
+            cajaNombreEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 1)));
+            cajaApellidoEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 2)));
+            cajaRfcEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 3)));
+            cajaTelefonoEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 4)));
+            comboPuestoEmpleado.setSelectedItem(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 5)));
+            cajaSueldoEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 6)));
+        } else if (modoEmpleado.equals("baja")) {
             cajaIdEmpleado.setText(String.valueOf(tablaEmpleados.getValueAt(tablaEmpleados.getSelectedRow(), 0)));
         }
     }//GEN-LAST:event_tablaEmpleadosMouseReleased
@@ -2817,7 +2837,52 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     }//GEN-LAST:event_btnVaciarEmpleadosMouseClicked
 
     private void btnAgregarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarEmpleadosMouseClicked
-        // TODO add your handling code here:
+        boolean isId = !cajaIdEmpleado.getText().equals("");
+        boolean isNombre = !cajaNombreEmpleado.getText().equals("");
+        boolean isApellido = !cajaApellidoEmpleado.getText().equals("");
+        boolean isSueldo = !cajaSueldoEmpleado.getText().equals("");
+        boolean isTelefono = !cajaTelefonoEmpleado.getText().equals("");
+        boolean isRfc = !cajaRfcEmpleado.getText().equals("");
+        boolean isPuesto = comboPuestoEmpleado.getSelectedIndex() != 0;
+        String datosFaltantes = "TE FALTAN LOS DATOS DE [";
+
+        if (modoEmpleado.equals("alta")) {
+
+            if (isNombre && isApellido && isSueldo && isTelefono && isRfc && isPuesto) {
+
+                
+                
+            } else {
+                if (!isNombre) {
+                    datosFaltantes += " NOMBRE";
+                }
+
+                if (!isApellido) {
+                    datosFaltantes += " APELLIDO";
+                }
+
+                if (!isSueldo) {
+                    datosFaltantes += " SUELDO";
+                }
+
+                if (!isRfc) {
+                    datosFaltantes += " RFC";
+                }
+
+                if (!isTelefono) {
+                    datosFaltantes += " TELEFONO";
+                }
+
+                if (!isPuesto) {
+                    datosFaltantes += " PUESTO";
+                }
+
+                datosFaltantes += " ]";
+                personalizarMensaje(txtMessageEmpleados, datosFaltantes, messageEmpleados, colorError);
+            }
+
+        }
+
     }//GEN-LAST:event_btnAgregarEmpleadosMouseClicked
 
     private void btnModoRegistrarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarEmpleadosMouseClicked
@@ -2825,9 +2890,10 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 txtAgregarEmpleados, "AGREGAR",
                 btnAgregarEmpleados, colorBtnAgregar);
         habilitarCajasEmpleados();
-        cajaIdEmpleado.setEditable(false);
+        cajaIdEmpleado.setEnabled(false);
         vaciarCajasEmpleados();
         modoEmpleado = "alta";
+        resetMessage(messageEmpleados, txtMessageEmpleados);
     }//GEN-LAST:event_btnModoRegistrarEmpleadosMouseClicked
 
     private void btnModoModificarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoModificarEmpleadosMouseClicked
@@ -2837,6 +2903,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         habilitarCajasEmpleados();
         vaciarCajasEmpleados();
         modoEmpleado = "cambio";
+        resetMessage(messageEmpleados, txtMessageEmpleados);
     }//GEN-LAST:event_btnModoModificarEmpleadosMouseClicked
 
     private void btnModoEliminarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarEmpleadosMouseClicked
@@ -2847,6 +2914,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdEmpleado.setEnabled(true);
         vaciarCajasEmpleados();
         modoEmpleado = "baja";
+        resetMessage(messageEmpleados, txtMessageEmpleados);
     }//GEN-LAST:event_btnModoEliminarEmpleadosMouseClicked
 
     private void btnModoConsultarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoConsultarEmpleadosMouseClicked
@@ -2856,6 +2924,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         habilitarCajasEmpleados();
         vaciarCajasEmpleados();
         modoEmpleado = "consulta";
+        resetMessage(messageEmpleados, txtMessageEmpleados);
     }//GEN-LAST:event_btnModoConsultarEmpleadosMouseClicked
 
     /**
@@ -2891,7 +2960,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
                 try {
                     UIManager.setLookAndFeel(new FlatIntelliJLaf());
-                } catch (UnsupportedLookAndFeelException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 new VentanaPrincipal().setVisible(true);
