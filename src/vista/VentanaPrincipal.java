@@ -604,7 +604,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         panelEmpleados.add(btnAgregarEmpleados, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 300, 140, 30));
 
-        comboPuestoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "selecciona opcion ...", "recepcionista", "botones", "conserje", "cocinero", "mesero", "lavaplatos", "personal de Limpieza", "personal de Seguridad", "jefe de Recepción", "jefe de Servicios a la Habitación", "jefe de Servicio de Limpieza", "gerente" }));
+        comboPuestoEmpleado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "selecciona opcion ...", "recepcionista", "botones", "conserje", "cocinero", "mesero", "lavaplatos", "limpieza", "seguridad", "gerente" }));
         panelEmpleados.add(comboPuestoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 140, 30));
         panelEmpleados.add(cajaSueldoEmpleado, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 300, 140, 30));
 
@@ -2880,8 +2880,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     personalizarMensaje(txtMessageEmpleados, "ERROR AL AGREGAR EL EMPLEADO D:", messageEmpleados, colorError);
                 }
 
-                
-
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
@@ -2940,10 +2938,70 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 personalizarMensaje(txtMessageEmpleados, "AGREGA EL ID CLARO QUE SI", messageEmpleados, colorError);
             }
 
-        } else if(modoEmpleado.equals("cambio")){
+        } else if (modoEmpleado.equals("cambio")) {
+            if (isNombre && isApellido && isSueldo && isTelefono && isRfc && isPuesto && isId) {
+                empleado.setNombre(cajaNombreEmpleado.getText().trim().toLowerCase());
+                empleado.setApellido(cajaApellidoEmpleado.getText().trim().toLowerCase());
+                empleado.setRfc(cajaRfcEmpleado.getText().toUpperCase());
+                empleado.setTelefono(cajaTelefonoEmpleado.getText());
+                empleado.setSueldo(Double.parseDouble(cajaSueldoEmpleado.getText()));
+                empleado.setPuesto(String.valueOf(comboPuestoEmpleado.getSelectedItem()));
+                empleado.setId(Integer.parseInt(cajaIdEmpleado.getText()));
+
+                empleadoDAO.setOpcion(3);
+                empleadoDAO.setEmpleado(empleado);
+
+                Thread h1 = new Thread(empleadoDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (empleadoDAO.isRes()) {
+                    personalizarMensaje(txtMessageEmpleados, "EXITO AL MODIFICAR EL EMPLEADO :D", messageEmpleados, colorCambio);
+                    vaciarCajasEmpleados();
+                    actualizarTablaEmpleados();
+                } else {
+                    personalizarMensaje(txtMessageEmpleados, "ERROR AL MODIFICAR EL EMPLEADO D:", messageEmpleados, colorError);
+                }
+            } else {
+                if (!isId) {
+                    datosFaltantes += " ID";
+                }
+
+                if (!isNombre) {
+                    datosFaltantes += " NOMBRE";
+                }
+
+                if (!isApellido) {
+                    datosFaltantes += " APELLIDO";
+                }
+
+                if (!isSueldo) {
+                    datosFaltantes += " SUELDO";
+                }
+
+                if (!isRfc) {
+                    datosFaltantes += " RFC";
+                }
+
+                if (!isTelefono) {
+                    datosFaltantes += " TELEFONO";
+                }
+
+                if (!isPuesto) {
+                    datosFaltantes += " PUESTO";
+                }
+
+                datosFaltantes += " ]";
+                personalizarMensaje(txtMessageEmpleados, datosFaltantes, messageEmpleados, colorError);
+            }
+        } else if(modoEmpleado.equals("consulta")){
             
         }
-
     }//GEN-LAST:event_btnAgregarEmpleadosMouseClicked
 
     private void btnModoRegistrarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarEmpleadosMouseClicked
