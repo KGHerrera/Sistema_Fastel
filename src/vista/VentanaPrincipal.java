@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import modelo.Cliente;
 import modelo.Empleado;
+import modelo.EmpleadoDAO;
 import modelo.Habitacion;
 import modelo.Reservacion;
 
@@ -58,9 +59,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     Reservacion reservacion;
     ReservacionDAO reservacionDAO;
-    
+
     Empleado empleado;
-    
+    EmpleadoDAO empleadoDAO;
 
     /**
      * Creates new form VentanaPrincipal
@@ -76,6 +77,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         reservacion = new Reservacion();
         reservacionDAO = new ReservacionDAO();
+
+        empleado = new Empleado();
+        empleadoDAO = new EmpleadoDAO();
 
         // Seleccionar tema aleatorio
         Random random = new Random();
@@ -2849,9 +2853,34 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         if (modoEmpleado.equals("alta")) {
 
             if (isNombre && isApellido && isSueldo && isTelefono && isRfc && isPuesto) {
+                empleado.setNombre(cajaNombreEmpleado.getText().trim().toLowerCase());
+                empleado.setApellido(cajaApellidoEmpleado.getText().trim().toLowerCase());
+                empleado.setRfc(cajaRfcEmpleado.getText().toUpperCase());
+                empleado.setTelefono(cajaTelefonoEmpleado.getText());
+                empleado.setSueldo(Double.parseDouble(cajaSueldoEmpleado.getText()));
+                empleado.setPuesto(String.valueOf(comboPuestoEmpleado.getSelectedItem()));
 
-                
-                
+                empleadoDAO.setOpcion(1);
+                empleadoDAO.setEmpleado(empleado);
+
+                Thread h1 = new Thread(empleadoDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (empleadoDAO.isRes()) {
+                    personalizarMensaje(txtMessageEmpleados, "EXITO AL AGREGAR LA HABITACION :D", messageEmpleados, colorAlta);
+                    vaciarCajasHabitaciones();
+                } else {
+                    personalizarMensaje(txtMessageEmpleados, "ERROR AL AGREGAR LA HABITACION D:", messageEmpleados, colorError);
+                }
+
+                actualizarTablaEmpleados();
+
             } else {
                 if (!isNombre) {
                     datosFaltantes += " NOMBRE";
