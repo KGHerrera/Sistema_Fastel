@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import modelo.Cliente;
 import modelo.Empleado;
-import modelo.EmpleadoDAO;
+import controlador.EmpleadoDAO;
 import modelo.Habitacion;
 import modelo.Reservacion;
 
@@ -2873,13 +2873,14 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 }
 
                 if (empleadoDAO.isRes()) {
-                    personalizarMensaje(txtMessageEmpleados, "EXITO AL AGREGAR LA HABITACION :D", messageEmpleados, colorAlta);
-                    vaciarCajasHabitaciones();
+                    personalizarMensaje(txtMessageEmpleados, "EXITO AL AGREGAR EL EMPLEADO :D", messageEmpleados, colorAlta);
+                    vaciarCajasEmpleados();
+                    actualizarTablaEmpleados();
                 } else {
-                    personalizarMensaje(txtMessageEmpleados, "ERROR AL AGREGAR LA HABITACION D:", messageEmpleados, colorError);
+                    personalizarMensaje(txtMessageEmpleados, "ERROR AL AGREGAR EL EMPLEADO D:", messageEmpleados, colorError);
                 }
 
-                actualizarTablaEmpleados();
+                
 
             } else {
                 if (!isNombre) {
@@ -2910,6 +2911,37 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 personalizarMensaje(txtMessageEmpleados, datosFaltantes, messageEmpleados, colorError);
             }
 
+        } else if (modoEmpleado.equals("baja")) {
+
+            if (isId) {
+                empleado.setId(Integer.parseInt(cajaIdEmpleado.getText()));
+
+                empleadoDAO.setOpcion(2);
+                empleadoDAO.setEmpleado(empleado);
+
+                Thread h1 = new Thread(empleadoDAO);
+                h1.start();
+
+                try {
+                    h1.join();
+                } catch (InterruptedException e1) {
+                    e1.printStackTrace();
+                }
+
+                if (empleadoDAO.isRes()) {
+                    personalizarMensaje(txtMessageEmpleados, "EXITO AL ELIMINAR EL EMPLEADO", messageEmpleados, colorBaja);
+                    vaciarCajasEmpleados();
+                    actualizarTablaEmpleados();
+                } else {
+                    personalizarMensaje(txtMessageEmpleados, "ERROR AL ELIMINAR EL EMPLEADO D:", messageEmpleados, colorError);
+                }
+
+            } else {
+                personalizarMensaje(txtMessageEmpleados, "AGREGA EL ID CLARO QUE SI", messageEmpleados, colorError);
+            }
+
+        } else if(modoEmpleado.equals("cambio")){
+            
         }
 
     }//GEN-LAST:event_btnAgregarEmpleadosMouseClicked
