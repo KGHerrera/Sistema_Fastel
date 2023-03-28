@@ -755,16 +755,16 @@ public class ConexionBD {
         return exito;
     }
 
-    public static ResultSetTableModel consultaEmpleado(Empleado empleado, String nombre) {
+    public static ResultSetTableModel consultaEmpleado(Empleado empleado) {
 
         ResultSetTableModel modeloDatos = null;
         String consulta = "SELECT * FROM empleados "
                 + "WHERE id_empleado LIKE " + empleado.getId()
-                + " or nombre LIKE '" + nombre + "%'"
-                + " or apellido LIKE '" + empleado.getApellido() + "%'"
-                + " or rfc LIKE '" + empleado.getRfc() + "%'"
-                + " or telefono LIKE '" + empleado.getTelefono() + "%'"
-                + " or puesto LIKE '" + empleado.getPuesto() + "%'"
+                + " or nombre LIKE '" + empleado.getNombre() + "'"
+                + " or apellido LIKE '" + empleado.getApellido() + "'"
+                + " or rfc LIKE '" + empleado.getRfc() + "'"
+                + " or telefono LIKE '" + empleado.getTelefono() + "'"
+                + " or puesto LIKE '" + empleado.getPuesto() + "'"
                 + " or sueldo = " + empleado.getSueldo();
 
         try {

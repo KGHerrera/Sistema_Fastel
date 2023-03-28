@@ -2999,8 +2999,32 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 datosFaltantes += " ]";
                 personalizarMensaje(txtMessageEmpleados, datosFaltantes, messageEmpleados, colorError);
             }
-        } else if(modoEmpleado.equals("consulta")){
-            
+        } else if (modoEmpleado.equals("consulta")) {
+            if (isNombre || isApellido || isSueldo || isTelefono || isRfc || isPuesto || isId) {
+                empleado.setNombre(cajaNombreEmpleado.getText().trim().toLowerCase());
+                empleado.setApellido(cajaApellidoEmpleado.getText().trim().toLowerCase());
+                empleado.setRfc(cajaRfcEmpleado.getText().toUpperCase());
+                empleado.setTelefono(cajaTelefonoEmpleado.getText());
+
+                empleado.setPuesto(String.valueOf(comboPuestoEmpleado.getSelectedItem()));
+
+                if (!isSueldo) {
+                    empleado.setSueldo(0);
+                } else {
+                    empleado.setSueldo(Double.parseDouble(cajaSueldoEmpleado.getText()));
+                }
+
+                if (!isId) {
+                    empleado.setId(0);
+                } else {
+                    empleado.setId(Integer.parseInt(cajaIdEmpleado.getText()));
+                }
+
+                tablaEmpleados.setModel(ConexionBD.consultaEmpleado(empleado));
+
+            } else {
+                personalizarMensaje(txtMessageEmpleados, "PRO TIP ESCRIBE UN DATO", messageEmpleados, colorError);
+            }
         }
     }//GEN-LAST:event_btnAgregarEmpleadosMouseClicked
 
