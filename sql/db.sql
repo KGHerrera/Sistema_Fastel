@@ -94,6 +94,8 @@ FROM
     INNER JOIN habitaciones h ON r.fk_id_habitacion = h.id_habitacion
     INNER JOIN clientes c ON r.fk_id_cliente = c.id_cliente;
 
+/* CONSULTA DEL REPORTE
+SELECT fecha_reservacion, nombre_cliente, vigencia, costo_total, tipo_habitacion FROM v_reservaciones */
 
 /* FUNCION PARA VERIFICAR USUARIOS USANDO ENCRIPTADO */
 CREATE FUNCTION verificarUsuario (@usuario VARCHAR(20), @password VARCHAR(64))
