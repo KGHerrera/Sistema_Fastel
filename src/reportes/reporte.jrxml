@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="708c3f68-02ab-4a48-b752-4e6484794864">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb988ffc-3a2f-42e3-809b-01380445812e">
 	<queryString language="SQL">
 		<![CDATA[SELECT fecha_reservacion, nombre_cliente, vigencia, costo_total, tipo_habitacion FROM v_reservaciones]]>
 	</queryString>
@@ -14,16 +14,16 @@
 	<title>
 		<band height="72">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="2640e15a-1aee-49ad-bb22-7baec7de39e2"/>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="6b945969-c2bb-4aac-ac5d-cccfc1c21669"/>
 				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="f9a45102-298d-4878-84d2-bae3333a85dc"/>
+					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="714f3fbe-6a49-4f9e-9523-106c49ed66e2"/>
 					<textElement>
 						<font size="34" isBold="true"/>
 					</textElement>
 					<text><![CDATA[TITLE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="cd0886ea-6629-434f-a66f-abbfb957b718"/>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="be285118-0635-4417-8ebb-1753b7d35d0b"/>
 					<textElement textAlignment="Right">
 						<font size="14" isBold="false"/>
 					</textElement>
@@ -38,38 +38,38 @@
 	<columnHeader>
 		<band height="21">
 			<line>
-				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="b514f728-2a7a-40c9-a5f9-75f75405f50c"/>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="dc04b6a5-e0c2-4c4b-953b-75720307f4d5"/>
 			</line>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="7a913ae9-fac3-43b7-b21d-a0dc0492cb07"/>
+				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3ee6dfd1-d415-44bd-877c-995843e9f9f9"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[fecha_reservacion]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b052cfe3-389a-47a1-a183-807ac588ec40"/>
+				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a1dd9427-3543-4150-afbd-0091a8443d8e"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[nombre_cliente]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="e09029c9-40c4-45f8-8b58-0ba817782390"/>
+				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="268115e1-dc2b-480a-b697-707d467e8ea7"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[vigencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="be4aa517-8f79-4666-bcc8-953137a337b2"/>
+				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d382ecae-5c34-42b4-97b1-d5691651a504"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[costo_total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="61de91e6-5836-406c-bd3a-a8901727f65b"/>
+				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="81475457-600e-40ad-b2db-c311a070f721"/>
 				<textElement textAlignment="Center">
 					<font size="14" isBold="true"/>
 				</textElement>
@@ -80,38 +80,38 @@
 	<detail>
 		<band height="20">
 			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="e8507255-7ae0-4923-8184-5a454f39ad7f"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="3467b925-09e5-4211-aa5c-f44c1aeee88d"/>
 			</line>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="111" height="20" uuid="bf00ed99-812e-4ecc-aa72-8ae979da5617"/>
+				<reportElement x="0" y="0" width="111" height="20" uuid="2c18533b-0364-4028-a94b-a1ae36d4bdf1"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_reservacion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="111" y="0" width="111" height="20" uuid="622dcc9f-0918-4a35-8245-a28d50330bd8"/>
+				<reportElement x="111" y="0" width="111" height="20" uuid="1378a375-1615-473d-9ebd-ca083b6c37a6"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="222" y="0" width="111" height="20" uuid="4281c2c5-efc0-4b8d-a761-f649724d49cb"/>
+				<reportElement x="222" y="0" width="111" height="20" uuid="d5e10020-9a67-4cf7-96a3-39d5ca2cd8c6"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vigencia}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="333" y="0" width="111" height="20" uuid="1297fe81-13e1-4111-adef-891a6d25a6da"/>
+				<reportElement x="333" y="0" width="111" height="20" uuid="dfd3686c-5b94-4a07-9e0e-7541d272c7c7"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{costo_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="444" y="0" width="111" height="20" uuid="25950b81-fc51-4105-a84f-0c215d4ba63e"/>
+				<reportElement x="444" y="0" width="111" height="20" uuid="abc4688b-384f-4102-99f8-f4cd7dd46076"/>
 				<textElement>
 					<font size="14"/>
 				</textElement>
@@ -125,16 +125,16 @@
 	<pageFooter>
 		<band height="17">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="06e60fff-b170-4588-bc71-ec3fe2d3e04e"/>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="91b55d3e-cccd-454e-a60c-f6879a2a72b1"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5407780a-e34e-4cc3-afa5-4938cbb9befa"/>
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="20c37a7e-6ef0-47c7-8ed2-f4277eca1852"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="05c57089-63a6-42d6-9a03-55b7ce580534"/>
+				<reportElement x="0" y="4" width="100" height="13" uuid="d34e008b-b7a7-4776-8790-44d56cb5d506"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 		</band>

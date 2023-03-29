@@ -3076,7 +3076,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
             loading = true;
             new Thread(() -> {
                 try {
-                    String rutaReporte = System.getProperty("user.dir") + "/src/reportes/PruebaReporte.jasper";
+                    String rutaReporte = System.getProperty("user.dir") + "/src/reportes/reporte.jasper";
                     JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(rutaReporte);
                     JasperPrint print = JasperFillManager.fillReport(jasperReport, null, ConexionBD.getConexion());
                     JasperViewer view = new JasperViewer(print, false);
