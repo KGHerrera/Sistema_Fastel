@@ -421,7 +421,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtMessageReportes.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
         txtMessageReportes.setForeground(new java.awt.Color(240, 240, 240));
         txtMessageReportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtMessageReportes.setText("POWERED BY JASPER REPORTS");
+        txtMessageReportes.setText("POWERED BY JASPER REPORTS & JFREECHART");
         messageReportes.add(txtMessageReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 930, 50));
 
         panelReportes.add(messageReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
@@ -460,6 +460,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnGraficoPane.setBackground(btnColorReset        );
         btnGraficoPane.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         btnGraficoPane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGraficoPane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGraficoPaneMouseClicked(evt);
+            }
+        });
         btnGraficoPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtIconGrafico.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
@@ -3091,6 +3096,27 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         }
 
     }//GEN-LAST:event_btnReportePaneMouseClicked
+
+    private void btnGraficoPaneMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGraficoPaneMouseClicked
+        if (!loading) {
+            txtIconGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/loader.gif")));
+            loading = true;
+            new Thread(() -> {
+                try {
+                    String rutaReporte = System.getProperty("user.dir") + "/src/reportes/estadisticas.jasper";
+                    JasperReport jasperReport = (JasperReport) JRLoader.loadObjectFromFile(rutaReporte);
+                    JasperPrint print = JasperFillManager.fillReport(jasperReport, null, ConexionBD.getConexion());
+                    JasperViewer view = new JasperViewer(print, false);
+                    view.setVisible(true);
+                } catch (Exception e) {
+                    System.out.println(e);
+                } finally {
+                    loading = false;
+                    txtIconGrafico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/icons8-reporte-de-negocios-100.png")));
+                }
+            }).start();
+        }
+    }//GEN-LAST:event_btnGraficoPaneMouseClicked
 
     /**
      * @param args the command line arguments
