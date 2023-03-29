@@ -131,4 +131,67 @@ GO
 /* COMANDO PARA MOSTRAR EL NUMERO DE CONEXIONES MAX MIN Y CONFIGURADAS
 sp_configure 'user connections'*/
 
+/* PARTICIONES */
+sp_helpdb [fastel]
 
+USE fastel
+GO
+ALTER DATABASE fastel
+ADD FILEGROUP fastel_1
+GO
+ALTER DATABASE fastel
+ADD FILEGROUP fastel_2
+GO
+
+ALTER DATABASE fastel
+    ADD FILE
+    (
+        NAME = fastel_1,
+        FILENAME = 'C:\fastel\fastel_1.ndf',
+            SIZE = 10 MB,
+            MAXSIZE = UNLIMITED,
+            FILEGROWTH = 64 MB
+    ) TO FILEGROUP fastel_1
+
+ALTER DATABASE fastel
+    ADD FILE
+    (
+        NAME = fastel_2,
+        FILENAME = 'C:\fastel\fastel_2.ndf',
+            SIZE = 10 MB,
+            MAXSIZE = UNLIMITED,
+            FILEGROWTH = 64 MB
+    ) TO FILEGROUP fastel_2
+
+
+/* ESQUEMA DE PARTICIONADO */
+
+CREATE PARTITION FUNCTION pf_clientes_id(INT)
+AS RANGE LEFT FOR VALUES (100, 200, 300, 500);
+
+CREATE PARTITION SCHEME ps_clientes_id
+AS PARTITION pf_clientes_id
+TO ([PRIMARY], [PRIMARY], [PRIMARY], [PRIMARY], [PRIMARY]);
+
+CREATE TABLE clientes (
+    id_cliente INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+    nombre VARCHAR(25) NOT NULL,
+    apellido VARCHAR(25) NOT NULL,
+    rfc VARCHAR(14) NOT NULL,
+    telefono VARCHAR(12) NOT NULL,
+    fecha_registro DATE NOT NULL
+)
+ON ps_clientes_id(id_cliente);
+
+/* MOSTRAR LAS PARTICIONES DE LA TABLA */
+SELECT 
+    ps.name AS partition_scheme_name, 
+    pf.name AS partition_function_name,
+    p.partition_number,
+    p.partition_id,
+    p.rows
+FROM sys.partitions p 
+JOIN sys.indexes i ON p.object_id = i.object_id AND p.index_id = i.index_id 
+JOIN sys.partition_schemes ps ON ps.data_space_id = i.data_space_id 
+JOIN sys.partition_functions pf ON ps.function_id = pf.function_id 
+WHERE p.object_id = OBJECT_ID('clientes');

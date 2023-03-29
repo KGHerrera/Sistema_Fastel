@@ -26,6 +26,11 @@ import javax.swing.UIManager;
 import modelo.Cliente;
 import modelo.Empleado;
 import controlador.EmpleadoDAO;
+import java.io.File;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.JFrame;
 import modelo.Habitacion;
 import modelo.Reservacion;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -97,27 +102,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnColorHover = horaDelRandomizer(btnColorHover1, randomNum);
         btnColorReset = horaDelRandomizer(btnColorReset1, randomNum);
 
-        /*
-        if (intRandom == 1) {
-            btnColorHover = new Color(0, 79, 160);
-            btnColorMain = new Color(0, 65, 130);
-            btnColorReset = new Color(0, 79, 146);
-        } else if (intRandom == 2) {
-            btnColorHover = new Color(160, 79, 160);
-            btnColorMain = new Color(130, 65, 130);
-            btnColorReset = new Color(146, 79, 146);
-        } else if (intRandom == 3) {
-            btnColorHover = new Color(79, 160, 160);
-            btnColorMain = new Color(65, 130, 130);
-            btnColorReset = new Color(79, 146, 146);
-        }
-         */
         // Declaracion de colores
         panelMessageColor = btnColorReset;
         colorAlta = new Color(0, 153, 153);
         colorBaja = new Color(219, 0, 84);
-        colorCambio = new Color(230, 194, 2);
-        colorError = new Color(219, 0, 84);
+        colorCambio = new Color(212, 191, 4);
+        colorError = new Color(220, 0, 84);
         colorBtnAgregar = new Color(72, 58, 125);
 
         // inicializacion de componentes        
@@ -207,6 +197,20 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private void initComponents() {
 
         jPanelPrincipal = new javax.swing.JPanel();
+        panelInicio = new javax.swing.JPanel();
+        barraInicioPane = new javax.swing.JPanel();
+        txtSeleccionaAccion = new javax.swing.JLabel();
+        txtInicioTitulo = new javax.swing.JLabel();
+        txtWelcomeUser = new javax.swing.JLabel();
+        txtLogoMain = new javax.swing.JLabel();
+        messagePaneInicio = new javax.swing.JPanel();
+        btnGithub = new javax.swing.JLabel();
+        btnTwitter = new javax.swing.JLabel();
+        btnTiktok = new javax.swing.JLabel();
+        btnFacebook = new javax.swing.JLabel();
+        btnYoutube = new javax.swing.JLabel();
+        btnInstagram = new javax.swing.JLabel();
+        kdance = new javax.swing.JLabel();
         panelReportes = new javax.swing.JPanel();
         barraReportes = new javax.swing.JPanel();
         txtGenerarReportes = new javax.swing.JLabel();
@@ -323,20 +327,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaIdCliente = new javax.swing.JTextField();
         cajaRfcCliente = new javax.swing.JTextField();
         cajaTelefonoCliente = new javax.swing.JTextField();
-        panelInicio = new javax.swing.JPanel();
-        barraInicioPane = new javax.swing.JPanel();
-        txtSeleccionaAccion = new javax.swing.JLabel();
-        txtInicioTitulo = new javax.swing.JLabel();
-        txtWelcomeUser = new javax.swing.JLabel();
-        txtLogoMain = new javax.swing.JLabel();
-        messagePaneInicio = new javax.swing.JPanel();
-        btnGithub = new javax.swing.JLabel();
-        btnTwitter = new javax.swing.JLabel();
-        btnTiktok = new javax.swing.JLabel();
-        btnFacebook = new javax.swing.JLabel();
-        btnYoutube = new javax.swing.JLabel();
-        btnInstagram = new javax.swing.JLabel();
-        kdance = new javax.swing.JLabel();
         panelHabitaciones = new javax.swing.JPanel();
         barraHabitaciones = new javax.swing.JPanel();
         txtModoHabitaciones = new javax.swing.JLabel();
@@ -393,6 +383,84 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         jPanelPrincipal.setBackground(new java.awt.Color(240, 240, 240));
         jPanelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        panelInicio.setBackground(new java.awt.Color(240, 240, 240));
+        panelInicio.setForeground(new java.awt.Color(240, 240, 240));
+        panelInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        barraInicioPane.setBackground(btnColorMain);
+        barraInicioPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtSeleccionaAccion.setFont(new java.awt.Font("Roboto", 2, 24)); // NOI18N
+        txtSeleccionaAccion.setForeground(new java.awt.Color(240, 240, 240));
+        txtSeleccionaAccion.setText("SELECCIONA ALGUNA DE LAS OPCIONES DE LA IZQUIERDA");
+        barraInicioPane.add(txtSeleccionaAccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, 60));
+
+        txtInicioTitulo.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
+        txtInicioTitulo.setForeground(new java.awt.Color(240, 240, 240));
+        txtInicioTitulo.setText("PANTALLA DE INICIO");
+        barraInicioPane.add(txtInicioTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
+
+        panelInicio.add(barraInicioPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
+
+        txtWelcomeUser.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
+        txtWelcomeUser.setForeground(new java.awt.Color(50, 50, 50));
+        txtWelcomeUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtWelcomeUser.setText("Bienvenido al SISTEMA");
+        txtWelcomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        panelInicio.add(txtWelcomeUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 1020, 80));
+
+        txtLogoMain.setFont(new java.awt.Font("Calibri", 1, 64)); // NOI18N
+        txtLogoMain.setForeground(new java.awt.Color(50, 50, 50));
+        txtLogoMain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtLogoMain.setText("FASTEL");
+        panelInicio.add(txtLogoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 1020, 80));
+
+        messagePaneInicio.setBackground(panelMessageColor);
+        messagePaneInicio.setForeground(new java.awt.Color(33, 235, 103));
+        messagePaneInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        messagePaneInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        btnGithub.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnGithub.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/git_de_la_minita.png"))); // NOI18N
+        btnGithub.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGithubMouseClicked(evt);
+            }
+        });
+        messagePaneInicio.add(btnGithub, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 50, 50));
+
+        btnTwitter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnTwitter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tuito.png"))); // NOI18N
+        messagePaneInicio.add(btnTwitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 0, 50, 50));
+
+        btnTiktok.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnTiktok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/titok.png"))); // NOI18N
+        messagePaneInicio.add(btnTiktok, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 50, 50));
+
+        btnFacebook.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnFacebook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/facebu.png"))); // NOI18N
+        messagePaneInicio.add(btnFacebook, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 50, 50));
+
+        btnYoutube.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnYoutube.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/yutu.png"))); // NOI18N
+        btnYoutube.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnYoutubeMouseClicked(evt);
+            }
+        });
+        messagePaneInicio.add(btnYoutube, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 50, 50));
+
+        btnInstagram.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnInstagram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/itagran.png"))); // NOI18N
+        messagePaneInicio.add(btnInstagram, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, 50, 50));
+
+        panelInicio.add(messagePaneInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
+
+        kdance.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/kdance.gif"))); // NOI18N
+        panelInicio.add(kdance, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 480, -1, -1));
+
+        jPanelPrincipal.add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
         panelReportes.setBackground(new java.awt.Color(240, 240, 240));
         panelReportes.setForeground(new java.awt.Color(240, 240, 240));
@@ -1213,84 +1281,6 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         jPanelPrincipal.add(panelClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
 
-        panelInicio.setBackground(new java.awt.Color(240, 240, 240));
-        panelInicio.setForeground(new java.awt.Color(240, 240, 240));
-        panelInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        barraInicioPane.setBackground(btnColorMain);
-        barraInicioPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtSeleccionaAccion.setFont(new java.awt.Font("Roboto", 2, 24)); // NOI18N
-        txtSeleccionaAccion.setForeground(new java.awt.Color(240, 240, 240));
-        txtSeleccionaAccion.setText("SELECCIONA ALGUNA DE LAS OPCIONES DE LA IZQUIERDA");
-        barraInicioPane.add(txtSeleccionaAccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, 60));
-
-        txtInicioTitulo.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        txtInicioTitulo.setForeground(new java.awt.Color(240, 240, 240));
-        txtInicioTitulo.setText("PANTALLA DE INICIO");
-        barraInicioPane.add(txtInicioTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
-
-        panelInicio.add(barraInicioPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 100));
-
-        txtWelcomeUser.setFont(new java.awt.Font("Roboto", 1, 48)); // NOI18N
-        txtWelcomeUser.setForeground(new java.awt.Color(50, 50, 50));
-        txtWelcomeUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtWelcomeUser.setText("Bienvenido al SISTEMA");
-        txtWelcomeUser.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        panelInicio.add(txtWelcomeUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 1020, 80));
-
-        txtLogoMain.setFont(new java.awt.Font("Calibri", 1, 64)); // NOI18N
-        txtLogoMain.setForeground(new java.awt.Color(50, 50, 50));
-        txtLogoMain.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtLogoMain.setText("FASTEL");
-        panelInicio.add(txtLogoMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 350, 1020, 80));
-
-        messagePaneInicio.setBackground(panelMessageColor);
-        messagePaneInicio.setForeground(new java.awt.Color(33, 235, 103));
-        messagePaneInicio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        messagePaneInicio.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnGithub.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnGithub.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/git_de_la_minita.png"))); // NOI18N
-        btnGithub.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGithubMouseClicked(evt);
-            }
-        });
-        messagePaneInicio.add(btnGithub, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 0, 50, 50));
-
-        btnTwitter.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnTwitter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tuito.png"))); // NOI18N
-        messagePaneInicio.add(btnTwitter, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 0, 50, 50));
-
-        btnTiktok.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnTiktok.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/titok.png"))); // NOI18N
-        messagePaneInicio.add(btnTiktok, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 0, 50, 50));
-
-        btnFacebook.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnFacebook.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/facebu.png"))); // NOI18N
-        messagePaneInicio.add(btnFacebook, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 0, 50, 50));
-
-        btnYoutube.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnYoutube.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/yutu.png"))); // NOI18N
-        btnYoutube.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnYoutubeMouseClicked(evt);
-            }
-        });
-        messagePaneInicio.add(btnYoutube, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 0, 50, 50));
-
-        btnInstagram.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnInstagram.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/itagran.png"))); // NOI18N
-        messagePaneInicio.add(btnInstagram, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 0, 50, 50));
-
-        panelInicio.add(messagePaneInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 630, 1020, 50));
-
-        kdance.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/kdance.gif"))); // NOI18N
-        panelInicio.add(kdance, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 480, -1, -1));
-
-        jPanelPrincipal.add(panelInicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 1020, 680));
-
         panelHabitaciones.setBackground(new java.awt.Color(240, 240, 240));
         panelHabitaciones.setForeground(new java.awt.Color(240, 240, 240));
         panelHabitaciones.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -1960,6 +1950,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     //Metodo de personalizacion de mensaje
     public void personalizarMensaje(JLabel txt, String datosFaltantes, JPanel panel, Color color) {
+        if (color.equals(colorError)) {
+            shake(VentanaPrincipal.this);
+        }
         txt.setText(datosFaltantes);
         panel.setBackground(color);
         panel.setVisible(true);
@@ -2026,6 +2019,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 datosFaltantes += " ]";
 
                 personalizarMensaje(txtMessageClientes, datosFaltantes, messageClientes, colorError);
+
             }
 
         } else if (modoCliente.equals("baja")) {
@@ -2553,7 +2547,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     vaciarCajasReservaciones();
                     actualizarTablaReservaciones();
                 } else {
-                    personalizarMensaje(txtMessageReservaciones, "ERROR AL ELIMINAR LA RESERVACION", messageReservaciones, colorBaja);
+                    personalizarMensaje(txtMessageReservaciones, "ERROR AL ELIMINAR LA RESERVACION", messageReservaciones, colorError);
                 }
 
             } else {
@@ -2784,9 +2778,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     boolean dance = false;
     private void btnYoutubeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnYoutubeMouseClicked
-
         if (!dance) {
-            reproducirCancion(8);
+            reproducirCancion(10);
         }
     }//GEN-LAST:event_btnYoutubeMouseClicked
 
@@ -3053,7 +3046,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     private void btnModoEliminarEmpleadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoEliminarEmpleadosMouseClicked
         eventoRegistro(txtModoEmpleados, "MODO ELIMINACION",
-                txtAgregarEmpleados, "CANCELAR",
+                txtAgregarEmpleados, "ELIMINAR",
                 btnAgregarEmpleados, colorBaja);
         desabilitarCajasEmpleados();
         cajaIdEmpleado.setEnabled(true);
@@ -3511,13 +3504,43 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         dance = true;
         new Thread(() -> {
             try {
+
+                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/iconos/kdance.wav").getAbsoluteFile());
+                Clip clip = AudioSystem.getClip();
+                clip.open(audioInputStream);
+                clip.start();
                 Thread.sleep(duracionSegundos * 1000);
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
                 kdance.setVisible(false);
                 dance = false;
-            }
+                clip.stop();
+                clip.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            } 
         }).start();
+    }
+
+    public static void shake(JFrame frame) {
+        int originalX = frame.getLocation().x;
+        int originalY = frame.getLocation().y;
+        final int SHAKE_DISTANCE = 3;
+        final int SHAKE_DURATION = 250; // en milisegundos
+        final int SHAKE_FREQUENCY = 25; // en milisegundos
+        final long endTime = System.currentTimeMillis() + SHAKE_DURATION;
+
+        Thread t = new Thread(() -> {
+            while (System.currentTimeMillis() < endTime) {
+                try {
+                    frame.setLocation(originalX + (int) (Math.random() * SHAKE_DISTANCE * 2) - SHAKE_DISTANCE,
+                            originalY + (int) (Math.random() * SHAKE_DISTANCE * 2) - SHAKE_DISTANCE);
+                    Thread.sleep(SHAKE_FREQUENCY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            frame.setLocation(originalX, originalY);
+        });
+        t.start();
     }
 }
