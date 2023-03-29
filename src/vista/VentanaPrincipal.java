@@ -1558,15 +1558,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtcClientes2.setForeground(new java.awt.Color(240, 240, 240));
         txtcClientes2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtcClientes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user.png"))); // NOI18N
-        userPanel.add(txtcClientes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 260, 90));
+        userPanel.add(txtcClientes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 90));
 
         txtcClientes3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         txtcClientes3.setForeground(new java.awt.Color(240, 240, 240));
         txtcClientes3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtcClientes3.setText("USERNAME");
-        userPanel.add(txtcClientes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 260, 30));
+        userPanel.add(txtcClientes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 260, 30));
 
-        sideMenu.add(userPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 500, 260, 180));
+        sideMenu.add(userPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 260, 140));
 
         btnClientes.setBackground(btnColorReset);
         btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -1686,7 +1686,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtReportes.setText("Reportes");
         btnReportes.add(txtReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 180, 60));
 
-        sideMenu.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 260, 60));
+        sideMenu.add(btnReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 260, 60));
 
         jPanelPrincipal.add(sideMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 680));
 
@@ -3504,20 +3504,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         dance = true;
         new Thread(() -> {
             try {
-
-                AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("src/iconos/kdance.wav").getAbsoluteFile());
-                Clip clip = AudioSystem.getClip();
-                clip.open(audioInputStream);
-                clip.start();
                 Thread.sleep(duracionSegundos * 1000);
-                kdance.setVisible(false);
-                dance = false;
-                clip.stop();
-                clip.close();
-
             } catch (Exception e) {
                 e.printStackTrace();
-            } 
+            } finally {
+                kdance.setVisible(false);
+                dance = false;
+            }
         }).start();
     }
 
