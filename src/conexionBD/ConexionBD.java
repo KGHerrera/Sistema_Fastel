@@ -14,6 +14,7 @@ import modelo.Cliente;
 import modelo.Empleado;
 import modelo.Habitacion;
 import modelo.Reservacion;
+import modelo.Usuario;
 import vista.ResultSetTableModel;
 
 /**
@@ -59,7 +60,25 @@ public class ConexionBD {
         }
     }
 
-    // Consultas clientes
+    // consultar usuario      
+    public static ResultSet verificarUsuario(Usuario u) {
+        try {
+            String consulta = "SELECT dbo.verificarUsuario(?, ?);";
+
+            pstm = conexion.prepareStatement(consulta);
+            pstm.setString(1, u.getUsuario());
+            pstm.setString(2, u.getPassword());
+
+            rs = pstm.executeQuery();
+
+        } catch (Exception ex) {
+            
+        }
+
+        return rs;
+    }
+
+// Consultas clientes
     public static boolean altaCliente(Cliente cliente) {
         boolean exito = false;
         try {
@@ -203,7 +222,6 @@ public class ConexionBD {
     // =============================================
     // consultas para la tabla habitaciones
     // =============================================
-    
     public static boolean altaHabitacion(Habitacion habitacion) {
         boolean exito = false;
         try {
