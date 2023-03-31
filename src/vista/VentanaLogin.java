@@ -32,6 +32,16 @@ public class VentanaLogin extends javax.swing.JFrame {
     public static String user = "USUARIO";
     public static String tipo = "EMPLEADO";
 
+    private String[] protips = {
+        "al dar clic en una tabla en modo cambio se cargan los datos",
+        "si das clic en el icono de youtube seras 20% mas feliz",
+        "la interfaz genera colores aleatorios a partir de un 30% de HUE",
+        "no crees usuarios con espacios en su nombre o pasaran cosas malas",
+        "acepta los terminos y condiciones para ser un BIG SHOT",
+        "si das clic en el icono de github, pos ya de una vez sigueme",
+        "anuma se nota que no tengo amigos pero soy feliz"
+    };
+
     public VentanaLogin() {
 
         ConexionBD.getConexion();
@@ -76,7 +86,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnClose = new javax.swing.JLabel();
         btnMinimize = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txtOlvidoXD = new javax.swing.JLabel();
+        txtTips = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -266,10 +276,17 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(42, 31, 84));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtOlvidoXD.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
-        txtOlvidoXD.setForeground(new java.awt.Color(240, 240, 240));
-        txtOlvidoXD.setText("al dar clic en una tabla en modo cambio se cargan los datos");
-        jPanel2.add(txtOlvidoXD, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 0, 340, 50));
+        txtTips.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
+        txtTips.setForeground(new java.awt.Color(240, 240, 240));
+        txtTips.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        txtTips.setText("al dar clic en una tabla en modo cambio se cargan los datos");
+        txtTips.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtTips.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTipsMouseClicked(evt);
+            }
+        });
+        jPanel2.add(txtTips, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 0, 780, 50));
 
         bg.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 670, 1020, 50));
 
@@ -306,10 +323,10 @@ public class VentanaLogin extends javax.swing.JFrame {
                 if (rs.getString(1) != null) {
 
                     String[] datos = rs.getString(1).split(" ");
-                    
+
                     user = datos[0].toUpperCase();
                     tipo = datos[1].toUpperCase();
-                    
+
                     System.out.println(user);
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
@@ -372,6 +389,14 @@ public class VentanaLogin extends javax.swing.JFrame {
         this.setExtendedState(ICONIFIED);
         this.setExtendedState(1);
     }//GEN-LAST:event_btnMinimizeMouseClicked
+    int indiceActual = 0;
+    private void txtTipsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTipsMouseClicked
+        indiceActual++;
+        if (indiceActual == protips.length) {
+            indiceActual = 0;
+        }
+        txtTips.setText(protips[indiceActual]);
+    }//GEN-LAST:event_txtTipsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -478,8 +503,8 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel txtLogin1;
     private javax.swing.JLabel txtLogo;
     private javax.swing.JLabel txtMessageLogin;
-    private javax.swing.JLabel txtOlvidoXD;
     private javax.swing.JLabel txtPassword;
+    private javax.swing.JLabel txtTips;
     private javax.swing.JLabel txtUser;
     private javax.swing.JLabel userIcon;
     // End of variables declaration//GEN-END:variables
