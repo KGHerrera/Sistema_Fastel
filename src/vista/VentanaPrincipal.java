@@ -168,6 +168,9 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         for (String dato : datos) {
             comboTipoHabitacion.addItem(dato);
         }
+        
+        tipoUsuario.setText(VentanaLogin.tipo);
+        username.setText(VentanaLogin.user);
     }
 
     private void resetMessage(JPanel panel, JLabel message) {
@@ -358,7 +361,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtLogo = new javax.swing.JLabel();
         userPanel = new javax.swing.JPanel();
         txtcClientes2 = new javax.swing.JLabel();
-        txtcClientes3 = new javax.swing.JLabel();
+        tipoUsuario = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
         btnClientes = new javax.swing.JPanel();
         txtClientes = new javax.swing.JLabel();
         btnReservaciones = new javax.swing.JPanel();
@@ -1525,13 +1529,19 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtcClientes2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user.png"))); // NOI18N
         userPanel.add(txtcClientes2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 90));
 
-        txtcClientes3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        txtcClientes3.setForeground(new java.awt.Color(240, 240, 240));
-        txtcClientes3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtcClientes3.setText("USERNAME");
-        userPanel.add(txtcClientes3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 260, 30));
+        tipoUsuario.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        tipoUsuario.setForeground(new java.awt.Color(240, 240, 240));
+        tipoUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tipoUsuario.setText("ADMINISTRADOR");
+        userPanel.add(tipoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 260, 30));
 
-        sideMenu.add(userPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 260, 140));
+        username.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        username.setForeground(new java.awt.Color(240, 240, 240));
+        username.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        username.setText("USERNAME");
+        userPanel.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 260, 20));
+
+        sideMenu.add(userPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 260, 160));
 
         btnClientes.setBackground(btnColorReset);
         btnClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -3262,6 +3272,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JTable tablaHabitaciones;
     private javax.swing.JTable tablaReservaciones;
     private javax.swing.JTable tablaReservacionesCanceladas;
+    private javax.swing.JLabel tipoUsuario;
     private javax.swing.JLabel txtAgregar;
     private javax.swing.JLabel txtAgregarEmpleados;
     private javax.swing.JLabel txtAgregarHabitaciones;
@@ -3339,8 +3350,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JLabel txtVerTodoReservaciones1;
     private javax.swing.JLabel txtWelcomeUser;
     private javax.swing.JLabel txtcClientes2;
-    private javax.swing.JLabel txtcClientes3;
     private javax.swing.JPanel userPanel;
+    private javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 
     // ===================================================    

@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -28,7 +29,8 @@ public class VentanaLogin extends javax.swing.JFrame {
     /**
      * Creates new form VentanaLogin
      */
-    public static String user = "";
+    public static String user = "USUARIO";
+    public static String tipo = "EMPLEADO";
 
     public VentanaLogin() {
 
@@ -200,6 +202,10 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnHomePane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHomePane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         menu.add(btnHomePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 260, 50));
+
+        jSeparator1.setBackground(new java.awt.Color(70, 41, 125));
+        jSeparator1.setForeground(new java.awt.Color(70, 41, 125));
+        jSeparator1.setToolTipText("");
         menu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 93, 180, 40));
 
         txtLogo.setFont(new java.awt.Font("Roboto Cn", 1, 32)); // NOI18N
@@ -298,7 +304,12 @@ public class VentanaLogin extends javax.swing.JFrame {
             try {
                 rs.next();
                 if (rs.getString(1) != null) {
-                    user = rs.getString(1);
+
+                    String[] datos = rs.getString(1).split(" ");
+                    
+                    user = datos[0].toUpperCase();
+                    tipo = datos[1].toUpperCase();
+                    
                     System.out.println(user);
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
@@ -307,9 +318,10 @@ public class VentanaLogin extends javax.swing.JFrame {
                     });
                     dispose();
                 } else {
-                    messagePane.setBackground(new Color(199, 56, 87));
+                    messagePane.setBackground(new Color(219, 0, 84));
                     txtMessageLogin.setText("DATOS ERRONEOS intenta de nuevo");
                     messagePane.setVisible(true);
+                    shake(VentanaLogin.this);
                 }
 
             } catch (SQLException e1) {
@@ -329,9 +341,10 @@ public class VentanaLogin extends javax.swing.JFrame {
 
             noDatos += " ]";
 
-            messagePane.setBackground(new Color(199, 56, 87));
+            messagePane.setBackground(new Color(219, 0, 84));
             txtMessageLogin.setText(noDatos);
             messagePane.setVisible(true);
+            shake(VentanaLogin.this);
         }
     }//GEN-LAST:event_btnLoginMouseClicked
 
@@ -416,6 +429,29 @@ public class VentanaLogin extends javax.swing.JFrame {
                 ((JPasswordField) c).setText("");
             }
         }
+    }
+
+    public static void shake(JFrame frame) {
+        int originalX = frame.getLocation().x;
+        int originalY = frame.getLocation().y;
+        final int SHAKE_DISTANCE = 3;
+        final int SHAKE_DURATION = 250; // en milisegundos
+        final int SHAKE_FREQUENCY = 25; // en milisegundos
+        final long endTime = System.currentTimeMillis() + SHAKE_DURATION;
+
+        Thread t = new Thread(() -> {
+            while (System.currentTimeMillis() < endTime) {
+                try {
+                    frame.setLocation(originalX + (int) (Math.random() * SHAKE_DISTANCE * 2) - SHAKE_DISTANCE,
+                            originalY + (int) (Math.random() * SHAKE_DISTANCE * 2) - SHAKE_DISTANCE);
+                    Thread.sleep(SHAKE_FREQUENCY);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            frame.setLocation(originalX, originalY);
+        });
+        t.start();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
