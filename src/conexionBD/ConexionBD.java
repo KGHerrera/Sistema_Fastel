@@ -645,8 +645,8 @@ public class ConexionBD {
 
         ResultSetTableModel modeloDatos = null;
         String consulta = "SELECT * FROM v_reservaciones "
-                + "WHERE id_reservacion LIKE " + reservacion.getIdReservacion()
-                + " or id_habitacion LIKE " + reservacion.getIdHabitacion()
+                + "WHERE id_reservacion = " + reservacion.getIdReservacion()
+                + " or id_habitacion = " + reservacion.getIdHabitacion()
                 + " or nombre_cliente LIKE '" + nombre + "%'"
                 + " or vigencia LIKE '" + reservacion.getVigencia() + "'"
                 + " or fecha_reservacion LIKE '" + reservacion.getFechaReservacion() + "'"

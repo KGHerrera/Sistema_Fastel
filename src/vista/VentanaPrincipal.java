@@ -2683,8 +2683,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 } else {
                     reservacion.setIdReservacion(0);
                 }
-
-                String nombre = cajaIdClienteReservacion.getText();
+                String nombre = "";
+                if (isIdCliente) {
+                    nombre = cajaIdClienteReservacion.getText();
+                } else {
+                    nombre = "nuleado2021";
+                }
 
                 if (isIdHabitacion) {
                     reservacion.setIdHabitacion(Integer.parseInt(cajaIdHabitacionReservacion.getText()));
