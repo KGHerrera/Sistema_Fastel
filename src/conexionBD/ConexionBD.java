@@ -220,7 +220,7 @@ public class ConexionBD {
 
         ResultSetTableModel modeloDatos = null;
         String consulta = "SELECT * FROM clientes "
-                + "WHERE id_cliente LIKE " + a.getIdCliente()
+                + "WHERE id_cliente = " + a.getIdCliente()
                 + " or nombre LIKE '" + a.getNombre()
                 + "' or apellido LIKE '" + a.getApellido()
                 + "' or telefono LIKE '" + a.getTelefono()
@@ -434,7 +434,7 @@ public class ConexionBD {
         String consulta = "SELECT * FROM habitaciones "
                 + "WHERE id_habitacion LIKE " + habitacion.getIdHabitacion()
                 + " or tipo_habitacion LIKE '" + habitacion.getTipoHabitacion()
-                + "' or precio_noche LIKE " + habitacion.getPrecioNoche() + "";
+                + "' or precio_noche = " + habitacion.getPrecioNoche() + "";
 
         try {
             modeloDatos = new ResultSetTableModel(controlador, url,
@@ -813,7 +813,7 @@ public class ConexionBD {
 
         ResultSetTableModel modeloDatos = null;
         String consulta = "SELECT * FROM empleados "
-                + "WHERE id_empleado LIKE " + empleado.getId()
+                + "WHERE id_empleado = " + empleado.getId()
                 + " or nombre LIKE '" + empleado.getNombre() + "'"
                 + " or apellido LIKE '" + empleado.getApellido() + "'"
                 + " or rfc LIKE '" + empleado.getRfc() + "'"

@@ -30,7 +30,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     /**
      * Creates new form VentanaLogin
      */
-    public static String user = "USUARIO";
+    public static String user = "KHERRERA";
     public static String tipo = "EMPLEADO";
     public static String id = "0";
     public static Empleado empleado = new Empleado(0, "nuleado", "suarez", "DKJASL123", "494123901", "barredor", 2000);;
