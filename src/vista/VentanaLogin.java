@@ -33,13 +33,16 @@ public class VentanaLogin extends javax.swing.JFrame {
     public static String tipo = "EMPLEADO";
 
     private String[] protips = {
-        "al dar clic en una tabla en modo cambio se cargan los datos",
-        "si das clic en el icono de youtube seras 20% mas feliz",
-        "la interfaz genera colores aleatorios a partir de un 30% de HUE",
-        "no crees usuarios con espacios en su nombre o pasaran cosas malas",
-        "acepta los terminos y condiciones para ser un BIG SHOT",
-        "si das clic en el icono de github, pos ya de una vez sigueme",
-        "anuma se nota que no tengo amigos pero soy feliz"
+        "al dar clic en una tabla en modo cambio se cargan los datos a los campos del formulario",
+        "si das clic en el icono de youtube seras 20% mas feliz, washa nomas lo que puedo hacers",
+        "la interfaz genera colores aleatorios a partir de un 30% del circulo cromatico :0",
+        "no crees usuarios con espacios en su nombre o pasaran cosas malas (* lo arregla despues)",
+        "acepta los terminos y condiciones que estas esperando, de las frases que mas me gustan",
+        "si das clic en el icono de github, pos ya de una vez sigueme o no tu sabes jejogs",        
+        "desocupa una habitacion antes de reservarla o sino ijuesu pobres clientes",
+        "caminar hacia atras es increible deberias intentarlo (es algo imposible al inicio)",
+        "chat me recomento la cancion: THE Luminers - Ho Hey, deberias escucharla",
+        "anuma se nota que no tengo nada mejor que hacer que escribir mensajes de ayuda que no ayudan a nadie"
     };
 
     public VentanaLogin() {
@@ -279,7 +282,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         txtTips.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
         txtTips.setForeground(new java.awt.Color(240, 240, 240));
         txtTips.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        txtTips.setText("al dar clic en una tabla en modo cambio se cargan los datos");
+        txtTips.setText("al dar clic en una tabla en modo cambio se cargan los datos a los campos del formulario");
         txtTips.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtTips.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
