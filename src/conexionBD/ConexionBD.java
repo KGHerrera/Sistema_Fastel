@@ -77,6 +77,42 @@ public class ConexionBD {
 
         return rs;
     }
+    
+    public static Empleado getEmpleadoById(int id) {
+        
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Empleado empleado = null;
+
+        try {
+            ps = conexion.prepareStatement("SELECT * FROM empleados WHERE id_empleado = ?");
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                empleado = new Empleado(
+                        rs.getInt("id_empleado"),
+                        rs.getString("nombre"),
+                        rs.getString("apellido"),
+                        rs.getString("rfc"),
+                        rs.getString("telefono"),
+                        rs.getString("puesto"),
+                        rs.getFloat("sueldo")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (ps != null) ps.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return empleado;
+    }
 
 // Consultas clientes
     public static boolean altaCliente(Cliente cliente) {

@@ -104,11 +104,13 @@ AS
 BEGIN
     DECLARE @rtipo VARCHAR(20)
     DECLARE @rusuario VARCHAR(20)
+    DECLARE @idusuario INT
 
     SELECT @rtipo = tipo_usuario FROM usuarios WHERE usuario = @usuario AND password = HASHBYTES('SHA2_512', @password)
     SELECT @rusuario = usuario FROM usuarios WHERE usuario = @usuario AND password = HASHBYTES('SHA2_512', @password)
+    SELECT @idusuario = fk_id_empleado FROM usuarios WHERE usuario = @usuario AND password = HASHBYTES('SHA2_512', @password)
       
-    RETURN @rusuario + ' ' + @rtipo
+    RETURN @rusuario + ' ' + @rtipo + ' ' + (SELECT CAST(@idusuario as varchar))
 END;
 
 /* EJEMPLO DE LLAMADO A LA FUNCION ANTERIOR

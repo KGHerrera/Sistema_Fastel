@@ -18,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import modelo.Empleado;
 import modelo.Usuario;
 
 /**
@@ -31,6 +32,8 @@ public class VentanaLogin extends javax.swing.JFrame {
      */
     public static String user = "USUARIO";
     public static String tipo = "EMPLEADO";
+    public static String id = "0";
+    public static Empleado empleado = new Empleado(0, "nuleado", "suarez", "DKJASL123", "494123901", "barredor", 2000);;
 
     private String[] protips = {
         "al dar clic en una tabla en modo cambio se cargan los datos a los campos del formulario",
@@ -48,6 +51,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     public VentanaLogin() {
 
         ConexionBD.getConexion();
+        
 
         initComponents();
         setLocationRelativeTo(null);
@@ -329,8 +333,13 @@ public class VentanaLogin extends javax.swing.JFrame {
 
                     user = datos[0].toUpperCase();
                     tipo = datos[1].toUpperCase();
-
+                    id = datos[2];
+                    
+                    empleado = ConexionBD.getEmpleadoById(Integer.valueOf(id));
+                    
+                    System.out.println(empleado);
                     System.out.println(user);
+                    
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             new VentanaPrincipal().setVisible(true);
