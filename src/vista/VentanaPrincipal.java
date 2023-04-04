@@ -26,6 +26,7 @@ import javax.swing.UIManager;
 import modelo.Cliente;
 import modelo.Empleado;
 import controlador.EmpleadoDAO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import modelo.Habitacion;
 import modelo.Reservacion;
@@ -52,6 +53,8 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     Color colorBaja;
     Color colorError;
     Color colorBtnAgregar;
+
+    ImageIcon[] iconos = new ImageIcon[5];
 
     String modoCliente = "alta";
     String modoReservacion = "alta";
@@ -87,6 +90,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         empleado = new Empleado();
         empleadoDAO = new EmpleadoDAO();
+
+        //rellenar iconos
+        iconos[0] = new ImageIcon(getClass().getResource("/iconos/user.png"));
+        iconos[1] = new ImageIcon(getClass().getResource("/iconos/user1.png"));
+        iconos[2] = new ImageIcon(getClass().getResource("/iconos/user2.png"));
+        iconos[3] = new ImageIcon(getClass().getResource("/iconos/user3.png"));
+        iconos[4] = new ImageIcon(getClass().getResource("/iconos/user4.png"));
 
         // Seleccionar tema aleatorio
         Random random = new Random();
@@ -178,7 +188,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         // CARGAR DATOS DEL EMPLEADO
         tipoUsuario1.setText(VentanaLogin.tipo);
         tipoUsuario.setText(VentanaLogin.tipo);
-        username1.setText(VentanaLogin.user);
+        star.setText(VentanaLogin.user);
         username.setText(VentanaLogin.user);
 
         txtuserid.setText(String.valueOf(VentanaLogin.empleado.getId()));
@@ -238,7 +248,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtMessageReportes2 = new javax.swing.JLabel();
         panelRound1 = new Clases.PanelRound();
         txtPFP1 = new javax.swing.JLabel();
-        username1 = new javax.swing.JLabel();
+        star = new javax.swing.JLabel();
         tipoUsuario1 = new javax.swing.JLabel();
         empleadoSeparator = new javax.swing.JSeparator();
         txtInfoUser1 = new javax.swing.JLabel();
@@ -265,6 +275,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtDesactivarShake = new javax.swing.JLabel();
         btnCerrarSesion = new Clases.PanelRound();
         txtCerrarSesion = new javax.swing.JLabel();
+        username2 = new javax.swing.JLabel();
         panelHabitaciones = new javax.swing.JPanel();
         barraHabitaciones = new javax.swing.JPanel();
         txtModoHabitaciones = new javax.swing.JLabel();
@@ -479,7 +490,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtQueGenerar.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
         txtQueGenerar.setForeground(new java.awt.Color(90, 90, 90));
         txtQueGenerar.setText("SELECCIONA LO QUE QUIERES GENERAR");
-        panelReportes.add(txtQueGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        panelReportes.add(txtQueGenerar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
         btnGenerarReporte.setBackground(btnColorReset);
         btnGenerarReporte.setRoundBottomLeft(25);
@@ -616,13 +627,19 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtPFP1.setForeground(new java.awt.Color(240, 240, 240));
         txtPFP1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtPFP1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/user.png"))); // NOI18N
+        txtPFP1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtPFP1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtPFP1MouseClicked(evt);
+            }
+        });
         panelRound1.add(txtPFP1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 80, 80));
 
-        username1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        username1.setForeground(new java.awt.Color(240, 240, 240));
-        username1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        username1.setText("USERNAME");
-        panelRound1.add(username1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 160, 20));
+        star.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        star.setForeground(new java.awt.Color(240, 240, 240));
+        star.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        star.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/start.png"))); // NOI18N
+        panelRound1.add(star, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 40, 50));
 
         tipoUsuario1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tipoUsuario1.setForeground(new java.awt.Color(240, 240, 240));
@@ -648,7 +665,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtsueldo.setForeground(new java.awt.Color(240, 240, 240));
         txtsueldo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtsueldo.setText("sueldo:");
-        panelRound1.add(txtsueldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, 100, 20));
+        panelRound1.add(txtsueldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 100, 20));
 
         tipoUsuario2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         tipoUsuario2.setForeground(new java.awt.Color(240, 240, 240));
@@ -690,13 +707,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txttelefono.setForeground(new java.awt.Color(240, 240, 240));
         txttelefono.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txttelefono.setText("telefono:");
-        panelRound1.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, 100, 20));
+        panelRound1.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 220, 100, 20));
 
         txtrfc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtrfc.setForeground(new java.awt.Color(240, 240, 240));
         txtrfc.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         txtrfc.setText("RFC:");
-        panelRound1.add(txtrfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 100, 20));
+        panelRound1.add(txtrfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 100, 20));
 
         txtInfoUser3.setFont(new java.awt.Font("Roboto Cn", 1, 12)); // NOI18N
         txtInfoUser3.setForeground(btnColorLetra);
@@ -711,7 +728,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtusersueldo.setForeground(new java.awt.Color(240, 240, 240));
         txtusersueldo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtusersueldo.setText("sueldo");
-        panelRound1.add(txtusersueldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 100, 20));
+        panelRound1.add(txtusersueldo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 250, 100, 20));
 
         txtuserid.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtuserid.setForeground(new java.awt.Color(240, 240, 240));
@@ -741,13 +758,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtusertelefono.setForeground(new java.awt.Color(240, 240, 240));
         txtusertelefono.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtusertelefono.setText("telefono");
-        panelRound1.add(txtusertelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 220, 100, 20));
+        panelRound1.add(txtusertelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 100, 20));
 
         txtuserrfc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         txtuserrfc.setForeground(new java.awt.Color(240, 240, 240));
         txtuserrfc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txtuserrfc.setText("rfc");
-        panelRound1.add(txtuserrfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 100, 20));
+        panelRound1.add(txtuserrfc, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 100, 20));
         panelRound1.add(checkShake, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 410, 30, 40));
 
         txtDesactivarShake.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
@@ -770,6 +787,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         btnCerrarSesion.add(txtCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
         panelRound1.add(btnCerrarSesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 410, 170, -1));
+
+        username2.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        username2.setForeground(new java.awt.Color(240, 240, 240));
+        username2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        username2.setText("USERNAME");
+        panelRound1.add(username2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 160, 20));
 
         panelUsuario.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 960, 470));
 
@@ -1842,6 +1865,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         txtLogo.setFont(new java.awt.Font("Roboto Cn", 1, 32)); // NOI18N
         txtLogo.setForeground(new java.awt.Color(240, 240, 240));
         txtLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/hotel.png"))); // NOI18N
         txtLogo.setText("FASTEL");
         txtLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtLogo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1849,7 +1873,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 txtLogoMouseClicked(evt);
             }
         });
-        sideMenu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 260, 50));
+        sideMenu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 260, 90));
 
         userPanel.setBackground(btnColorReset);
         userPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -2081,6 +2105,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     // Metodos de la barra de la ventana 
     //=======================================================
     int xMouse, yMouse;
+
     private void barraVentanaMousePressed(java.awt.event.MouseEvent evt) {
         xMouse = evt.getX();
         yMouse = evt.getY();
@@ -2090,7 +2115,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         int x = evt.getXOnScreen();
         int y = evt.getYOnScreen();
         this.setLocation(x - xMouse, y - yMouse);
-    }                                         
+    }
 
     // ===========================================================
     // Cambios de color en los botones del menu
@@ -3452,6 +3477,16 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         ocultarPaneles(panelUsuario);
     }//GEN-LAST:event_userPanelMouseClicked
 
+    int indiceIconos  = 0;
+    private void txtPFP1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtPFP1MouseClicked
+        indiceIconos++;
+        if (indiceIconos == iconos.length) {
+            indiceIconos = 0;
+        }
+        txtPFP.setIcon(iconos[indiceIconos]);
+        txtPFP1.setIcon(iconos[indiceIconos]);
+    }//GEN-LAST:event_txtPFP1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -3601,6 +3636,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JSeparator permisosSeparator;
     private javax.swing.JSeparator reportesSeparator;
     private javax.swing.JPanel sideMenu;
+    private javax.swing.JLabel star;
     private javax.swing.JTable tablaClientes;
     private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTable tablaHabitaciones;
@@ -3714,7 +3750,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
     private javax.swing.JLabel txtusertelefono;
     private javax.swing.JPanel userPanel;
     private javax.swing.JLabel username;
-    private javax.swing.JLabel username1;
+    private javax.swing.JLabel username2;
     private javax.swing.JLabel username3;
     // End of variables declaration//GEN-END:variables
 
