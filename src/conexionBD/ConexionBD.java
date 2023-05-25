@@ -60,8 +60,7 @@ public class ConexionBD {
             //e.printStackTrace();
         }
     }
-    
-    
+
     public static ArrayList<String> obtenerHabitacionesConcatenadas() {
         ArrayList<String> habitacionesConcatenadas = new ArrayList<>();
 
@@ -71,7 +70,7 @@ public class ConexionBD {
 
         try {
             conexion = ConexionBD.getConexion();
-            String query = "SELECT id_habitacion, tipo_habitacion, disponible FROM habitaciones WHERE baja_temporal = 0";
+            String query = "SELECT id_habitacion, tipo_habitacion, disponible, baja_temporal FROM habitaciones";
             pstm = conexion.prepareStatement(query);
             rs = pstm.executeQuery();
 
@@ -79,7 +78,9 @@ public class ConexionBD {
                 int idHabitacion = rs.getInt("id_habitacion");
                 String tipoHabitacion = rs.getString("tipo_habitacion");
                 boolean disponible = rs.getBoolean("disponible");
-                String habitacionConcatenada = idHabitacion + " " + tipoHabitacion + " " + (disponible ? "dis" : "no dis");
+                boolean bajaTemporal = rs.getBoolean("baja_temporal");
+                String estado = bajaTemporal ? "baja" : (disponible ? "Disponible" : "No disponible");
+                String habitacionConcatenada = idHabitacion + " " + tipoHabitacion + " " + estado;
                 habitacionesConcatenadas.add(habitacionConcatenada);
             }
         } catch (SQLException e) {
@@ -104,7 +105,7 @@ public class ConexionBD {
         }
         return habitacionesConcatenadas;
     }
-    
+
     //
     public static ArrayList<String> obtenerClientesConcatenados() {
         ArrayList<String> clientesConcatenados = new ArrayList<>();
@@ -115,7 +116,7 @@ public class ConexionBD {
 
         try {
             conexion = ConexionBD.getConexion();
-            String query = "SELECT id_cliente, nombre, apellido FROM clientes";
+            String query = "SELECT id_cliente, nombre, apellido, rfc FROM clientes";
             pstm = conexion.prepareStatement(query);
             rs = pstm.executeQuery();
 
@@ -123,7 +124,8 @@ public class ConexionBD {
                 int idCliente = rs.getInt("id_cliente");
                 String nombre = rs.getString("nombre");
                 String apellido = rs.getString("apellido");
-                String clienteConcatenado = idCliente + " " + nombre + " " + apellido;
+                String rfc = rs.getString("rfc");
+                String clienteConcatenado = nombre + " " + apellido + " " + rfc + " " + idCliente;
                 clientesConcatenados.add(clienteConcatenado);
             }
         } catch (SQLException e) {
@@ -162,14 +164,14 @@ public class ConexionBD {
             rs = pstm.executeQuery();
 
         } catch (Exception ex) {
-            
+
         }
 
         return rs;
     }
-    
+
     public static Empleado getEmpleadoById(int id) {
-        
+
         PreparedStatement ps = null;
         ResultSet rs = null;
         Empleado empleado = null;
@@ -194,8 +196,12 @@ public class ConexionBD {
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (ps != null) ps.close();
+                if (rs != null) {
+                    rs.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -602,7 +608,7 @@ public class ConexionBD {
                     return -5;
                 }
             }
-            
+
             // verificar que la fecha sea mayor
             String sqlFechaDif = "SELECT DATEDIFF(day, GETDATE(), ?)";
             ps = conexion.prepareStatement(sqlFechaDif);
