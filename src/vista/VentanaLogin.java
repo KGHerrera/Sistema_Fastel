@@ -5,7 +5,6 @@
 package vista;
 
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import modelo.Usuario;
 import conexionBD.ConexionBD;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -31,9 +30,17 @@ public class VentanaLogin extends javax.swing.JFrame {
      * Creates new form VentanaLogin
      */
     public static String user = "KHERRERA";
-    public static String tipo = "EMPLEADO";
+    public static String tipo = "ADMINISTRADOR";
     public static String id = "0";
-    public static Empleado empleado = new Empleado(0, "nuleado", "suarez", "DKJASL123", "494123901", "barredor", 2000);;
+    public static Empleado empleado = new Empleado(0, "nuleado", "suarez", "DKJASL123", "494123901", "barredor", 2000);
+    ;
+
+    Color btnColorHover = new Color(23, 80, 80);
+    Color btnColorMain = new Color(23, 60, 60);
+    Color btnColorReset = new Color(23, 70, 70);
+    Color btnColorLetra = new Color(111, 230, 230);
+    Color btnColorSeparator = new Color(40, 130, 130);
+    Color colorBaja = new Color(219, 0, 84);
 
     private String[] protips = {
         "al dar clic en una tabla en modo cambio se cargan los datos a los campos del formulario",
@@ -41,7 +48,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         "la interfaz genera colores aleatorios a partir de un 30% del circulo cromatico :0",
         "no crees usuarios con espacios en su nombre o pasaran cosas malas (* lo arregla despues)",
         "acepta los terminos y condiciones que estas esperando, de las frases que mas me gustan",
-        "si das clic en el icono de github, pos ya de una vez sigueme o no tu sabes jejogs",        
+        "si das clic en el icono de github, pos ya de una vez sigueme o no tu sabes jejogs",
         "desocupa una habitacion antes de reservarla o sino ijuesu pobres clientes",
         "caminar hacia atras es increible deberias intentarlo (es algo imposible al inicio)",
         "chat me recomento la cancion: THE Luminers - Ho Hey, deberias escucharla",
@@ -52,10 +59,23 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         ConexionBD.getConexion();
         
+        btnColorMain = horaDelRandomizer(btnColorMain, 0.2);
+        btnColorHover = horaDelRandomizer(btnColorHover, 0.2);
+        btnColorReset = horaDelRandomizer(btnColorReset, 0.2);
+        btnColorLetra = horaDelRandomizer(btnColorLetra, 0.2);
+        btnColorSeparator = horaDelRandomizer(btnColorSeparator, 0.2);
 
         initComponents();
         setLocationRelativeTo(null);
 
+    }
+    
+    private Color horaDelRandomizer(Color color1, double randomNum) {
+        float[] hsb = Color.RGBtoHSB(color1.getRed(), color1.getGreen(), color1.getBlue(), null);
+        float hue = hsb[0]; // Obtenemos el valor de hue
+        float saturation = hsb[1]; // Obtenemos el valor de saturación
+        float brightness = hsb[2]; // Obtenemos el valor de brillo
+        return Color.getHSBColor(hue + (float) randomNum, saturation, brightness);
     }
 
     /**
@@ -99,7 +119,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        bg.setBackground(new java.awt.Color(55, 42, 104));
+        bg.setBackground(btnColorSeparator);
         bg.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         loginPane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -212,34 +232,36 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         bg.add(loginPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 440, 550));
 
-        menu.setBackground(new java.awt.Color(40, 23, 72));
+        menu.setBackground(btnColorMain);
         menu.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        btnHomePane.setBackground(new java.awt.Color(22, 16, 44));
+        btnHomePane.setBackground(btnColorMain);
         btnHomePane.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHomePane.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         menu.add(btnHomePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 260, 50));
 
-        jSeparator1.setBackground(new java.awt.Color(70, 41, 125));
-        jSeparator1.setForeground(new java.awt.Color(70, 41, 125));
+        jSeparator1.setBackground(btnColorSeparator);
+        jSeparator1.setForeground(btnColorSeparator);
         jSeparator1.setToolTipText("");
         menu.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 93, 180, 40));
 
+        txtLogo.setBackground(btnColorMain);
         txtLogo.setFont(new java.awt.Font("Roboto Cn", 1, 32)); // NOI18N
         txtLogo.setForeground(new java.awt.Color(240, 240, 240));
         txtLogo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        txtLogo.setText("FASTEL");
+        txtLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/hotel.png"))); // NOI18N
+        txtLogo.setText("FASTEL-JAH");
         txtLogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtLogo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtLogoMouseClicked(evt);
             }
         });
-        menu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 140));
+        menu.add(txtLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 250, 90));
 
         bg.add(menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 720));
 
-        barra.setBackground(new java.awt.Color(55, 42, 104));
+        barra.setBackground(btnColorMain);
         barra.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 barraMouseDragged(evt);
@@ -280,7 +302,7 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         bg.add(barra, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 40));
 
-        jPanel2.setBackground(new java.awt.Color(42, 31, 84));
+        jPanel2.setBackground(btnColorReset);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtTips.setFont(new java.awt.Font("Roboto", 2, 12)); // NOI18N
@@ -334,12 +356,12 @@ public class VentanaLogin extends javax.swing.JFrame {
                     user = datos[0].toUpperCase();
                     tipo = datos[1].toUpperCase();
                     id = datos[2];
-                    
+
                     empleado = ConexionBD.getEmpleadoById(Integer.valueOf(id));
-                    
+
                     System.out.println(empleado);
                     System.out.println(user);
-                    
+
                     java.awt.EventQueue.invokeLater(new Runnable() {
                         public void run() {
                             new VentanaPrincipal().setVisible(true);
@@ -389,10 +411,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
 
-    private void txtLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLogoMouseClicked
-
-    }//GEN-LAST:event_txtLogoMouseClicked
-
     private void btnCloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCloseMouseClicked
         System.exit(0);
     }//GEN-LAST:event_btnCloseMouseClicked
@@ -409,6 +427,10 @@ public class VentanaLogin extends javax.swing.JFrame {
         }
         txtTips.setText(protips[indiceActual]);
     }//GEN-LAST:event_txtTipsMouseClicked
+
+    private void txtLogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtLogoMouseClicked
+        
+    }//GEN-LAST:event_txtLogoMouseClicked
 
     /**
      * @param args the command line arguments

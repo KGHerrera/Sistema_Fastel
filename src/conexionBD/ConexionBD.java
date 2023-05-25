@@ -9,6 +9,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JTable;
 import modelo.Cliente;
 import modelo.Empleado;
@@ -58,6 +59,95 @@ public class ConexionBD {
             System.out.println("Error al cerrar la conexion");
             //e.printStackTrace();
         }
+    }
+    
+    
+    public static ArrayList<String> obtenerHabitacionesConcatenadas() {
+        ArrayList<String> habitacionesConcatenadas = new ArrayList<>();
+
+        Connection conexion = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            conexion = ConexionBD.getConexion();
+            String query = "SELECT id_habitacion, tipo_habitacion, disponible FROM habitaciones WHERE baja_temporal = 0";
+            pstm = conexion.prepareStatement(query);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int idHabitacion = rs.getInt("id_habitacion");
+                String tipoHabitacion = rs.getString("tipo_habitacion");
+                boolean disponible = rs.getBoolean("disponible");
+                String habitacionConcatenada = idHabitacion + " " + tipoHabitacion + " " + (disponible ? "dis" : "no dis");
+                habitacionesConcatenadas.add(habitacionConcatenada);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las habitaciones concatenadas: " + e);
+        } finally {
+            // Cerrar recursos
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar el ResultSet: " + e);
+                }
+            }
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar el PreparedStatement: " + e);
+                }
+            }
+            // No cierres la conexión aquí, ya que es compartida y será cerrada en otro lugar.
+        }
+        return habitacionesConcatenadas;
+    }
+    
+    //
+    public static ArrayList<String> obtenerClientesConcatenados() {
+        ArrayList<String> clientesConcatenados = new ArrayList<>();
+
+        Connection conexion = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+
+        try {
+            conexion = ConexionBD.getConexion();
+            String query = "SELECT id_cliente, nombre, apellido FROM clientes";
+            pstm = conexion.prepareStatement(query);
+            rs = pstm.executeQuery();
+
+            while (rs.next()) {
+                int idCliente = rs.getInt("id_cliente");
+                String nombre = rs.getString("nombre");
+                String apellido = rs.getString("apellido");
+                String clienteConcatenado = idCliente + " " + nombre + " " + apellido;
+                clientesConcatenados.add(clienteConcatenado);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los clientes concatenados: " + e);
+        } finally {
+            // Cerrar recursos
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar el ResultSet: " + e);
+                }
+            }
+            if (pstm != null) {
+                try {
+                    pstm.close();
+                } catch (SQLException e) {
+                    System.out.println("Error al cerrar el PreparedStatement: " + e);
+                }
+            }
+            // No cierres la conexión aquí, ya que es compartida y será cerrada en otro lugar.
+        }
+
+        return clientesConcatenados;
     }
 
     // consultar usuario      
@@ -502,13 +592,25 @@ public class ConexionBD {
             }
 
             // verificar que la fecha sea mayor
-            String sqlFecha = "SELECT DATEDIFF(day, GETDATE(), ?)";
+            String sqlFecha = "SELECT DATEDIFF(day, ?, ?)";
             ps = conexion.prepareStatement(sqlFecha);
-            ps.setString(1, reservacion.getVigencia());
+            ps.setString(1, reservacion.getFechaReservacion());
+            ps.setString(2, reservacion.getVigencia());
             rs = ps.executeQuery();
             while (rs.next()) {
                 if (rs.getInt(1) <= 0) {
                     return -5;
+                }
+            }
+            
+            // verificar que la fecha sea mayor
+            String sqlFechaDif = "SELECT DATEDIFF(day, GETDATE(), ?)";
+            ps = conexion.prepareStatement(sqlFechaDif);
+            ps.setString(1, reservacion.getFechaReservacion());
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) < 0) {
+                    return -6;
                 }
             }
 
@@ -525,14 +627,16 @@ public class ConexionBD {
             // Insertar la reservación
             String sqlReservacion = "INSERT INTO reservaciones (fecha_reservacion, "
                     + "vigencia, costo_total, fk_id_habitacion, fk_id_cliente) "
-                    + "VALUES (GETDATE(), ?, (SELECT DATEDIFF(day, GETDATE(), ?)) * "
+                    + "VALUES (?, ?, (SELECT DATEDIFF(day, ?, ?)) * "
                     + "(SELECT precio_noche FROM habitaciones WHERE id_habitacion = ?), ?, ?)";
             ps = conexion.prepareStatement(sqlReservacion);
-            ps.setString(1, reservacion.getVigencia());
+            ps.setString(1, reservacion.getFechaReservacion());
             ps.setString(2, reservacion.getVigencia());
-            ps.setInt(3, reservacion.getIdHabitacion());
-            ps.setInt(4, reservacion.getIdHabitacion());
-            ps.setInt(5, reservacion.getIdCliente());
+            ps.setString(3, reservacion.getFechaReservacion());
+            ps.setString(4, reservacion.getVigencia());
+            ps.setInt(5, reservacion.getIdHabitacion());
+            ps.setInt(6, reservacion.getIdHabitacion());
+            ps.setInt(7, reservacion.getIdCliente());
             resultado = ps.executeUpdate();
 
             // Confirmar la transacción
