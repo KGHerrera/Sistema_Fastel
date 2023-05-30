@@ -222,6 +222,12 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         recargarClientes();
         AutoCompleteDecorator.decorate(comboIdHabitacionReservacion);
         AutoCompleteDecorator.decorate(comboIdClienteReservacion);
+        
+        dateFechaFinal.getDateEditor().setEnabled(false);
+        dateFechaInicio.getDateEditor().setEnabled(false);
+        dateFechaRegistroCliente.getDateEditor().setEnabled(false);
+        dateFechaReservacion.getDateEditor().setEnabled(false);
+        dateFechaVigencia.getDateEditor().setEnabled(false);
 
     }
 
@@ -540,6 +546,11 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         messageReportes.setBackground(panelMessageColor);
         messageReportes.setForeground(new java.awt.Color(33, 235, 103));
         messageReportes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        messageReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                messageReportesMouseClicked(evt);
+            }
+        });
         messageReportes.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtMessageReportes.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
@@ -642,7 +653,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
         btnGenerarGrafico.add(btnComenzarGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 210, 40));
 
-        panelReportes.add(btnGenerarGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 630, 170));
+        panelReportes.add(btnGenerarGrafico, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 180, 640, 170));
 
         btnGenerarReporteFecha.setBackground(btnColorReset);
         btnGenerarReporteFecha.setRoundBottomLeft(25);
@@ -2411,6 +2422,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         cajaRfcCliente.setEnabled(true);
         cajaTelefonoCliente.setEnabled(true);
         dateFechaRegistroCliente.setEnabled(true);
+        dateFechaRegistroCliente.getDateEditor().setEnabled(false);
     }
 
     public void desabilitarCajasClientes() {
@@ -3248,11 +3260,13 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
 
     private void habilitarCajasReservaciones() {
         dateFechaReservacion.setEnabled(true);
+        dateFechaReservacion.getDateEditor().setEnabled(false);
         cajaIdReservacion.setEnabled(true);
         cajaCostoTotal.setEnabled(true);
         comboIdHabitacionReservacion.setEnabled(true);
         comboIdClienteReservacion.setEnabled(true);
         dateFechaVigencia.setEnabled(true);
+        dateFechaVigencia.getDateEditor().setEnabled(false);
     }
 
     private void btnModoRegistrarReservacionesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModoRegistrarReservacionesMouseClicked
@@ -3275,6 +3289,7 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                 btnAgregarReservaciones, colorCambio);
         desabilitarCajasReservaciones();
         dateFechaVigencia.setEnabled(true);
+        dateFechaVigencia.getDateEditor().setEnabled(false);
         vaciarCajasReservaciones();
         modoReservacion = "cambio";
         txtIdClienteReservacion.setText("ID CLIENTE");
@@ -3695,8 +3710,17 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
         this.paint(this.getGraphics());
     }//GEN-LAST:event_btnInstagramMouseClicked
 
+    public static boolean esMenorOIgual(java.util.Date fecha1, java.util.Date fecha2) {
+        return fecha1.before(fecha2) || fecha1.equals(fecha2);
+    }
+    
     private void btnGenerarReporteFechaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGenerarReporteFechaMouseClicked
-        if (!loading) {
+        if(dateFechaInicio.getDate() == null && dateFechaFinal.getDate() == null){
+            personalizarMensaje(txtMessageReportes, "LAS FECHAS NO DEBEN ESTAR VACIAS", messageReportes, colorError);
+        } else if(esMenorOIgual( dateFechaFinal.getDate(), dateFechaInicio.getDate())){
+            personalizarMensaje(txtMessageReportes, "El RANGO DE FECHAS NO DEBE SER MENOR O IGUAL", messageReportes, colorError);
+        }        
+        else if (!loading) {
             txtIconReporteFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/loader.gif")));
             loading = true;
             new Thread(() -> {
@@ -3717,11 +3741,15 @@ public class VentanaPrincipal extends javax.swing.JFrame implements KeyListener 
                     System.out.println(e);
                 } finally {
                     loading = false;
-                    txtIconReporteFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/grafico.png")));
+                    txtIconReporteFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/reporte.png")));
                 }
             }).start();
         }
     }//GEN-LAST:event_btnGenerarReporteFechaMouseClicked
+
+    private void messageReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_messageReportesMouseClicked
+        personalizarMensaje(txtMessageReportes, "POWERED BY JASPER REPORTS & JFREECHART", messageReportes, panelMessageColor);
+    }//GEN-LAST:event_messageReportesMouseClicked
 
     /**
      * @param args the command line arguments
