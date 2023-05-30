@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2ca4c273-a868-440c-bc4f-552d6c9c2d67">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="14"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT tipo_habitacion, COUNT(*) AS total_reservas
 FROM v_reservaciones
@@ -14,24 +17,104 @@ GROUP BY tipo_habitacion;]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="82" splitType="Stretch">
+			<rectangle radius="20">
+				<reportElement x="0" y="0" width="802" height="73" backcolor="#281748" uuid="90dc6ee7-a452-44cf-bf3b-7fb80594190b"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="32" y="22" width="20" height="19" backcolor="#0875CF" uuid="da4b3845-5612-48fc-bf07-c4127c11b9d8"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="38" y="28" width="20" height="19" uuid="c8148966-633d-4114-b24f-345d1b6e85c2"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="72" y="0" width="76" height="73" forecolor="#F0F0F0" uuid="c1d36524-4dd3-42d7-b7ca-4ecd0075b2a5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Roboto Black" size="20"/>
+				</textElement>
+				<text><![CDATA[FASTEL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="0" width="457" height="73" forecolor="#F0F0F0" uuid="dbd43b0e-4508-4b47-afd9-d274b010e8e4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="24"/>
+				</textElement>
+				<text><![CDATA[Habitaciones mas reservadas por TIPO]]></text>
+			</staticText>
+		</band>
 	</title>
-	<pageHeader>
-		<band height="35" splitType="Stretch"/>
-	</pageHeader>
-	<columnHeader>
-		<band height="61" splitType="Stretch"/>
-	</columnHeader>
-	<detail>
-		<band height="125" splitType="Stretch"/>
-	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="472" splitType="Stretch">
+			<rectangle radius="20">
+				<reportElement x="-1" y="25" width="803" height="395" uuid="aa312907-ae2b-44c3-9e7e-517cc09b9ede"/>
+				<graphicElement>
+					<pen lineColor="#003366"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="669" y="452" width="80" height="20" uuid="a36263a3-215c-469a-a57c-6e8acd9bec3d"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="111" y="452" width="100" height="20" uuid="3b2d26bd-294a-46ed-a0e7-3b920b9621d8"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="749" y="452" width="40" height="20" uuid="2a62f010-1316-4dd3-a510-bc445ccc6246"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="452" width="109" height="20" uuid="049101b7-c81f-4aa5-b0e8-5867d58b485c"/>
+				<text><![CDATA[Fecha de generación]]></text>
+			</staticText>
+			<pieChart>
+				<chart>
+					<reportElement x="32" y="25" width="386" height="356" uuid="a3b7c73f-fb2c-41b7-81cd-c9e0cb8d503e"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{tipo_habitacion}]]></keyExpression>
+					<valueExpression><![CDATA[$F{total_reservas}]]></valueExpression>
+				</pieDataset>
+				<piePlot>
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+			<barChart>
+				<chart>
+					<reportElement x="451" y="63" width="324" height="318" uuid="a58a557b-e9c8-410e-8e4f-d1e131ccf556"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{tipo_habitacion}]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{total_reservas}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{total_reservas}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
 	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
-	</summary>
 </jasperReport>

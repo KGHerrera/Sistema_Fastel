@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cb988ffc-3a2f-42e3-809b-01380445812e">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
 	<queryString language="SQL">
 		<![CDATA[SELECT fecha_reservacion, nombre_cliente, vigencia, costo_total, tipo_habitacion FROM v_reservaciones]]>
 	</queryString>
@@ -12,108 +15,130 @@
 		<band/>
 	</background>
 	<title>
-		<band height="72">
-			<frame>
-				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="6b945969-c2bb-4aac-ac5d-cccfc1c21669"/>
-				<staticText>
-					<reportElement x="20" y="20" width="234" height="43" forecolor="#FFFFFF" uuid="714f3fbe-6a49-4f9e-9523-106c49ed66e2"/>
-					<textElement>
-						<font size="34" isBold="true"/>
-					</textElement>
-					<text><![CDATA[TITLE]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="be285118-0635-4417-8ebb-1753b7d35d0b"/>
-					<textElement textAlignment="Right">
-						<font size="14" isBold="false"/>
-					</textElement>
-					<text><![CDATA[Add a description here]]></text>
-				</staticText>
-			</frame>
+		<band height="62">
+			<rectangle radius="5">
+				<reportElement x="0" y="0" width="555" height="55" backcolor="#003366" uuid="bba99850-0dc6-47f1-acc9-ca18a662169a"/>
+				<graphicElement>
+					<pen lineColor="#003366"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="286" y="16" width="252" height="35" forecolor="#FFFFFF" uuid="f504b12f-1e4a-4f99-a95d-327c6953ec05"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="24" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reservaciones realizadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-406" y="19" width="252" height="35" forecolor="#FFFFFF" uuid="da4c572b-f338-4f14-9e81-93d7cf2c797c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="24" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Reservaciones realizadas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="4" width="81" height="35" forecolor="#FFFFFF" uuid="254be4fa-9e91-4a9a-912a-2ea69bb08d2b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FASTEL]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="11" y="11" width="20" height="19" backcolor="#0875CF" uuid="3145ffe6-8577-4e68-8464-944b706c86d1"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="16" y="16" width="20" height="19" uuid="1d9dbdae-06eb-4fae-adf6-c4598ea2a3c9"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="13"/>
+		<band height="8"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="21">
-			<line>
-				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="dc04b6a5-e0c2-4c4b-953b-75720307f4d5"/>
-			</line>
+		<band height="39">
+			<rectangle radius="5">
+				<reportElement x="0" y="1" width="555" height="29" uuid="62464a0f-b162-4186-b6ce-87a65c576b22"/>
+				<graphicElement>
+					<pen lineColor="#999999"/>
+				</graphicElement>
+			</rectangle>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="3ee6dfd1-d415-44bd-877c-995843e9f9f9"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="18" y="2" width="93" height="27" forecolor="#006699" backcolor="#FFFFFF" uuid="3ee6dfd1-d415-44bd-877c-995843e9f9f9"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[fecha_reservacion]]></text>
+				<text><![CDATA[FECHA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="111" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a1dd9427-3543-4150-afbd-0091a8443d8e"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="111" y="2" width="111" height="27" forecolor="#006699" backcolor="#FFFFFF" uuid="a1dd9427-3543-4150-afbd-0091a8443d8e"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[nombre_cliente]]></text>
+				<text><![CDATA[CLIENTE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="222" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="268115e1-dc2b-480a-b697-707d467e8ea7"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="222" y="2" width="111" height="27" forecolor="#006699" backcolor="#FFFFFF" uuid="268115e1-dc2b-480a-b697-707d467e8ea7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[vigencia]]></text>
+				<text><![CDATA[VIGENCIA]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="333" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d382ecae-5c34-42b4-97b1-d5691651a504"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="333" y="2" width="111" height="27" forecolor="#006699" backcolor="#FFFFFF" uuid="d382ecae-5c34-42b4-97b1-d5691651a504"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[costo_total]]></text>
+				<text><![CDATA[TOTAL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="444" y="0" width="111" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="81475457-600e-40ad-b2db-c311a070f721"/>
-				<textElement textAlignment="Center">
-					<font size="14" isBold="true"/>
+				<reportElement mode="Opaque" x="444" y="2" width="94" height="27" forecolor="#006699" backcolor="#FFFFFF" uuid="81475457-600e-40ad-b2db-c311a070f721"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[tipo_habitacion]]></text>
+				<text><![CDATA[HABITACIÓN]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
-			<line>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="3467b925-09e5-4211-aa5c-f44c1aeee88d"/>
-			</line>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="0" width="111" height="20" uuid="2c18533b-0364-4028-a94b-a1ae36d4bdf1"/>
-				<textElement>
-					<font size="14"/>
+		<band height="27">
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="18" y="4" width="93" height="20" uuid="2c18533b-0364-4028-a94b-a1ae36d4bdf1"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fecha_reservacion}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="111" y="0" width="111" height="20" uuid="1378a375-1615-473d-9ebd-ca083b6c37a6"/>
-				<textElement>
-					<font size="14"/>
+				<reportElement x="111" y="4" width="111" height="20" uuid="1378a375-1615-473d-9ebd-ca083b6c37a6"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="222" y="0" width="111" height="20" uuid="d5e10020-9a67-4cf7-96a3-39d5ca2cd8c6"/>
-				<textElement>
-					<font size="14"/>
+			<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy">
+				<reportElement x="222" y="4" width="111" height="20" uuid="d5e10020-9a67-4cf7-96a3-39d5ca2cd8c6"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{vigencia}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement x="333" y="0" width="111" height="20" uuid="dfd3686c-5b94-4a07-9e0e-7541d272c7c7"/>
-				<textElement>
-					<font size="14"/>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00">
+				<reportElement x="333" y="4" width="111" height="20" uuid="dfd3686c-5b94-4a07-9e0e-7541d272c7c7"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{costo_total}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="444" y="0" width="111" height="20" uuid="abc4688b-384f-4102-99f8-f4cd7dd46076"/>
-				<textElement>
-					<font size="14"/>
+				<reportElement x="444" y="4" width="111" height="20" uuid="abc4688b-384f-4102-99f8-f4cd7dd46076"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="12"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{tipo_habitacion}]]></textFieldExpression>
 			</textField>

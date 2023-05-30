@@ -3,8 +3,14 @@
 	<property name="ireport.zoom" value="1.4641000000000006"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<queryString language="SQL">
-		<![CDATA[SELECT fecha_reservacion, nombre_cliente, vigencia, costo_total, tipo_habitacion FROM v_reservaciones]]>
+	<parameter name="fechaInicio" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fechaFinal" class="java.util.Date">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT fecha_reservacion, fecha_vigencia, nombre_cliente, costo_total, id_habitacion FROM v_reservaciones WHERE fecha_reservacion BETWEEN $P{fechaInicio} $P{fechaFinal}]]>
 	</queryString>
 	<field name="fecha_reservacion" class="java.sql.Date"/>
 	<field name="nombre_cliente" class="java.lang.String"/>
